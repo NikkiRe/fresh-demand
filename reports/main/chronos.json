@@ -1,0 +1,231 @@
+{
+  "model": "amazon/chronos-2",
+  "model_revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "model_weights_sha256": "ddcda3c7508bf2528087723e98a20707cc04b7f370ae275a9fd88078ddba4f42",
+  "model_weights_bytes": 477930472,
+  "model_license": "Apache-2.0",
+  "model_parameters": 119477664,
+  "model_card": "https://huggingface.co/amazon/chronos-2",
+  "device": "cpu",
+  "dtype": "float32",
+  "threads": 4,
+  "batch_size": 256,
+  "context_days": 90,
+  "horizon_days": 1,
+  "cross_learning": false,
+  "future_covariates": false,
+  "fine_tuning": false,
+  "used_for_deployment_selection": false,
+  "pretraining_overlap_independently_audited": false,
+  "quantiles": [
+    0.5,
+    0.75,
+    0.9
+  ],
+  "model_load_seconds": 0.7553887090002718,
+  "versions": {
+    "chronos-forecasting": "2.3.2",
+    "torch": "2.14.1",
+    "transformers": "5.20.2",
+    "numpy": "2.5.4",
+    "polars": "2.1.0"
+  },
+  "pretraining_overlap_caveat": "No task-specific fitting is performed. FreshRetailNet is not named in the published Appendix A training list, but exact pretraining overlap has not been independently audited. This benchmark does not establish strictly unseen-dataset performance.",
+  "training_data_reference": "https://arxiv.org/html/2510.15821v1#A1",
+  "mode": "frozen_test_daily_updated_h1",
+  "sampling_seed": 42,
+  "sampling_rule": "Uniform fixed subset of the saved train-only sampled_series.parquet IDs",
+  "source_predictions_sha256": "52e2c55c13c43861530cecdf746de2a164b0a029287ea4fa2b305b25b6d615d3",
+  "source_series_sha256": "204e6d79f77fc2b93966fbc584271c307e8f6dfbdfb46dfd82d2bce8cc60bb8f",
+  "inference_seconds": 1.8030093329994088,
+  "per_origin_inference_seconds": {
+    "2024-06-26": 0.31148429099994246,
+    "2024-06-27": 0.24776529199971264,
+    "2024-06-28": 0.24744783300002382,
+    "2024-06-29": 0.25176904199997807,
+    "2024-06-30": 0.24706762499999968,
+    "2024-07-01": 0.2505948749999334,
+    "2024-07-02": 0.24688037499981874
+  },
+  "rows_all": 1792,
+  "rows_fully_available": 1096,
+  "series_all": 256,
+  "stores_fully_available": 215,
+  "test_dates": [
+    "2024-06-26",
+    "2024-06-27",
+    "2024-06-28",
+    "2024-06-29",
+    "2024-06-30",
+    "2024-07-01",
+    "2024-07-02"
+  ],
+  "point_metrics": {
+    "pred_chronos_q50": {
+      "mae": 0.29827113546159145,
+      "wape": 0.33435116490841466,
+      "bias": -0.030958447826474073
+    },
+    "pred_mean7": {
+      "mae": 0.32183394160583945,
+      "wape": 0.360764219160709,
+      "bias": 0.01961248431132755
+    },
+    "pred_profile_q50": {
+      "mae": 0.3027225612451429,
+      "wape": 0.3393410523607505,
+      "bias": 0.10835457602092533
+    },
+    "pred_raw_q50": {
+      "mae": 0.28076306086507885,
+      "wape": 0.3147252459351011,
+      "bias": 0.0037043078311991984
+    },
+    "pred_seasonal_lag7": {
+      "mae": 0.39573905109489055,
+      "wape": 0.4436091763574811,
+      "bias": 0.04118723983103719
+    },
+    "pred_uniform_q50": {
+      "mae": 0.3183188863585128,
+      "wape": 0.3568239692439938,
+      "bias": 0.1460889209557411
+    }
+  },
+  "quantile_metrics": {
+    "pred_chronos_q50": {
+      "quantile": 0.5,
+      "pinball_loss": 0.14913556773079573,
+      "assumed_underage_cost": 1.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.33435116490841466,
+      "mean_shortage": 0.16294441955259248,
+      "mean_excess": 0.135326715908999,
+      "fill_rate": 0.8173451936325556,
+      "cycle_service": 0.5136861313868614
+    },
+    "pred_chronos_q75": {
+      "quantile": 0.75,
+      "pinball_loss": 0.13017453046964253,
+      "assumed_underage_cost": 3.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.5836837793449243,
+      "mean_shortage": 0.0719367557530203,
+      "mean_excess": 0.3048878546195091,
+      "fill_rate": 0.9193614962154069,
+      "cycle_service": 0.7572992700729927
+    },
+    "pred_chronos_q90": {
+      "quantile": 0.9,
+      "pinball_loss": 0.07912237110864506,
+      "assumed_underage_cost": 9.000000000000002,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.8869331894804804,
+      "mean_shortage": 0.027212658355923472,
+      "mean_excess": 0.5463097858831395,
+      "fill_rate": 0.969495593304806,
+      "cycle_service": 0.9014598540145985
+    },
+    "pred_profile_q50": {
+      "quantile": 0.5,
+      "pinball_loss": 0.15136128062257145,
+      "assumed_underage_cost": 1.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.3393410523607505,
+      "mean_shortage": 0.10303029539769039,
+      "mean_excess": 0.19969226584745256,
+      "fill_rate": 0.8845067618300874,
+      "cycle_service": 0.6651459854014599
+    },
+    "pred_profile_q75": {
+      "quantile": 0.75,
+      "pinball_loss": 0.1359472942224158,
+      "assumed_underage_cost": 3.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.6095680176235473,
+      "mean_shortage": 0.037574802121920305,
+      "mean_excess": 0.43106477052390235,
+      "fill_rate": 0.9578800045762894,
+      "cycle_service": 0.8658759124087592
+    },
+    "pred_profile_q90": {
+      "quantile": 0.9,
+      "pinball_loss": 0.08521809627113011,
+      "assumed_underage_cost": 9.000000000000002,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.955264065878705,
+      "mean_shortage": 0.009747874303113675,
+      "mean_excess": 0.7644500939832782,
+      "fill_rate": 0.9890729851429203,
+      "cycle_service": 0.958941605839416
+    },
+    "pred_raw_q50": {
+      "quantile": 0.5,
+      "pinball_loss": 0.14038153043253943,
+      "assumed_underage_cost": 1.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.3147252459351011,
+      "mean_shortage": 0.1387292435275219,
+      "mean_excess": 0.1420338173375569,
+      "fill_rate": 0.8444895309480491,
+      "cycle_service": 0.541058394160584
+    },
+    "pred_raw_q75": {
+      "quantile": 0.75,
+      "pinball_loss": 0.11984352202767301,
+      "assumed_underage_cost": 3.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.5373610307235315,
+      "mean_shortage": 0.053407588049723134,
+      "mean_excess": 0.3191513239615225,
+      "fill_rate": 0.9401320236645121,
+      "cycle_service": 0.7965328467153284
+    },
+    "pred_raw_q90": {
+      "quantile": 0.9,
+      "pinball_loss": 0.07086971620678674,
+      "assumed_underage_cost": 9.000000000000002,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.7944239101044078,
+      "mean_shortage": 0.01947488970494183,
+      "mean_excess": 0.533423154723391,
+      "fill_rate": 0.9781693523604511,
+      "cycle_service": 0.9178832116788321
+    },
+    "pred_uniform_q50": {
+      "quantile": 0.5,
+      "pinball_loss": 0.1591594431792564,
+      "assumed_underage_cost": 1.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.3568239692439938,
+      "mean_shortage": 0.0939972530852524,
+      "mean_excess": 0.22432163327326038,
+      "fill_rate": 0.8946324758558737,
+      "cycle_service": 0.6952554744525548
+    },
+    "pred_uniform_q75": {
+      "quantile": 0.75,
+      "pinball_loss": 0.14482328565273794,
+      "assumed_underage_cost": 3.0,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 0.6493666802712438,
+      "mean_shortage": 0.03454949529390947,
+      "mean_excess": 0.47564465672922335,
+      "fill_rate": 0.9612712642118737,
+      "cycle_service": 0.875
+    },
+    "pred_uniform_q90": {
+      "quantile": 0.9,
+      "pinball_loss": 0.0916905291562323,
+      "assumed_underage_cost": 9.000000000000002,
+      "assumed_overage_cost": 1,
+      "normalized_cost": 1.027817699725186,
+      "mean_shortage": 0.006881651606953202,
+      "mean_excess": 0.8549704270997442,
+      "fill_rate": 0.9922859172151609,
+      "cycle_service": 0.968978102189781
+    }
+  },
+  "evaluation_scope": "All models use the identical sampled series and fully available operating-hour test days; this selected cohort does not identify latent demand on natural stockout days.",
+  "total_seconds": 5.802341417000207
+}

@@ -1,0 +1,272 @@
+{
+  "n_rows": 41220,
+  "n_total_rows": 70000,
+  "n_stores": 890,
+  "n_days": 7,
+  "demand_sum": 48185.162000000004,
+  "models": {
+    "pred_seasonal_lag7": {
+      "mae": 0.46576023774866576,
+      "wape": 0.3984346259954465,
+      "bias": 0.0009418044500919156,
+      "normalized_cost": 0.7959274475408009,
+      "mean_shortage": 0.23232964580300827,
+      "mean_excess": 0.2334305919456575,
+      "fill_rate": 0.8012535892273226,
+      "cycle_service": 0.5665938864628821
+    },
+    "pred_mean7": {
+      "mae": 0.37575960352117554,
+      "wape": 0.3214435775300051,
+      "bias": -0.010046637534244611,
+      "normalized_cost": 0.6529337925942549,
+      "mean_shortage": 0.19375193733971025,
+      "mean_excess": 0.1820076661814653,
+      "fill_rate": 0.8342548924678751,
+      "cycle_service": 0.5596797671033479
+    },
+    "pred_raw_q50": {
+      "mae": 0.3504410868648834,
+      "wape": 0.29978485079225203,
+      "bias": -0.03474264069532284,
+      "normalized_cost": 0.6343123422798269,
+      "mean_shortage": 0.19552718790371684,
+      "mean_excess": 0.15491389896116653,
+      "fill_rate": 0.8327362542562126,
+      "cycle_service": 0.538646288209607,
+      "pinball": 0.1752205434324417,
+      "quantile": 0.5,
+      "empirical_coverage": 0.538646288209607
+    },
+    "pred_raw_q75": {
+      "mae": 0.4256907008541452,
+      "wape": 0.36415713802535027,
+      "bias": 0.22768984773486622,
+      "normalized_cost": 0.5006244283158343,
+      "mean_shortage": 0.07976344602557014,
+      "mean_excess": 0.34592725482857506,
+      "fill_rate": 0.9317663548547579,
+      "cycle_service": 0.777171276079573,
+      "pinball": 0.14630439822632135,
+      "quantile": 0.75,
+      "empirical_coverage": 0.777171276079573
+    },
+    "pred_raw_q90": {
+      "mae": 0.6088727263539713,
+      "wape": 0.5208602137793102,
+      "bias": 0.46454248618367994,
+      "normalized_cost": 0.5771779413749405,
+      "mean_shortage": 0.03291701634725029,
+      "mean_excess": 0.5759557100067211,
+      "fill_rate": 0.9718411362021848,
+      "cycle_service": 0.9064289180009704,
+      "pinball": 0.08722088571319735,
+      "quantile": 0.9,
+      "empirical_coverage": 0.9064289180009704
+    },
+    "pred_uniform_q50": {
+      "mae": 0.3782902038271255,
+      "wape": 0.32360837972806056,
+      "bias": 0.10628342393250784,
+      "normalized_cost": 0.5409333355236132,
+      "mean_shortage": 0.1270237530525418,
+      "mean_excess": 0.25126645077458376,
+      "fill_rate": 0.8913375221022237,
+      "cycle_service": 0.6699902959728288,
+      "pinball": 0.18914510191356276,
+      "quantile": 0.5,
+      "empirical_coverage": 0.6699902959728288
+    },
+    "pred_uniform_q75": {
+      "mae": 0.5716815084342962,
+      "wape": 0.4890449839654309,
+      "bias": 0.41014901323324077,
+      "normalized_cost": 0.567940954697621,
+      "mean_shortage": 0.046113720655966015,
+      "mean_excess": 0.5255677877783301,
+      "fill_rate": 0.9605520146339049,
+      "cycle_service": 0.8728044638524988,
+      "pinball": 0.16597723743655707,
+      "quantile": 0.75,
+      "empirical_coverage": 0.8728044638524988
+    },
+    "pred_uniform_q90": {
+      "mae": 0.938777309356675,
+      "wape": 0.8030771109928434,
+      "bias": 0.7801300681712875,
+      "normalized_cost": 0.8260241538143994,
+      "mean_shortage": 0.013412263170519328,
+      "mean_excess": 0.9253650461861557,
+      "fill_rate": 0.9885264785892219,
+      "cycle_service": 0.9663027656477439,
+      "pinball": 0.10460754147208293,
+      "quantile": 0.9,
+      "empirical_coverage": 0.9663027656477439
+    },
+    "pred_profile_q50": {
+      "mae": 0.36383409589170745,
+      "wape": 0.3112419012445404,
+      "bias": 0.06954642553412668,
+      "normalized_cost": 0.552937376954954,
+      "mean_shortage": 0.1412680210064695,
+      "mean_excess": 0.22256607488523789,
+      "fill_rate": 0.8791522621447931,
+      "cycle_service": 0.6403687530325085,
+      "pinball": 0.18191704794585373,
+      "quantile": 0.5,
+      "empirical_coverage": 0.6403687530325085
+    },
+    "pred_profile_q75": {
+      "mae": 0.5300999628403152,
+      "wape": 0.4534740480540004,
+      "bias": 0.3630132149076426,
+      "normalized_cost": 0.5439348812003583,
+      "mean_shortage": 0.05287323992979406,
+      "mean_excess": 0.47722672291052115,
+      "fill_rate": 0.9547695834268211,
+      "cycle_service": 0.8583212032993692,
+      "pinball": 0.15896161067497586,
+      "quantile": 0.75,
+      "empirical_coverage": 0.8583212032993692
+    },
+    "pred_profile_q90": {
+      "mae": 0.8483524514559313,
+      "wape": 0.725723160358234,
+      "bias": 0.6971370697016258,
+      "normalized_cost": 0.754309251014842,
+      "mean_shortage": 0.01670821699703236,
+      "mean_excess": 0.8316442344588989,
+      "fill_rate": 0.9857069546716958,
+      "cycle_service": 0.9569141193595342,
+      "pinball": 0.09820181874321898,
+      "quantile": 0.9,
+      "empirical_coverage": 0.9569141193595342
+    }
+  },
+  "start": "2024-06-26",
+  "end": "2024-07-02",
+  "bootstrap": {
+    "uniform_vs_raw": {
+      "estimate": 0.06731652638178659,
+      "ci_low": 0.061820756100908966,
+      "ci_high": 0.07319353821645834,
+      "n_boot": 2000,
+      "n_valid_boot": 2000,
+      "n_stores": 890,
+      "n_rows": 41220,
+      "metric": "normalized_cost_difference",
+      "direction": "candidate_minus_baseline",
+      "conditional_on_dates": true,
+      "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+    },
+    "profile_vs_raw": {
+      "estimate": 0.043310452884523905,
+      "ci_low": 0.03915348377634679,
+      "ci_high": 0.04779290398893304,
+      "n_boot": 2000,
+      "n_valid_boot": 2000,
+      "n_stores": 890,
+      "n_rows": 41220,
+      "metric": "normalized_cost_difference",
+      "direction": "candidate_minus_baseline",
+      "conditional_on_dates": true,
+      "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+    }
+  },
+  "cost_sensitivity": {
+    "1": {
+      "raw": {
+        "normalized_cost": 0.29978485079225203,
+        "mean_shortage": 0.19552718790371684,
+        "mean_excess": 0.15491389896116653,
+        "fill_rate": 0.8327362542562126,
+        "cycle_service": 0.538646288209607
+      },
+      "uniform": {
+        "normalized_cost": 0.32360837972806056,
+        "mean_shortage": 0.1270237530525418,
+        "mean_excess": 0.25126645077458376,
+        "fill_rate": 0.8913375221022237,
+        "cycle_service": 0.6699902959728288
+      },
+      "profile": {
+        "normalized_cost": 0.3112419012445404,
+        "mean_shortage": 0.1412680210064695,
+        "mean_excess": 0.22256607488523789,
+        "fill_rate": 0.8791522621447931,
+        "cycle_service": 0.6403687530325085
+      }
+    },
+    "3": {
+      "raw": {
+        "normalized_cost": 0.5006244283158343,
+        "mean_shortage": 0.07976344602557014,
+        "mean_excess": 0.34592725482857506,
+        "fill_rate": 0.9317663548547579,
+        "cycle_service": 0.777171276079573
+      },
+      "uniform": {
+        "normalized_cost": 0.567940954697621,
+        "mean_shortage": 0.046113720655966015,
+        "mean_excess": 0.5255677877783301,
+        "fill_rate": 0.9605520146339049,
+        "cycle_service": 0.8728044638524988
+      },
+      "profile": {
+        "normalized_cost": 0.5439348812003583,
+        "mean_shortage": 0.05287323992979406,
+        "mean_excess": 0.47722672291052115,
+        "fill_rate": 0.9547695834268211,
+        "cycle_service": 0.8583212032993692
+      }
+    },
+    "9": {
+      "raw": {
+        "normalized_cost": 0.7461311241618311,
+        "mean_shortage": 0.03291701634725029,
+        "mean_excess": 0.5759557100067211,
+        "fill_rate": 0.9718411362021848,
+        "cycle_service": 0.9064289180009704
+      },
+      "uniform": {
+        "normalized_cost": 0.8948652822790674,
+        "mean_shortage": 0.013412263170519328,
+        "mean_excess": 0.9253650461861557,
+        "fill_rate": 0.9885264785892219,
+        "cycle_service": 0.9663027656477439
+      },
+      "profile": {
+        "normalized_cost": 0.8400675229846665,
+        "mean_shortage": 0.01670821699703236,
+        "mean_excess": 0.8316442344588989,
+        "fill_rate": 0.9857069546716958,
+        "cycle_service": 0.9569141193595342
+      }
+    }
+  },
+  "test_sha256": "1b118840664280c6b88bffc84c80ee1f54c05d911e354b7599e5da10995e960e",
+  "selection": {
+    "selected_method": "raw",
+    "selection_metric": "Mean validation-window normalized cost, Cu=3, Co=1, q=0.75",
+    "validation_costs": {
+      "raw": 0.5508683621045708,
+      "uniform": 0.6262295636121494,
+      "profile": 0.5997847937912443
+    },
+    "config_sha256": "4656035562094f010d3ffc1d4526e589e7f64767974a3cdf10dcf546239a6edb",
+    "frozen_before_test_read_utc": "2026-10-25T23:40:44.979173+00:00"
+  },
+  "policy_comparison": {
+    "estimate": -0.13368791396399252,
+    "ci_low": -0.141015954051286,
+    "ci_high": -0.12617126433546075,
+    "n_boot": 2000,
+    "n_valid_boot": 2000,
+    "n_stores": 890,
+    "n_rows": 41220,
+    "metric": "normalized_cost_difference",
+    "direction": "candidate_minus_baseline",
+    "conditional_on_dates": true,
+    "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+  }
+}

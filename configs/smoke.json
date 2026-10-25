@@ -1,0 +1,15 @@
+{
+  "seed": 42,
+  "max_series": 300,
+  "warmup_days": 28,
+  "validation_windows": 1,
+  "validation_days": 7,
+  "threads": 4,
+  "n_estimators": 40,
+  "learning_rate": 0.05,
+  "num_leaves": 15,
+  "min_child_samples": 40,
+  "quantiles": [0.5, 0.75, 0.9],
+  "primary_quantile": 0.75,
+  "bootstrap_replicates": 100
+}

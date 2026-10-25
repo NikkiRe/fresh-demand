@@ -1,0 +1,11 @@
+{
+  "selected_method": "raw",
+  "selection_metric": "Mean validation-window normalized cost, Cu=3, Co=1, q=0.75",
+  "validation_costs": {
+    "raw": 0.5508683621045708,
+    "uniform": 0.6262295636121494,
+    "profile": 0.5997847937912443
+  },
+  "config_sha256": "4656035562094f010d3ffc1d4526e589e7f64767974a3cdf10dcf546239a6edb",
+  "frozen_before_test_read_utc": "2026-10-25T23:40:44.979173+00:00"
+}

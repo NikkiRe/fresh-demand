@@ -1,0 +1,15 @@
+{
+  "rows": 4500000,
+  "series": 50000,
+  "stores": 898,
+  "products": 865,
+  "first_date": "2024-03-28",
+  "last_date": "2024-06-25",
+  "days": 90,
+  "stockout_hour_fraction": 0.19877133333333333,
+  "stockout_day_fraction": 0.442668,
+  "operating_sales_fraction": 0.9519041578249028,
+  "daily_hourly_max_discrepancy": 7.105427357601002e-15,
+  "positive_sales_in_flagged_operating_hours": 417269,
+  "sha256": "6706832db892bbae4969c19d87e07975d2543d2ba7d7d4756360654785de5a3d"
+}

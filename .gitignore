@@ -1,0 +1,12 @@
+.venv/
+.venv-*/
+.cache/
+forecasts/
+work/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/
+artifacts/
+reports/smoke/
+.DS_Store

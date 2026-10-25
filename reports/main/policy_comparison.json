@@ -1,0 +1,13 @@
+{
+  "estimate": -0.13368791396399252,
+  "ci_low": -0.141015954051286,
+  "ci_high": -0.12617126433546075,
+  "n_boot": 2000,
+  "n_valid_boot": 2000,
+  "n_stores": 890,
+  "n_rows": 41220,
+  "metric": "normalized_cost_difference",
+  "direction": "candidate_minus_baseline",
+  "conditional_on_dates": true,
+  "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+}

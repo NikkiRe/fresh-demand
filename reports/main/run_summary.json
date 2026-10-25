@@ -1,0 +1,1008 @@
+{
+  "metadata": {
+    "dataset_revision": "c374e85975c82816c495acfa904cc55ab14a47d3",
+    "config": {
+      "seed": 42,
+      "max_series": 10000,
+      "warmup_days": 28,
+      "validation_windows": 3,
+      "validation_days": 7,
+      "threads": 6,
+      "n_estimators": 250,
+      "learning_rate": 0.05,
+      "num_leaves": 31,
+      "min_child_samples": 100,
+      "quantiles": [
+        0.5,
+        0.75,
+        0.9
+      ],
+      "primary_quantile": 0.75,
+      "bootstrap_replicates": 2000
+    },
+    "train_sha256": "6706832db892bbae4969c19d87e07975d2543d2ba7d7d4756360654785de5a3d",
+    "config_sha256": "4656035562094f010d3ffc1d4526e589e7f64767974a3cdf10dcf546239a6edb",
+    "n_series": 10000,
+    "n_train_rows": 900000,
+    "sampled_stores": 890,
+    "recovery_warmup_end_exclusive": "2024-04-25",
+    "recovery": {
+      "warmup_rows": 280000,
+      "complete_days": 139500,
+      "positive_complete_days": 135617,
+      "product_profiles": 609,
+      "category_profiles": 197,
+      "pair_priors": 10000,
+      "pairs_using_observed_prior": 108,
+      "global_prior": 0.8285852903225808,
+      "operational_hours": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "smoothing_pseudo_days": 7.0,
+      "minimum_share": 0.2,
+      "prior_cap_multiplier": 5.0,
+      "safety_parameters": "predeclared arbitrary sensitivity assumptions"
+    },
+    "python": "3.12.15",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "versions": {
+      "numpy": "2.5.4",
+      "polars": "2.1.0",
+      "lightgbm": "4.7.0",
+      "scikit-learn": "1.9.1",
+      "pyarrow": "26.0.0"
+    },
+    "started_utc": "2026-10-25T23:38:38.613827+00:00",
+    "forecast_protocol": "One day ahead; model refit at each weekly origin, realized history updated daily",
+    "target": "Normalized sales sum in hours [6,22); evaluation only on fully available days",
+    "elapsed_seconds": 187.47854691700013
+  },
+  "validation": {
+    "folds": [
+      {
+        "start": "2024-06-05",
+        "end": "2024-06-11",
+        "n_rows": 41264,
+        "n_total_rows": 70000,
+        "n_stores": 890,
+        "n_days": 7,
+        "demand_sum": 40052.105,
+        "models": {
+          "pred_seasonal_lag7": {
+            "mae": 0.4381717962388522,
+            "wape": 0.4514299810209725,
+            "bias": 0.016955438422025505,
+            "normalized_cost": 0.8859045236199196,
+            "mean_shortage": 0.21085716362931373,
+            "mean_excess": 0.22731463260953857,
+            "fill_rate": 0.7827627287005263,
+            "cycle_service": 0.5688978286157426
+          },
+          "pred_mean7": {
+            "mae": 0.34077448346535205,
+            "wape": 0.35108562423159245,
+            "bias": -0.014931535522825298,
+            "normalized_cost": 0.7171027839860101,
+            "mean_shortage": 0.17763374508391958,
+            "mean_excess": 0.16314073838143245,
+            "fill_rate": 0.8169914201227911,
+            "cycle_service": 0.5418524621946491
+          },
+          "pred_raw_q50": {
+            "mae": 0.31872567773762683,
+            "wape": 0.32836966661715866,
+            "bias": -0.031869389415593884,
+            "normalized_cost": 0.6886087226499112,
+            "mean_shortage": 0.17482954266824216,
+            "mean_excess": 0.14389613506938467,
+            "fill_rate": 0.8198804719836237,
+            "cycle_service": 0.5302685149282668,
+            "pinball": 0.15936283886881342,
+            "quantile": 0.5,
+            "empirical_coverage": 0.5302685149282668
+          },
+          "pred_raw_q75": {
+            "mae": 0.38832966308118994,
+            "wape": 0.4000797265807183,
+            "bias": 0.23017318889465616,
+            "normalized_cost": 0.5699862642667805,
+            "mean_shortage": 0.08245825038276244,
+            "mean_excess": 0.3058714126984275,
+            "fill_rate": 0.9150467311569689,
+            "cycle_service": 0.7541682822799535,
+            "pinball": 0.13831154096167872,
+            "quantile": 0.75,
+            "empirical_coverage": 0.7541682822799535
+          },
+          "pred_raw_q90": {
+            "mae": 0.5525523164496153,
+            "wape": 0.5692714224627377,
+            "bias": 0.4900175674658645,
+            "normalized_cost": 0.6485252774596106,
+            "mean_shortage": 0.038463112179981766,
+            "mean_excess": 0.5140892042696334,
+            "fill_rate": 0.9603730725015633,
+            "cycle_service": 0.8879168282279953,
+            "pinball": 0.08602572138894694,
+            "quantile": 0.9,
+            "empirical_coverage": 0.8879168282279953
+          },
+          "pred_uniform_q50": {
+            "mae": 0.34800127529717756,
+            "wape": 0.35853108404321654,
+            "bias": 0.12256470446874772,
+            "normalized_cost": 0.5944974636176854,
+            "mean_shortage": 0.11451810550584629,
+            "mean_excess": 0.23348316979133127,
+            "fill_rate": 0.8820168102127657,
+            "cycle_service": 0.6697605661108957,
+            "pinball": 0.17400063764858878,
+            "quantile": 0.5,
+            "empirical_coverage": 0.6697605661108957
+          },
+          "pred_uniform_q75": {
+            "mae": 0.5411147424022874,
+            "wape": 0.5574877707548201,
+            "bias": 0.46188024646576786,
+            "normalized_cost": 0.6530952950438724,
+            "mean_shortage": 0.04639979887571702,
+            "mean_excess": 0.4947149435265704,
+            "fill_rate": 0.9521962378554739,
+            "cycle_service": 0.8702743311360993,
+            "pinball": 0.15847858503843038,
+            "quantile": 0.75,
+            "empirical_coverage": 0.8702743311360993
+          },
+          "pred_uniform_q90": {
+            "mae": 0.8887088670095336,
+            "wape": 0.9155993845587239,
+            "bias": 0.878763177999532,
+            "normalized_cost": 0.9524355911179162,
+            "mean_shortage": 0.017877176387534513,
+            "mean_excess": 0.870831690621999,
+            "fill_rate": 0.9815818967204039,
+            "cycle_service": 0.9563784412563009,
+            "pinball": 0.10317262781098095,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9563784412563009
+          },
+          "pred_profile_q50": {
+            "mae": 0.33654129579385295,
+            "wape": 0.34672434893590603,
+            "bias": 0.0875915018516279,
+            "normalized_cost": 0.6058571960201842,
+            "mean_shortage": 0.12576114773614352,
+            "mean_excess": 0.21078014805770942,
+            "fill_rate": 0.8704335764578608,
+            "cycle_service": 0.6424001550988755,
+            "pinball": 0.16827064789692647,
+            "quantile": 0.5,
+            "empirical_coverage": 0.6424001550988755
+          },
+          "pred_profile_q75": {
+            "mae": 0.49651268037374996,
+            "wape": 0.5115361413074898,
+            "bias": 0.403507442778024,
+            "normalized_cost": 0.6195648398369555,
+            "mean_shortage": 0.05242798536879013,
+            "mean_excess": 0.4440846950049599,
+            "fill_rate": 0.9459856507352671,
+            "cycle_service": 0.851686700271423,
+            "pinball": 0.15034216277783255,
+            "quantile": 0.75,
+            "empirical_coverage": 0.851686700271423
+          },
+          "pred_profile_q90": {
+            "mae": 0.8033833213916445,
+            "wape": 0.8276920619753897,
+            "bias": 0.784173129845334,
+            "normalized_cost": 0.8712109941054453,
+            "mean_shortage": 0.02112040567032847,
+            "mean_excess": 0.782262915721316,
+            "fill_rate": 0.978240533934972,
+            "cycle_service": 0.9476056611089569,
+            "pinball": 0.09723465667542722,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9476056611089569
+          }
+        }
+      },
+      {
+        "start": "2024-06-12",
+        "end": "2024-06-18",
+        "n_rows": 38872,
+        "n_total_rows": 70000,
+        "n_stores": 890,
+        "n_days": 7,
+        "demand_sum": 37352.664,
+        "models": {
+          "pred_seasonal_lag7": {
+            "mae": 0.42467447005556697,
+            "wape": 0.44194829048873197,
+            "bias": -0.01127089623380009,
+            "normalized_cost": 0.895167477211264,
+            "mean_shortage": 0.2177524181930439,
+            "mean_excess": 0.20692205186252316,
+            "fill_rate": 0.7733904066387342,
+            "cycle_service": 0.5592971804898127
+          },
+          "pred_mean7": {
+            "mae": 0.33659087334254556,
+            "wape": 0.35028185482490437,
+            "bias": 0.010496803425548746,
+            "normalized_cost": 0.6900669062242599,
+            "mean_shortage": 0.16325217196366096,
+            "mean_excess": 0.17333870137888455,
+            "fill_rate": 0.8301074743003223,
+            "cycle_service": 0.5722113603622144
+          },
+          "pred_raw_q50": {
+            "mae": 0.3152252093236746,
+            "wape": 0.3280471330459825,
+            "bias": -0.006264153018474642,
+            "normalized_cost": 0.6623584191104396,
+            "mean_shortage": 0.16062226203660152,
+            "mean_excess": 0.15460294728707308,
+            "fill_rate": 0.8328443569677716,
+            "cycle_service": 0.5588598477052892,
+            "pinball": 0.1576126046618373,
+            "quantile": 0.5,
+            "empirical_coverage": 0.5588598477052892
+          },
+          "pred_raw_q75": {
+            "mae": 0.39499113933786795,
+            "wape": 0.4110575772678919,
+            "bias": 0.26595627850773595,
+            "normalized_cost": 0.5561588760280478,
+            "mean_shortage": 0.06971496267945722,
+            "mean_excess": 0.3252761766584108,
+            "fill_rate": 0.9274493506199222,
+            "cycle_service": 0.7854496810043219,
+            "pinball": 0.1336052661741956,
+            "quantile": 0.75,
+            "empirical_coverage": 0.7854496810043219
+          },
+          "pred_raw_q90": {
+            "mae": 0.5764116943573634,
+            "wape": 0.5998574929771925,
+            "bias": 0.5407291691715804,
+            "normalized_cost": 0.6589858167828045,
+            "mean_shortage": 0.028408628472862588,
+            "mean_excess": 0.5480030658845008,
+            "fill_rate": 0.970435838097194,
+            "cycle_service": 0.9088032516978802,
+            "pinball": 0.08036807221402639,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9088032516978802
+          },
+          "pred_uniform_q50": {
+            "mae": 0.3382911114123093,
+            "wape": 0.35205125082428623,
+            "bias": 0.11217663329665735,
+            "normalized_cost": 0.5919258683519152,
+            "mean_shortage": 0.11524948537042129,
+            "mean_excess": 0.22304162604188799,
+            "fill_rate": 0.8800626912361857,
+            "cycle_service": 0.6612471701996295,
+            "pinball": 0.16914555570615464,
+            "quantile": 0.5,
+            "empirical_coverage": 0.6612471701996295
+          },
+          "pred_uniform_q75": {
+            "mae": 0.5362924401991965,
+            "wape": 0.558106370550255,
+            "bias": 0.47339330782932976,
+            "normalized_cost": 0.6428194332711804,
+            "mean_shortage": 0.04070100031160795,
+            "mean_excess": 0.49559143988758864,
+            "fill_rate": 0.9576434686395375,
+            "cycle_service": 0.8787301913974068,
+            "pinball": 0.15442361020560313,
+            "quantile": 0.75,
+            "empirical_coverage": 0.8787301913974068
+          },
+          "pred_uniform_q90": {
+            "mae": 0.8730352580857151,
+            "wape": 0.9085463503301378,
+            "bias": 0.8809203545046839,
+            "normalized_cost": 0.9361723461555918,
+            "mean_shortage": 0.013273108403652797,
+            "mean_excess": 0.8597621496820625,
+            "fill_rate": 0.986187002087273,
+            "cycle_service": 0.9628524387734102,
+            "pinball": 0.09792201253149375,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9628524387734102
+          },
+          "pred_profile_q50": {
+            "mae": 0.33255809491375843,
+            "wape": 0.3460850413637865,
+            "bias": 0.09912005616138694,
+            "normalized_cost": 0.5930500265661861,
+            "mean_shortage": 0.11865610351963114,
+            "mean_excess": 0.21390199139412733,
+            "fill_rate": 0.8765175073988003,
+            "cycle_service": 0.6531179254990739,
+            "pinball": 0.16627904745687921,
+            "quantile": 0.5,
+            "empirical_coverage": 0.6531179254990739
+          },
+          "pred_profile_q75": {
+            "mae": 0.5055649924279004,
+            "wape": 0.5261290703564636,
+            "bias": 0.43596273515375933,
+            "normalized_cost": 0.6162954055591682,
+            "mean_shortage": 0.04332106429998445,
+            "mean_excess": 0.46224392812791604,
+            "fill_rate": 0.9549168323986479,
+            "cycle_service": 0.8693146738011936,
+            "pinball": 0.14805178025696736,
+            "quantile": 0.75,
+            "empirical_coverage": 0.8693146738011936
+          },
+          "pred_profile_q90": {
+            "mae": 0.804471593337811,
+            "wape": 0.837193828430213,
+            "bias": 0.8061227887975749,
+            "normalized_cost": 0.8682648680628509,
+            "mean_shortage": 0.014928304480456475,
+            "mean_excess": 0.7895432888573546,
+            "fill_rate": 0.984464480183681,
+            "cycle_service": 0.9564467997530356,
+            "pinball": 0.09238980291814627,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9564467997530356
+          }
+        }
+      },
+      {
+        "start": "2024-06-19",
+        "end": "2024-06-25",
+        "n_rows": 39561,
+        "n_total_rows": 70000,
+        "n_stores": 888,
+        "n_days": 7,
+        "demand_sum": 44277.953,
+        "models": {
+          "pred_seasonal_lag7": {
+            "mae": 0.46133937463663705,
+            "wape": 0.41219265488628165,
+            "bias": -0.10491435771658188,
+            "normalized_cost": 0.9292996674891452,
+            "mean_shortage": 0.289381461540406,
+            "mean_excess": 0.17195791309623115,
+            "fill_rate": 0.7414464936985684,
+            "cycle_service": 0.48767725790551303
+          },
+          "pred_mean7": {
+            "mae": 0.36074764468614473,
+            "wape": 0.32231701342265234,
+            "bias": -0.04988071925676291,
+            "normalized_cost": 0.6945147461020678,
+            "mean_shortage": 0.20828788092168693,
+            "mean_excess": 0.15245976376445777,
+            "fill_rate": 0.8139011336602924,
+            "cycle_service": 0.5086322388210611
+          },
+          "pred_raw_q50": {
+            "mae": 0.34441845073971167,
+            "wape": 0.30772737686662555,
+            "bias": -0.07460763277038471,
+            "normalized_cost": 0.6900623865036358,
+            "mean_shortage": 0.21396086533406747,
+            "mean_excess": 0.13045758540564417,
+            "fill_rate": 0.8088324951814948,
+            "cycle_service": 0.4908369353656379,
+            "pinball": 0.17220922536985583,
+            "quantile": 0.5,
+            "empirical_coverage": 0.4908369353656379
+          },
+          "pred_raw_q75": {
+            "mae": 0.37897355375313346,
+            "wape": 0.3386013070664697,
+            "bias": 0.15074266811405554,
+            "normalized_cost": 0.5264599460188839,
+            "mean_shortage": 0.10512873772375522,
+            "mean_excess": 0.27384481602937827,
+            "fill_rate": 0.9060706805237929,
+            "cycle_service": 0.7058213897525341,
+            "pinball": 0.14730775730016102,
+            "quantile": 0.75,
+            "empirical_coverage": 0.7058213897525341
+          },
+          "pred_raw_q90": {
+            "mae": 0.5232759960781942,
+            "wape": 0.46753113633887816,
+            "bias": 0.38087572335358144,
+            "normalized_cost": 0.5541865493241749,
+            "mean_shortage": 0.048493772950109426,
+            "mean_excess": 0.4747822231280847,
+            "fill_rate": 0.9566722935073517,
+            "cycle_service": 0.8575111852582088,
+            "pinball": 0.09112261796790694,
+            "quantile": 0.9,
+            "empirical_coverage": 0.8575111852582088
+          },
+          "pred_uniform_q50": {
+            "mae": 0.366879101132801,
+            "wape": 0.32779528267521174,
+            "bias": 0.0921364551475696,
+            "normalized_cost": 0.5634541102028539,
+            "mean_shortage": 0.13187849762776527,
+            "mean_excess": 0.23500060350503574,
+            "fill_rate": 0.882170586236179,
+            "cycle_service": 0.6551401632921311,
+            "pinball": 0.1834395505664005,
+            "quantile": 0.5,
+            "empirical_coverage": 0.6551401632921311
+          },
+          "pred_uniform_q75": {
+            "mae": 0.5581920061676487,
+            "wape": 0.4987275259991886,
+            "bias": 0.41468108947698173,
+            "normalized_cost": 0.5827739625213955,
+            "mean_shortage": 0.047033747455167446,
+            "mean_excess": 0.5111582587124813,
+            "fill_rate": 0.9579767817388964,
+            "cycle_service": 0.8723490306109553,
+            "pinball": 0.1630648752694959,
+            "quantile": 0.75,
+            "empirical_coverage": 0.8723490306109553
+          },
+          "pred_uniform_q90": {
+            "mae": 0.8914784776482766,
+            "wape": 0.7965088190559186,
+            "bias": 0.7663416660262452,
+            "normalized_cost": 0.826675972085592,
+            "mean_shortage": 0.01688202755228238,
+            "mean_excess": 0.874596450095994,
+            "fill_rate": 0.9849164234851632,
+            "cycle_service": 0.9606177801370036,
+            "pinball": 0.10265346980665353,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9606177801370036
+          },
+          "pred_profile_q50": {
+            "mae": 0.35885180044445597,
+            "wape": 0.32062313443855733,
+            "bias": 0.06993067710577403,
+            "normalized_cost": 0.5713155917713406,
+            "mean_shortage": 0.14029156041600926,
+            "mean_excess": 0.21856024002844673,
+            "fill_rate": 0.8746537713336083,
+            "cycle_service": 0.6378251308106468,
+            "pinball": 0.17942590022222799,
+            "quantile": 0.5,
+            "empirical_coverage": 0.6378251308106468
+          },
+          "pred_profile_q75": {
+            "mae": 0.5202865631726622,
+            "wape": 0.4648601692511325,
+            "bias": 0.366226202524656,
+            "normalized_cost": 0.563494135977609,
+            "mean_shortage": 0.05519716567981714,
+            "mean_excess": 0.4650893974928451,
+            "fill_rate": 0.9506830166367618,
+            "cycle_service": 0.8562978691135209,
+            "pinball": 0.15767022363307412,
+            "quantile": 0.75,
+            "empirical_coverage": 0.8562978691135209
+          },
+          "pred_profile_q90": {
+            "mae": 0.8137752486851579,
+            "wape": 0.7270833548523241,
+            "bias": 0.689898786787817,
+            "normalized_cost": 0.7642679229168312,
+            "mean_shortage": 0.020809086689992002,
+            "mean_excess": 0.7929661619951659,
+            "fill_rate": 0.9814077159677465,
+            "cycle_service": 0.9498243219332171,
+            "pinball": 0.09802479422050937,
+            "quantile": 0.9,
+            "empirical_coverage": 0.9498243219332171
+          }
+        }
+      }
+    ],
+    "selection": {
+      "selected_method": "raw",
+      "selection_metric": "Mean validation-window normalized cost, Cu=3, Co=1, q=0.75",
+      "validation_costs": {
+        "raw": 0.5508683621045708,
+        "uniform": 0.6262295636121494,
+        "profile": 0.5997847937912443
+      },
+      "config_sha256": "4656035562094f010d3ffc1d4526e589e7f64767974a3cdf10dcf546239a6edb",
+      "frozen_before_test_read_utc": "2026-10-25T23:40:44.979173+00:00"
+    },
+    "pooled": {
+      "n_rows": 119697,
+      "n_total_rows": 210000,
+      "n_stores": 890,
+      "n_days": 21,
+      "demand_sum": 121682.72200000001,
+      "models": {
+        "pred_seasonal_lag7": {
+          "mae": 0.4414456001403544,
+          "wape": 0.4342417159274264,
+          "bias": -0.03605515991004869,
+          "normalized_cost": 0.9045385917649015,
+          "mean_shortage": 0.23904944986089877,
+          "mean_excess": 0.20239615027945562,
+          "fill_rate": 0.7648515620812624,
+          "cycle_service": 0.5389358129276423
+        },
+        "pred_mean7": {
+          "mae": 0.3460171623826352,
+          "wape": 0.34037056046226744,
+          "bias": -0.01984317872179092,
+          "normalized_cost": 0.700584299646326,
+          "mean_shortage": 0.18309476547329626,
+          "mean_excess": 0.16292239690933893,
+          "fill_rate": 0.8198931304079707,
+          "cycle_service": 0.5407320150045531
+        },
+        "pred_raw_q50": {
+          "mae": 0.326080595442735,
+          "wape": 0.32075933535337126,
+          "bias": -0.03956101665239932,
+          "normalized_cost": 0.6810796873591418,
+          "mean_shortage": 0.18314895621469343,
+          "mean_excess": 0.1429316392280415,
+          "fill_rate": 0.8198398239971147,
+          "cycle_service": 0.5265211325262955,
+          "pinball": 0.1630402977213675,
+          "quantile": 0.5,
+          "empirical_coverage": 0.5265211325262955
+        },
+        "pred_raw_q75": {
+          "mae": 0.38740071635673023,
+          "wape": 0.38107878245648985,
+          "bias": 0.21225423452831893,
+          "normalized_cost": 0.5499033303846609,
+          "mean_shortage": 0.08581263746091924,
+          "mean_excess": 0.301588078895811,
+          "fill_rate": 0.9155877260359145,
+          "cycle_service": 0.7483479118106552,
+          "pinball": 0.1397564978196422,
+          "quantile": 0.75,
+          "empirical_coverage": 0.7483479118106552
+        },
+        "pred_raw_q90": {
+          "mae": 0.5506246259295203,
+          "wape": 0.5416390656504692,
+          "bias": 0.46586981685488155,
+          "normalized_cost": 0.6174083144460568,
+          "mean_shortage": 0.03851311410203398,
+          "mean_excess": 0.5121115118274863,
+          "fill_rate": 0.9621153756022062,
+          "cycle_service": 0.8846504089492636,
+          "pinball": 0.0858729538745792,
+          "quantile": 0.9,
+          "empirical_coverage": 0.8846504089492636
+        },
+        "pred_uniform_q50": {
+          "mae": 0.351087168655829,
+          "wape": 0.3453578300672528,
+          "bias": 0.10830365986937901,
+          "normalized_cost": 0.5824120002651264,
+          "mean_shortage": 0.12049339871144873,
+          "mean_excess": 0.23059376994438022,
+          "fill_rate": 0.8814729149010632,
+          "cycle_service": 0.6621636298319924,
+          "pinball": 0.1755435843279145,
+          "quantile": 0.5,
+          "empirical_coverage": 0.6621636298319924
+        },
+        "pred_uniform_q75": {
+          "mae": 0.5451928822101599,
+          "wape": 0.5362959617381794,
+          "bias": 0.4482395379511721,
+          "normalized_cost": 0.6243523855251863,
+          "mean_shortage": 0.044758621084858355,
+          "mean_excess": 0.5004342611253015,
+          "fill_rate": 0.9559717881064964,
+          "cycle_service": 0.8737061079225044,
+          "pinball": 0.15867753109496915,
+          "quantile": 0.75,
+          "empirical_coverage": 0.8737061079225044
+        },
+        "pred_uniform_q90": {
+          "mae": 0.8845341929608327,
+          "wape": 0.8700996127850656,
+          "bias": 0.838517380949097,
+          "normalized_cost": 0.9016818446210341,
+          "mean_shortage": 0.016053083772507738,
+          "mean_excess": 0.8684811091883249,
+          "fill_rate": 0.9842088840820157,
+          "cycle_service": 0.9598820354729024,
+          "pinball": 0.10129588631408944,
+          "quantile": 0.9,
+          "empirical_coverage": 0.9598820354729024
+        },
+        "pred_profile_q50": {
+          "mae": 0.34262157257498754,
+          "wape": 0.3370303827728992,
+          "bias": 0.08470396821723095,
+          "normalized_cost": 0.5893567973285676,
+          "mean_shortage": 0.12825620088905376,
+          "mean_excess": 0.21436537168593378,
+          "fill_rate": 0.8738367927221657,
+          "cycle_service": 0.6443686976281778,
+          "pinball": 0.17131078628749377,
+          "quantile": 0.5,
+          "empirical_coverage": 0.6443686976281778
+        },
+        "pred_profile_q75": {
+          "mae": 0.5073099438939443,
+          "wape": 0.4990312293825367,
+          "bias": 0.3999042576636431,
+          "normalized_cost": 0.5981582011014304,
+          "mean_shortage": 0.050385722876813935,
+          "mean_excess": 0.4569242210171304,
+          "fill_rate": 0.9504365141405532,
+          "cycle_service": 0.8589354787505117,
+          "pinball": 0.15202034741189305,
+          "quantile": 0.75,
+          "empirical_coverage": 0.8589354787505117
+        },
+        "pred_profile_q90": {
+          "mae": 0.8071713724100499,
+          "wape": 0.7939992644425372,
+          "bias": 0.7566063838018903,
+          "normalized_cost": 0.831392145083184,
+          "mean_shortage": 0.019006606263210536,
+          "mean_excess": 0.7881647661468394,
+          "fill_rate": 0.9813035596796765,
+          "cycle_service": 0.9512101389341421,
+          "pinball": 0.09592242225157341,
+          "quantile": 0.9,
+          "empirical_coverage": 0.9512101389341421
+        }
+      }
+    }
+  },
+  "recovery_validation": {
+    "n_observed_days": 119697,
+    "regimes": {
+      "empirical": {
+        "raw": {
+          "mae": 0.416963040009357,
+          "wape": 0.4101586830051353,
+          "bias": -0.4101586830051353
+        },
+        "uniform": {
+          "mae": 0.3095226961422065,
+          "wape": 0.30447164191588094,
+          "bias": 0.01635012159679229
+        },
+        "profile": {
+          "mae": 0.2699267879028213,
+          "wape": 0.265521893335062,
+          "bias": -0.044006303060042606
+        }
+      },
+      "suffix": {
+        "raw": {
+          "mae": 0.1618354845986115,
+          "wape": 0.1591945157176875,
+          "bias": -0.1591945157176875
+        },
+        "uniform": {
+          "mae": 0.19788560043537062,
+          "wape": 0.19465633514766834,
+          "bias": 0.10242247622147696
+        },
+        "profile": {
+          "mae": 0.1304052385339161,
+          "wape": 0.1282771751012782,
+          "bias": -0.006701766140863702
+        }
+      },
+      "peak": {
+        "raw": {
+          "mae": 0.3641260850313709,
+          "wape": 0.3581839663317196,
+          "bias": -0.3581839663317196
+        },
+        "uniform": {
+          "mae": 0.22290400019122547,
+          "wape": 0.2192664634087419,
+          "bias": -0.1551804930024606
+        },
+        "profile": {
+          "mae": 0.20872359917711997,
+          "wape": 0.2053174702214808,
+          "bias": -0.027592221839909063
+        }
+      }
+    }
+  },
+  "test": {
+    "n_rows": 41220,
+    "n_total_rows": 70000,
+    "n_stores": 890,
+    "n_days": 7,
+    "demand_sum": 48185.162000000004,
+    "models": {
+      "pred_seasonal_lag7": {
+        "mae": 0.46576023774866576,
+        "wape": 0.3984346259954465,
+        "bias": 0.0009418044500919156,
+        "normalized_cost": 0.7959274475408009,
+        "mean_shortage": 0.23232964580300827,
+        "mean_excess": 0.2334305919456575,
+        "fill_rate": 0.8012535892273226,
+        "cycle_service": 0.5665938864628821
+      },
+      "pred_mean7": {
+        "mae": 0.37575960352117554,
+        "wape": 0.3214435775300051,
+        "bias": -0.010046637534244611,
+        "normalized_cost": 0.6529337925942549,
+        "mean_shortage": 0.19375193733971025,
+        "mean_excess": 0.1820076661814653,
+        "fill_rate": 0.8342548924678751,
+        "cycle_service": 0.5596797671033479
+      },
+      "pred_raw_q50": {
+        "mae": 0.3504410868648834,
+        "wape": 0.29978485079225203,
+        "bias": -0.03474264069532284,
+        "normalized_cost": 0.6343123422798269,
+        "mean_shortage": 0.19552718790371684,
+        "mean_excess": 0.15491389896116653,
+        "fill_rate": 0.8327362542562126,
+        "cycle_service": 0.538646288209607,
+        "pinball": 0.1752205434324417,
+        "quantile": 0.5,
+        "empirical_coverage": 0.538646288209607
+      },
+      "pred_raw_q75": {
+        "mae": 0.4256907008541452,
+        "wape": 0.36415713802535027,
+        "bias": 0.22768984773486622,
+        "normalized_cost": 0.5006244283158343,
+        "mean_shortage": 0.07976344602557014,
+        "mean_excess": 0.34592725482857506,
+        "fill_rate": 0.9317663548547579,
+        "cycle_service": 0.777171276079573,
+        "pinball": 0.14630439822632135,
+        "quantile": 0.75,
+        "empirical_coverage": 0.777171276079573
+      },
+      "pred_raw_q90": {
+        "mae": 0.6088727263539713,
+        "wape": 0.5208602137793102,
+        "bias": 0.46454248618367994,
+        "normalized_cost": 0.5771779413749405,
+        "mean_shortage": 0.03291701634725029,
+        "mean_excess": 0.5759557100067211,
+        "fill_rate": 0.9718411362021848,
+        "cycle_service": 0.9064289180009704,
+        "pinball": 0.08722088571319735,
+        "quantile": 0.9,
+        "empirical_coverage": 0.9064289180009704
+      },
+      "pred_uniform_q50": {
+        "mae": 0.3782902038271255,
+        "wape": 0.32360837972806056,
+        "bias": 0.10628342393250784,
+        "normalized_cost": 0.5409333355236132,
+        "mean_shortage": 0.1270237530525418,
+        "mean_excess": 0.25126645077458376,
+        "fill_rate": 0.8913375221022237,
+        "cycle_service": 0.6699902959728288,
+        "pinball": 0.18914510191356276,
+        "quantile": 0.5,
+        "empirical_coverage": 0.6699902959728288
+      },
+      "pred_uniform_q75": {
+        "mae": 0.5716815084342962,
+        "wape": 0.4890449839654309,
+        "bias": 0.41014901323324077,
+        "normalized_cost": 0.567940954697621,
+        "mean_shortage": 0.046113720655966015,
+        "mean_excess": 0.5255677877783301,
+        "fill_rate": 0.9605520146339049,
+        "cycle_service": 0.8728044638524988,
+        "pinball": 0.16597723743655707,
+        "quantile": 0.75,
+        "empirical_coverage": 0.8728044638524988
+      },
+      "pred_uniform_q90": {
+        "mae": 0.938777309356675,
+        "wape": 0.8030771109928434,
+        "bias": 0.7801300681712875,
+        "normalized_cost": 0.8260241538143994,
+        "mean_shortage": 0.013412263170519328,
+        "mean_excess": 0.9253650461861557,
+        "fill_rate": 0.9885264785892219,
+        "cycle_service": 0.9663027656477439,
+        "pinball": 0.10460754147208293,
+        "quantile": 0.9,
+        "empirical_coverage": 0.9663027656477439
+      },
+      "pred_profile_q50": {
+        "mae": 0.36383409589170745,
+        "wape": 0.3112419012445404,
+        "bias": 0.06954642553412668,
+        "normalized_cost": 0.552937376954954,
+        "mean_shortage": 0.1412680210064695,
+        "mean_excess": 0.22256607488523789,
+        "fill_rate": 0.8791522621447931,
+        "cycle_service": 0.6403687530325085,
+        "pinball": 0.18191704794585373,
+        "quantile": 0.5,
+        "empirical_coverage": 0.6403687530325085
+      },
+      "pred_profile_q75": {
+        "mae": 0.5300999628403152,
+        "wape": 0.4534740480540004,
+        "bias": 0.3630132149076426,
+        "normalized_cost": 0.5439348812003583,
+        "mean_shortage": 0.05287323992979406,
+        "mean_excess": 0.47722672291052115,
+        "fill_rate": 0.9547695834268211,
+        "cycle_service": 0.8583212032993692,
+        "pinball": 0.15896161067497586,
+        "quantile": 0.75,
+        "empirical_coverage": 0.8583212032993692
+      },
+      "pred_profile_q90": {
+        "mae": 0.8483524514559313,
+        "wape": 0.725723160358234,
+        "bias": 0.6971370697016258,
+        "normalized_cost": 0.754309251014842,
+        "mean_shortage": 0.01670821699703236,
+        "mean_excess": 0.8316442344588989,
+        "fill_rate": 0.9857069546716958,
+        "cycle_service": 0.9569141193595342,
+        "pinball": 0.09820181874321898,
+        "quantile": 0.9,
+        "empirical_coverage": 0.9569141193595342
+      }
+    },
+    "start": "2024-06-26",
+    "end": "2024-07-02",
+    "bootstrap": {
+      "uniform_vs_raw": {
+        "estimate": 0.06731652638178659,
+        "ci_low": 0.061820756100908966,
+        "ci_high": 0.07319353821645834,
+        "n_boot": 2000,
+        "n_valid_boot": 2000,
+        "n_stores": 890,
+        "n_rows": 41220,
+        "metric": "normalized_cost_difference",
+        "direction": "candidate_minus_baseline",
+        "conditional_on_dates": true,
+        "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+      },
+      "profile_vs_raw": {
+        "estimate": 0.043310452884523905,
+        "ci_low": 0.03915348377634679,
+        "ci_high": 0.04779290398893304,
+        "n_boot": 2000,
+        "n_valid_boot": 2000,
+        "n_stores": 890,
+        "n_rows": 41220,
+        "metric": "normalized_cost_difference",
+        "direction": "candidate_minus_baseline",
+        "conditional_on_dates": true,
+        "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+      }
+    },
+    "cost_sensitivity": {
+      "1": {
+        "raw": {
+          "normalized_cost": 0.29978485079225203,
+          "mean_shortage": 0.19552718790371684,
+          "mean_excess": 0.15491389896116653,
+          "fill_rate": 0.8327362542562126,
+          "cycle_service": 0.538646288209607
+        },
+        "uniform": {
+          "normalized_cost": 0.32360837972806056,
+          "mean_shortage": 0.1270237530525418,
+          "mean_excess": 0.25126645077458376,
+          "fill_rate": 0.8913375221022237,
+          "cycle_service": 0.6699902959728288
+        },
+        "profile": {
+          "normalized_cost": 0.3112419012445404,
+          "mean_shortage": 0.1412680210064695,
+          "mean_excess": 0.22256607488523789,
+          "fill_rate": 0.8791522621447931,
+          "cycle_service": 0.6403687530325085
+        }
+      },
+      "3": {
+        "raw": {
+          "normalized_cost": 0.5006244283158343,
+          "mean_shortage": 0.07976344602557014,
+          "mean_excess": 0.34592725482857506,
+          "fill_rate": 0.9317663548547579,
+          "cycle_service": 0.777171276079573
+        },
+        "uniform": {
+          "normalized_cost": 0.567940954697621,
+          "mean_shortage": 0.046113720655966015,
+          "mean_excess": 0.5255677877783301,
+          "fill_rate": 0.9605520146339049,
+          "cycle_service": 0.8728044638524988
+        },
+        "profile": {
+          "normalized_cost": 0.5439348812003583,
+          "mean_shortage": 0.05287323992979406,
+          "mean_excess": 0.47722672291052115,
+          "fill_rate": 0.9547695834268211,
+          "cycle_service": 0.8583212032993692
+        }
+      },
+      "9": {
+        "raw": {
+          "normalized_cost": 0.7461311241618311,
+          "mean_shortage": 0.03291701634725029,
+          "mean_excess": 0.5759557100067211,
+          "fill_rate": 0.9718411362021848,
+          "cycle_service": 0.9064289180009704
+        },
+        "uniform": {
+          "normalized_cost": 0.8948652822790674,
+          "mean_shortage": 0.013412263170519328,
+          "mean_excess": 0.9253650461861557,
+          "fill_rate": 0.9885264785892219,
+          "cycle_service": 0.9663027656477439
+        },
+        "profile": {
+          "normalized_cost": 0.8400675229846665,
+          "mean_shortage": 0.01670821699703236,
+          "mean_excess": 0.8316442344588989,
+          "fill_rate": 0.9857069546716958,
+          "cycle_service": 0.9569141193595342
+        }
+      }
+    },
+    "test_sha256": "1b118840664280c6b88bffc84c80ee1f54c05d911e354b7599e5da10995e960e",
+    "selection": {
+      "selected_method": "raw",
+      "selection_metric": "Mean validation-window normalized cost, Cu=3, Co=1, q=0.75",
+      "validation_costs": {
+        "raw": 0.5508683621045708,
+        "uniform": 0.6262295636121494,
+        "profile": 0.5997847937912443
+      },
+      "config_sha256": "4656035562094f010d3ffc1d4526e589e7f64767974a3cdf10dcf546239a6edb",
+      "frozen_before_test_read_utc": "2026-10-25T23:40:44.979173+00:00"
+    },
+    "policy_comparison": {
+      "estimate": -0.13368791396399252,
+      "ci_low": -0.141015954051286,
+      "ci_high": -0.12617126433546075,
+      "n_boot": 2000,
+      "n_valid_boot": 2000,
+      "n_stores": 890,
+      "n_rows": 41220,
+      "metric": "normalized_cost_difference",
+      "direction": "candidate_minus_baseline",
+      "conditional_on_dates": true,
+      "uncertainty_scope": "Store-cluster bootstrap conditional on observed dates; excludes temporal generalization."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata in this file."
+type: software
+title: "Fresh Demand: Stockout-Aware Forecasting and Replenishment Experiments"
+version: 0.1.0
+date-released: 2026-10-26
+authors:
+  - family-names: Evstigneev
+    given-names: Nikita
+license: MIT
+abstract: >-
+  Reproducible day-ahead demand forecasting, controlled stockout-recovery
+  experiments, and single-period replenishment evaluation on FreshRetailNet-50K.
+  Software and dataset licensing are separate; the external dataset is CC BY 4.0.
+keywords:
+  - demand forecasting
+  - censored demand
+  - stockouts
+  - LightGBM
+  - replenishment
