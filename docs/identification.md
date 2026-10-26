@@ -1,17 +1,17 @@
-# Identification, confidence sets, and an exact regret calculation
+# Censored observations, confidence sets, and minimax regret
 
 ## What is observed
 
 Demand has known discrete support `0, ..., M`. The agent selects an integer
 order `Q` before observing current demand `D`, and receives only
-`sales = min(D, Q)` and `sold_out = (D >= Q)`. Equality is deliberately treated
+`sales = min(D, Q)` and `sold_out = (D >= Q)`. Equality is treated
 as censored: a sold-out observation with sales `Q` means `D >= Q`, rather than
 `D > Q`. At `Q = 0`, every observation is sold out and provides no demand
-information. These conventions are part of the simulator, not inferred facts
-about the original retail dataset.
+information. This observation rule is specified by the simulator; the original
+retail dataset does not establish it.
 
-For threshold `d < M`, the Bernoulli event `D <= d` is fully observable exactly
-when `Q > d`. If this condition holds, `sales <= d` equals `D <= d`, including
+For threshold `d < M`, the event `D <= d` is observable for every possible outcome
+when `Q > d`. Then `sales <= d` equals `D <= d`, including
 when the order sells out. If `Q <= d`, a censored observation cannot determine
 the event, so it must not be counted as a negative example.
 
@@ -22,25 +22,24 @@ n[d] = sum_t 1{Q_t > d}
 s[d] = sum_t 1{Q_t > d and sales_t <= d}.
 ```
 
-This is a threshold-specific risk-set estimator, **not Kaplan–Meier**. Its
+This risk-set estimator counts observations separately for each threshold. Its
 unadjusted CDF estimates can be nonmonotone because their risk sets differ.
 The working point estimator uses weighted isotonic regression with weights
 `n[d]`. Remaining unobserved tail mass is explicitly placed uniformly over
-unknown support points by default; lower- and upper-endpoint alternatives
-are exposed for sensitivity analysis. Those are assumptions, not recovered
-counterfactual demand. The working PMF also supplies hypothetical-observation
-probabilities for exploration; a resulting information-value score is a
-model-based heuristic, not an exact value under unknown true demand.
+unknown support points by default. Lower- and upper-endpoint completions are
+available for sensitivity analysis. Each completion is an assumption about the
+unknown tail. The estimated PMF also assigns probabilities to hypothetical
+observations when scoring exploration. That score depends on the fitted model;
+it is not the exact information value under the unknown demand distribution.
 
-An independent Kaplan–Meier product-limit baseline supplies a stronger canonical
-comparison than naming the risk-set estimator Kaplan–Meier. Under the simulator's
+A separate Kaplan–Meier baseline uses a product-limit estimate. Under the simulator's
 `D >= Q` censoring convention, censored observations at a value are removed
 **before** uncensored events at the same value: the hazard denominator at `d`
 counts uncensored outcomes at or above `d` and censors strictly above `d`.
 The estimated hazard identifies mass only below the largest historical order.
 Remaining mass on that order through `M` receives an explicitly reported tail
 completion. If the largest order equals the known support bound `M`, the
-remaining support is the singleton `M`, not a freely estimated tail.
+remaining mass must lie at `M` because it is the known support bound.
 
 ## Conditions behind the confidence statement
 
@@ -48,8 +47,8 @@ Within each context, future demand must follow a stationary distribution and
 be independent of the past conditional on that context. Orders must be
 predictable: they may depend on past observations and current context, but
 not on current unobserved demand. Context groups and their maximum number `K`
-are fixed in advance. Under these conditions, threshold exposure cannot select
-current Bernoulli outcomes. Adaptive orders are allowed.
+are fixed in advance. An order can adapt to past outcomes, but exposure to a
+threshold must be decided before the current demand is observed.
 
 For a declared finite horizon `T` and error probability `delta`, use
 
@@ -63,8 +62,8 @@ simultaneous coverage at least `1-delta`. Unknown thresholds receive `[0,1]`.
 Monotonicity tightens lower bounds by a forward cumulative maximum and upper
 bounds by a reverse cumulative minimum. Both CDFs end at `F(M)=1`.
 
-This envelope preserves the coverage event. An empty intersection raises an
-error rather than silently claiming a valid ambiguity set. The implementation
+These monotone envelopes preserve simultaneous coverage. An empty intersection
+raises an error. The implementation
 rejects observations beyond the declared horizon. The statement does not
 cover drifting demand, hidden context confounding, demand-dependent order
 selection, estimated support bounds, or arbitrary endogenous retail data.
@@ -115,12 +114,12 @@ counts can exceed the remaining real horizon; this changes no observed counts
 and creates no confidence guarantee for those virtual states. It is a planning
 heuristic for overcoming a flat one-step information score during cold start.
 
-This formula is exact for this **deterministic pointwise-CDF ambiguity
-polytope**. It is not the full finite-sample worst-case policy analysis in
-[Kumar and Mouchtaki (2026), updated 11 October](https://arxiv.org/abs/2602.16842).
-That paper studies regret averaged over training datasets and a broader
-distributional optimization problem. A confidence band is also not a proof
-that any proposed exploration policy has sublinear regret.
+The formula solves the **deterministic pointwise-CDF ambiguity polytope**
+defined above. The finite-sample policy analysis in
+[Kumar and Mouchtaki (2026), updated 11 October](https://arxiv.org/abs/2602.16842)
+studies a different problem: regret averaged over training datasets and a
+broader distributional optimization. Neither this calculation nor the
+confidence band establishes sublinear regret for the exploration policy.
 
 ## An observational equivalence example
 
@@ -132,10 +131,10 @@ probability `0.4`. No amount of passive data distinguishes their tails.
 
 At `cu=3, co=1`, their optimal orders are respectively `10` and `20`. At equal
 costs, both optimal orders are `2`: the unidentified tail does not affect the
-required median. Thus uncertainty about demand and uncertainty about the
-economically relevant decision are different objects. Higher exploratory
-orders can reveal otherwise inaccessible thresholds, but incur real simulated
-excess-stock costs and must share the same budget across competing policies.
+required median. The tail is unidentified in both cases, while the optimal
+median order is identified. Higher orders can reveal additional thresholds.
+Their shortage and excess costs are included in evaluation, and competing
+policies have the same exploration budget.
 
 ## Independent checks and empirical boundaries
 
@@ -146,8 +145,8 @@ form on small random grids. Other tests verify censored equality, isotonic
 weights, observational equivalence, and vectorized hypothetical updates
 against explicit cloned-state enumeration.
 
-FreshRetail does not provide the known action thresholds, assignment
-probabilities, or latent demand needed to treat these simulated guarantees as
-an identified counterfactual evaluation. Its real contexts can motivate a
-semisynthetic environment, but simulated policy improvements remain conditional
-on its declared generator, support, costs, and information structure.
+FreshRetail does not provide historical order thresholds, assignment
+probabilities, or latent demand. It therefore cannot identify the counterfactual
+policy effects studied here. Retail-derived contexts define a semisynthetic
+environment; its results depend on the specified generator, support, costs,
+and observation rule.

@@ -1,10 +1,9 @@
 # Reproducing the identification mechanism
 
-This experiment is a conceptual reproduction of the indistinguishability
-mechanism discussed by [Kumar and Mouchtaki](https://arxiv.org/abs/2602.16842).
-It is **not** a numerical replication of their tables, theorem, data,
-implementation, or policy. The finite support, two distributions, cost ratios,
-and Monte Carlo design below are constructed for this project.
+This example illustrates the indistinguishability argument in
+[Kumar and Mouchtaki](https://arxiv.org/abs/2602.16842). The finite support,
+distributions, costs, and Monte Carlo design are specified for this project.
+It does not replicate the paper's tables, theorem, data, implementation, or policy.
 
 ## Two demands that produce the same observations
 
@@ -29,8 +28,8 @@ cost three, it is one quarter. Ordering five is optimal in both worlds and
 throughout the full CDF ambiguity band. Its regret is exactly zero, although
 its absolute expected cost differs between the worlds.
 
-With costs three and one, the critical quantile is three quarters. A knows to
-order twelve; B knows to order thirty-five. The full CDF ambiguity band permits
+With costs three and one, the critical quantile is three quarters. The optimal
+order is twelve under A and thirty-five under B. The full CDF ambiguity band permits
 every optimal quantile from eight through forty.
 
 For an order `q` between eight and forty, the full-band worst-case regret is
@@ -47,8 +46,8 @@ vertices from eight through forty and verifies the entire regret curve.
 
 Restricting ambiguity to the **two witness worlds A and B alone** is a smaller
 problem: its minimax orders are twenty-three or twenty-four and its regret is
-twelve. The experiment reports both problems separately. The value sixteen
-must not be described as minimax regret over only A and B.
+twelve. The two reported values refer to different ambiguity sets: sixteen
+for the full CDF band and twelve for the two distributions A and B.
 
 ## Fixed-design passive and audited observations
 
@@ -61,20 +60,20 @@ the same underlying uniform draws, including across A and B.
 The threshold risk-set estimator is evaluated with two explicit completions
 of its unidentified tail: uniform mass over unknown support points and mass
 at their lower endpoint. Those completions are working assumptions. The
-Monte Carlo study records the post-history order and its exact expected cost
-and regret under each known true PMF. It does not force improvement with N
-or audit count, and it does not run an adaptive inventory policy.
+Monte Carlo study records the order chosen after the historical observations,
+with its exact expected cost and regret under each known PMF. Results may
+improve or worsen with N and audit count. This is a fixed-design experiment;
+orders do not adapt during data collection.
 
-Audits are not free. The output includes the exact expected historical cost,
+The output includes the exact expected cost of the historical order sequence,
 the difference from cap-eight history, and the expected cost of history plus
 one terminal decision. The historical cost difference can be negative when
 higher stock also avoids expensive shortages. Terminal regret improvement
-alone therefore establishes neither audit return on investment nor a claim
-about cumulative online-policy performance.
+alone does not measure audit return on investment or cumulative policy performance.
 
 Approximate normal intervals in the summary describe variation of the seed
 mean. They are neither identification bounds nor CDF confidence statements.
-Every per-seed record is retained in the JSON, including unfavourable results.
+The JSON retains every per-seed record.
 
 ## Run and inspect
 

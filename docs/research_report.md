@@ -1,7 +1,7 @@
 # Confirmation research report
 
-This file is generated from `reports/active/confirmation/summary.json` and
-`reports/active/confirmation/outcomes.csv`. No model is trained by the report script.
+Source files: `reports/active/confirmation/summary.json` and
+`reports/active/confirmation/outcomes.csv`. The report script reads completed results.
 Configuration hash: `1bd8b39b9469ba37bdc6f57844169e633e3a8caf50b7caa5fd0dc0d13a0acc13`; context hash:
 `c504f44652f6c39f157a62a9c8a272d74e6f88262fc5b6c20223ba25fb9d8b2e`; frozen-selection hash:
 `ef9673e1eeef2463fc03ed4125b8354dbab36ef8ce0fe2d17144adce4507d008`. Runtime: 320.3 seconds.
@@ -17,21 +17,19 @@ Configuration hash: `1bd8b39b9469ba37bdc6f57844169e633e3a8caf50b7caa5fd0dc0d13a0
 | identified | -11.46 [-16.82, -4.19] | +5.29 [4.13, 6.44] |
 | shift | +763.95 [380.66, 1,171.62] | +186.36 [-335.15, 717.62] |
 
-Primary conclusion: The interval includes zero; the primary comparison does not establish a clear advantage. Difference means candidate minus
-baseline in cumulative conditional expected regret. The comparator is the
-PMF-optimal order from the same finite action set, not a clairvoyant observing
-coming realized demand. Paired intervals resample entire independent demand
-seeds and preserve every round/context. Secondary comparisons are descriptive.
+The interval includes zero; there is no clear advantage over uniform allocation. Differences are candidate minus baseline in cumulative
+conditional expected regret. The reference order minimizes expected cost under
+the true PMF using the same finite action set, without access to the next
+realized demand. Paired intervals resample whole independent trajectories,
+preserving all rounds and contexts. Secondary comparisons are descriptive.
 
 ## Full policy results
 
-Every configured policy is shown, including unfavourable outcomes. Costs below
-are realized scenario cost totals; normalized-cost and coverage diagnostics
-follow in a separate table. Means across seeds do not constitute claims about
-an unspecified population of environments. Every policy also accumulates a
-risk-set CDF band from its own observations for the same auxiliary coverage
-diagnostic; this is not a separate coverage claim for a Kaplan–Meier or Bayesian
-point predictor.
+Tables include every configured policy. Cost is the total realized scenario
+cost; the second table gives cost divided by demand and coverage diagnostics.
+Means describe repeated runs of the stated environment. Every policy also
+maintains a risk-set CDF band from its own observations. Coverage refers to
+that auxiliary band, rather than the Kaplan–Meier or Bayesian point estimate.
 
 
 ## heterogeneous
@@ -74,7 +72,7 @@ point predictor.
 | Cost-aware gate | 0.872 | 100.0% | 0.0% | 0.00 |
 | Past full information | 0.840 | 100.0% | 0.0% | 0.00 |
 
-Stationary confidence assumptions apply in this constructed environment. Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.
+This environment satisfies the stationary confidence assumptions. Coverage is checked before each action. The final identified fraction uses observations available before the last action.
 
 ## geometric
 
@@ -116,7 +114,7 @@ Stationary confidence assumptions apply in this constructed environment. Coverag
 | Cost-aware gate | 1.641 | 100.0% | 0.0% | 0.00 |
 | Past full information | 1.528 | 100.0% | 0.0% | 0.00 |
 
-Stationary confidence assumptions apply in this constructed environment. Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.
+This environment satisfies the stationary confidence assumptions. Coverage is checked before each action. The final identified fraction uses observations available before the last action.
 
 ## heavy_tail
 
@@ -158,7 +156,7 @@ Stationary confidence assumptions apply in this constructed environment. Coverag
 | Cost-aware gate | 1.598 | 100.0% | 0.0% | 0.00 |
 | Past full information | 1.570 | 100.0% | 0.0% | 0.00 |
 
-Stationary confidence assumptions apply in this constructed environment. Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.
+This environment satisfies the stationary confidence assumptions. Coverage is checked before each action. The final identified fraction uses observations available before the last action.
 
 ## fresh_empirical
 
@@ -200,7 +198,7 @@ Stationary confidence assumptions apply in this constructed environment. Coverag
 | Cost-aware gate | 1.011 | 100.0% | 0.0% | 0.00 |
 | Past full information | 0.875 | 100.0% | 0.0% | 0.00 |
 
-Stationary confidence assumptions apply in this constructed environment. Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.
+This environment satisfies the stationary confidence assumptions. Coverage is checked before each action. The final identified fraction uses observations available before the last action.
 
 ## identified
 
@@ -242,7 +240,7 @@ Stationary confidence assumptions apply in this constructed environment. Coverag
 | Cost-aware gate | 1.550 | 100.0% | 0.0% | 0.00 |
 | Past full information | 1.021 | 100.0% | 0.0% | 0.00 |
 
-Stationary confidence assumptions apply in this constructed environment. Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.
+This environment satisfies the stationary confidence assumptions. Coverage is checked before each action. The final identified fraction uses observations available before the last action.
 
 ## shift
 
@@ -284,11 +282,11 @@ Stationary confidence assumptions apply in this constructed environment. Coverag
 | Cost-aware gate | 1.027 | 0.0% | 0.0% | 1.93 |
 | Past full information | 1.025 | 0.0% | 0.0% | 0.00 |
 
-This environment shifts; no stationary coverage guarantee applies. Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.
+This environment shifts, so the stationary coverage guarantee does not apply. Coverage is checked before each action. The final identified fraction uses observations available before the last action.
 
 ## Secondary cost-aware policy comparisons
 
-These predefined descriptive contrasts use the same complete seed pairs, with 95% bootstrap intervals computed from outcomes.csv. Positive relative reduction favors the cost-aware policy. They are not multiplicity-adjusted and do not replace the fixed-budget primary result. The cost-aware policy has an at-most budget and may spend less.
+These secondary comparisons use complete seed pairs and 95% bootstrap intervals computed from outcomes.csv. Positive relative reduction favors the cost-aware policy. Intervals are not adjusted for multiple comparisons. The cost-aware policy may leave budget unused; this differs from the fixed-budget primary test.
 
 | Scenario | Baseline | Regret Δ, 95% CI | Relative regret reduction | Realized-cost Δ, 95% CI | Relative cost reduction |
 | --- | --- | --- | --- | --- | --- |
@@ -311,20 +309,19 @@ These predefined descriptive contrasts use the same complete seed pairs, with 95
 | shift | KM: uniform | -7,185.01 [-8,239.43, -6,209.51] | 54.6% | -7,246.73 [-8,317.80, -6,255.69] | 19.5% |
 | shift | Geometric Thompson | -4,175.25 [-4,606.83, -3,727.32] | 41.1% | -4,231.67 [-4,720.90, -3,723.59] | 12.4% |
 
-## Post-confirmation explanatory control
+## Myopic policy comparison added after confirmation
 
-This additional check was designed after confirmation. The candidate algorithm,
-frozen planning parameter, and primary outcome remain unchanged. The new
-`myopic_cost` control uses the same uniform-tail working PMF and at-most-B
-allocator, optimizing immediate fitted cost without information value.
-It isolates a rival explanation: saving unnecessary stock can improve on a
-forced-spending baseline without beneficial active information acquisition.
+The candidate algorithm, selected planning parameter, and primary comparison
+were unchanged. The added `myopic_cost` policy uses the same estimated demand
+distribution, uniform tail completion, and budget cap B. It minimizes immediate
+estimated cost without assigning value to future information. This checks
+whether reduced spending alone explains the cost-aware policy's results.
 
 There are 20 new paired seeds, 4000 through
-4019, with 400 rounds. The report independently
-recomputes both metrics from [outcomes.csv](../reports/active/mechanism_check/outcomes.csv)
-using complete seed-paired bootstrap draws. Positive relative reduction favors
-the cost-aware candidate. Intervals are descriptive and unadjusted.
+4019, with 400 rounds. Both metrics are computed
+from [outcomes.csv](../reports/active/mechanism_check/outcomes.csv) with a paired bootstrap
+over whole trajectories. Positive relative reduction favors the cost-aware
+policy. Intervals are descriptive and are not adjusted for multiple comparisons.
 
 | Scenario | Regret Δ, 95% CI | Regret reduction | Realized-cost Δ, 95% CI | Cost reduction | Cost-aware extra | Myopic extra |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -335,11 +332,10 @@ the cost-aware candidate. Intervals are descriptive and unadjusted.
 | identified | +312.86 [290.22, 334.45] | -626.1% | +308.10 [282.15, 331.65] | -42.0% | 417.9 | 0.0 |
 | shift | -18,817.99 [-20,360.47, -17,306.72] | 75.0% | -18,851.95 [-20,415.56, -17,325.34] | 38.2% | 2,241.9 | 35.7 |
 
-Heterogeneous interpretation: Expected regret is lower than the myopic control on these new simulator trajectories; this is explanatory evidence, not a new primary test. Scope is the specified simulator;
-this does not establish real operational value or a new finite-sample theorem.
+Heterogeneous result: The cost-aware policy has lower expected regret in this scenario. These results apply to the stated simulator.
 Source: [summary.json](../reports/active/mechanism_check/summary.json).
 
-## Identification and methodological boundaries
+## Assumptions and limits
 
 The full population ambiguity band gives order 24
 and regret 16; only the two witness worlds
@@ -350,23 +346,22 @@ Kumar–Mouchtaki. See [identification](identification.md) and [reproduction](re
 
 Mean-field planning evaluates nonlinear regret at expected fractional counts;
 it is not expected regret over future datasets. Unknown-tail completions are
-working assumptions. The geometric baseline is correctly specified only for
+assumptions. The geometric baseline is correctly specified only for
 the geometric control. Kaplan–Meier uses censored-before-event tie handling
 under the declared D>=Q observation convention.
 
 All policies observe one outcome from each context every round. Context
 frequency and the extra-stock cap are experimental design choices. Fixed
-allocation and at-most-budget cost gating are different interventions; actual
-extra units and full costs must accompany claims about performance.
+allocation and allocation with an upper budget limit use different spending
+rules. Both extra units and total cost are reported.
 
 Stationary scenarios: heterogeneous, geometric, heavy_tail, fresh_empirical, identified. Under constructed shift, old
 observations need not represent current demand and confidence coverage is not
 asserted. Empty-polytope action fallbacks are counted. Even stationary
 guarantees condition on the known finite support, fixed contexts, predictable
 orders, independence, and the declared finite horizon.
-The experiment runner may fall back to uniform allocation and logs this event;
-the serving CLI fails closed on an empty confidence set instead of issuing a
-recommendation under an invalid certificate.
+The experiment runner logs a fallback to uniform allocation when a confidence
+set is empty. The serving CLI returns an error without a recommendation.
 
 Retail-derived PMFs describe selected fully stocked historical sales, scaled
 and coarsened. They are not observed natural-stockout counterfactuals. Context
@@ -374,7 +369,7 @@ model provenance, clipping, and cluster sizes are in
 [`context_model.json`](../reports/active/context_model.json). Official retail
 evaluation outcomes are excluded from context construction.
 
-## Reproducible evidence
+## Result files
 
 - [Confirmation summary](../reports/active/confirmation/summary.json) and
   [complete per-seed results](../reports/active/confirmation/outcomes.csv).
@@ -385,20 +380,21 @@ evaluation outcomes are excluded from context construction.
 - [Former forecasting baseline](baseline_forecasting.md).
 
 Software versions: {"lightgbm": "4.7.0", "numpy": "2.5.4", "polars": "2.1.0", "scikit-learn": "1.9.1", "scipy": "1.18.1"}.
-These are fixed-simulator experiments with no claim of real operational ROI,
-financial savings, identified latent demand, or new scientific theory.
+Results apply to the stated simulators. They do not estimate operational ROI,
+financial savings, or latent demand in the original retail data. The project
+does not introduce a new statistical theory.
 
 ## Source verification
 
-The recorded simulation-core match is `True` against commit `7121c6c4e6e21a174dab5976be1e9c332f610459`. This check concerns the simulation core, not every repository source. The separately recorded auxiliary-source comparison includes serving changes after the run began; post-confirmation mechanism extensions are a separate stage. See [source_verification.json](../reports/active/confirmation/source_verification.json).
+The recorded simulation-core hash match is `True` against commit `7121c6c4e6e21a174dab5976be1e9c332f610459`. The check covers the simulation core. Serving changes made after the run began are recorded separately, as are the post-confirmation mechanism extensions. See [source_verification.json](../reports/active/confirmation/source_verification.json).
 
 ## Tests
 
-Measured test evidence: **109 passed**, 0 failures, 0 errors, and 0 skips; [test_summary.json](../reports/active/test_summary.json).
+Tests: **109 passed**, 0 failures, 0 errors, and 0 skips; [test_summary.json](../reports/active/test_summary.json).
 
 ## Serving replay
 
-The saved known-order history reproduces the recorded order at round 100: exact match `True`, oracle inputs used `False`. This verifies replay of the declared censored-information interface; it does not identify a real retail policy. See [verification.json](../reports/active/service_demo/verification.json), [history.csv](../reports/active/service_demo/history.csv), [next_orders.json](../reports/active/service_demo/next_orders.json), and [decision_replay.json](../reports/active/service_demo/decision_replay.json).
+The saved known-order history reproduces the recorded order at round 100: exact match `True`, oracle inputs used `False`. The check verifies log replay through the censored-feedback interface, rather than a real retail policy effect. See [verification.json](../reports/active/service_demo/verification.json), [history.csv](../reports/active/service_demo/history.csv), [next_orders.json](../reports/active/service_demo/next_orders.json), and [decision_replay.json](../reports/active/service_demo/decision_replay.json).
 
 ## Exploratory phase grid
 

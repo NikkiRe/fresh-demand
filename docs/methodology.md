@@ -1,9 +1,9 @@
-# Methodology
+# Forecasting methodology
 
-## Question and evidence
+## Task and data
 
-Does accounting for the timing of historical stockouts improve next-day demand
-forecasts and a simple replenishment decision? The project uses the public
+The forecasting experiment compares three treatments of historical stockouts
+when predicting next-day demand and setting an order quantity. Data come from the public
 [FreshRetailNet-50K release](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K)
 and its [original paper](https://arxiv.org/abs/2505.16319). Sales are globally
 normalized quantities. They are not prices, revenue, or an observation of unmet
@@ -15,7 +15,7 @@ namely hours 6 through 21. Overnight quantities are excluded consistently from
 recovery, forecasting, and decision evaluation. The default experiment uniformly
 samples 10,000 store–product pairs from sorted identifiers in the official
 training file, using seed 42. Sampling uses neither targets nor evaluation rows.
-The sample supports a laptop experiment rather than a claim about all pairs.
+Reported results cover this sample.
 
 ## Information available at prediction time
 
@@ -28,9 +28,9 @@ forecast. No future promotion plan or archived weather forecast is assumed.
 The forecasting model is refitted at each fold origin. Inside a seven-day scoring
 window, its parameters remain fixed, while lag features receive actual sales and
 stock observations from each completed preceding day. Recovery uses its frozen
-parameters to process that history. This is a sequence of **H=1 forecasts**, not
-a fixed-origin seven-step forecast. Deployments requiring an entire week's
-orders in advance would need a different experiment.
+parameters to process that history. This evaluates a sequence of **H=1 forecasts**.
+A fixed-origin seven-step forecast, with the whole week's orders set in advance,
+requires a different evaluation.
 
 ## Three recovery variants
 
@@ -53,8 +53,8 @@ days use a warmup demand prior. Pair priors prefer fully available warmup days;
 pairs without such days fall back to observed means, with product/global
 fallbacks for unseen identifiers. Estimates are capped at five times their
 prior, unless observed sales already exceed that cap, and never fall below
-observed sales. These are predeclared heuristic assumptions, not identified
-properties of customer demand.
+observed sales. These fixed heuristic parameters are assumptions about recovery;
+the data do not identify them.
 
 Positive sales sometimes coexist with a stockout flag in the same hour. An
 hour may contain partial availability; flags do not establish how long it was
@@ -85,8 +85,8 @@ Forecast metrics are MAE, WAPE, signed bias, and pinball loss. Positive bias mea
 overprediction. Decision loss is `3 * max(demand - order, 0) + max(order - demand, 0)`.
 Normalized cost divides total loss by total scored demand. Fill rate is total
 fulfilled demand divided by total demand; cycle service is the fraction of rows
-without a shortage. These are single-period scenario metrics, not measured
-financial savings or a shelf-life inventory simulator.
+without a shortage. The metrics describe a single-period scenario. They do not
+measure financial savings or model inventory shelf life.
 
 Fully available scoring days provide observable operational-demand targets.
 However, selecting them using realized stock status creates selection bias:
@@ -97,7 +97,7 @@ evaluation identifies real unmet demand, waste reduction, or production profit.
 Paired bootstrap draws resample stores with replacement, retaining all their
 products and dates together and recomputing normalized-cost differences. The
 95% interval is conditional on observed dates; it does not capture common
-temporal shocks, future-date performance, or transportability across cities.
+temporal shocks, future-date performance, or performance in other cities.
 
 Controlled recovery tests hide known sales on fully available evaluation days.
 Masks come from nonempty official-training stockout masks, fixed suffix hours
@@ -111,8 +111,8 @@ to partial same-day sales.
 
 The [official baseline](https://github.com/Dingdong-Inc/frn-50k-baseline) and
 [Azar's related pipeline](https://www.mdpi.com/2411-5134/11/5/89) establish relevant
-prior work. This implementation was written independently; baseline code was
-not cloned. Its modest engineering contribution is a reproducible comparison of
-exact-hour and uniform recovery, explicit information boundaries, controlled
-masking, and decision evaluation. No scientific novelty is claimed. Code uses
-the MIT license; the external dataset remains CC BY 4.0 and requires attribution.
+prior work. The implementation compares exact-hour and uniform recovery,
+controlled masking, and order decisions under a common validation protocol.
+It was written independently without cloning baseline code and does not propose
+a new method. Code uses the MIT license; the external dataset remains CC BY 4.0
+and requires attribution.

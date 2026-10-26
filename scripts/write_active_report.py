@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render measured identification and confirmation evidence; never train a policy."""
+"""Render the inventory learning report from saved experiment results."""
 
 from __future__ import annotations
 
@@ -61,10 +61,10 @@ def interval(comparison):
 
 def conclusion(comparison):
     if comparison["ci_high"] < 0:
-        return "Decision allocation has lower expected regret in this specified simulator."
+        return "Decision allocation has lower expected regret in this simulator."
     if comparison["ci_low"] > 0:
-        return "Decision allocation has higher expected regret; the primary advantage hypothesis is not supported."
-    return "The interval includes zero; the primary comparison does not establish a clear advantage."
+        return "Decision allocation has higher expected regret than uniform allocation."
+    return "The interval includes zero; there is no clear advantage over uniform allocation."
 
 
 def aggregate(outcomes):
@@ -118,43 +118,42 @@ def mechanism_sections(path: Path, confirmation_seeds, development_seeds):
                      num(extras[0], 1), num(extras[1], 1)])
     regret, cost = contrasts["heterogeneous"]
     if regret["ci_low"] > 0:
-        interpretation = "The myopic control has lower expected regret; this check does not support an information-value advantage."
+        interpretation = "The myopic policy has lower expected regret in this scenario."
     elif regret["ci_high"] < 0:
-        interpretation = "Expected regret is lower than the myopic control on these new simulator trajectories; this is explanatory evidence, not a new primary test."
+        interpretation = "The cost-aware policy has lower expected regret in this scenario."
     else:
-        interpretation = "The interval does not establish a clear expected-regret advantage over immediate-cost control."
+        interpretation = "The interval includes zero; neither policy has a clear expected-regret advantage."
     worse = [SCENARIOS.get(scenario, scenario) for scenario, (contrast, _) in contrasts.items()
              if scenario != "heterogeneous" and contrast["ci_low"] > 0]
-    counterevidence = (" The cost-aware policy has higher expected regret than myopic control in " + ", ".join(worse) + ".") if worse else ""
+    counterevidence = (" It has higher expected regret than the myopic policy in " + ", ".join(worse) + ".") if worse else ""
     text = f"""
-## Post-confirmation mechanism control
+## Comparison with a myopic policy
 
-New seeds {min(config['seeds'])}–{max(config['seeds'])} compare the unchanged cost-aware
-candidate with a myopic policy using the same working PMF and at-most budget,
-without information value. On heterogeneous demand, candidate-minus-myopic
+This comparison was added after confirmation, using new seeds
+{min(config['seeds'])}–{max(config['seeds'])} and the unchanged cost-aware policy.
+The myopic policy uses the same estimated demand distribution and budget cap,
+but optimizes only immediate cost. On heterogeneous demand, cost-aware minus myopic
 regret is **{interval(regret)}** and realized cost is **{interval(cost)}**.
-{interpretation}{counterevidence} This follow-up does not alter the original primary comparison.
+{interpretation}{counterevidence} This is a secondary analysis.
 """
     detail = f"""
-## Post-confirmation explanatory control
+## Myopic policy comparison added after confirmation
 
-This additional check was designed after confirmation. The candidate algorithm,
-frozen planning parameter, and primary outcome remain unchanged. The new
-`myopic_cost` control uses the same uniform-tail working PMF and at-most-B
-allocator, optimizing immediate fitted cost without information value.
-It isolates a rival explanation: saving unnecessary stock can improve on a
-forced-spending baseline without beneficial active information acquisition.
+The candidate algorithm, selected planning parameter, and primary comparison
+were unchanged. The added `myopic_cost` policy uses the same estimated demand
+distribution, uniform tail completion, and budget cap B. It minimizes immediate
+estimated cost without assigning value to future information. This checks
+whether reduced spending alone explains the cost-aware policy's results.
 
 There are {len(config['seeds'])} new paired seeds, {min(config['seeds'])} through
-{max(config['seeds'])}, with {config['horizon']} rounds. The report independently
-recomputes both metrics from [outcomes.csv](../{link(path.parent / 'outcomes.csv')})
-using complete seed-paired bootstrap draws. Positive relative reduction favors
-the cost-aware candidate. Intervals are descriptive and unadjusted.
+{max(config['seeds'])}, with {config['horizon']} rounds. Both metrics are computed
+from [outcomes.csv](../{link(path.parent / 'outcomes.csv')}) with a paired bootstrap
+over whole trajectories. Positive relative reduction favors the cost-aware
+policy. Intervals are descriptive and are not adjusted for multiple comparisons.
 
 {md_table(['Scenario', 'Regret Δ, 95% CI', 'Regret reduction', 'Realized-cost Δ, 95% CI', 'Cost reduction', 'Cost-aware extra', 'Myopic extra'], rows)}
 
-Heterogeneous interpretation: {interpretation} Scope is the specified simulator;
-this does not establish real operational value or a new finite-sample theorem.
+Heterogeneous result: {interpretation} These results apply to the stated simulator.
 Source: [summary.json](../{link(path)}).
 """
     return text, detail
@@ -190,7 +189,7 @@ def plot_identification(reproduction, output, plt, source_path):
     axes[2].annotate(f"q={q}, R={num(regret, 0)}", (q, regret), xytext=(6, 8), textcoords="offset points", fontsize=9)
     axes[2].set(xlabel="Order", ylabel="Worst-case expected regret (cost units)", title=f"Critical quantile {num(high['critical_quantile'], 2)}")
     axes[2].legend(fontsize=8, frameon=False)
-    figure.suptitle("Demand identification and decision identification differ", x=.06, ha="left", weight="bold", fontsize=14)
+    figure.suptitle("Censored observations and optimal inventory orders", x=.06, ha="left", weight="bold", fontsize=14)
     figure.text(.06, .025, f"Constructed population example; no sampling interval. Lower critical quantile {num(low['critical_quantile'], 2)} has zero-regret order {low['full_cdf_band_minimax_order']}.\nSource: {link(source_path)}. Full-band regret is distinct from the smaller two-witness problem.", fontsize=8)
     figure.subplots_adjust(left=.06, right=.98, bottom=.24, top=.80, wspace=.33)
     figure.savefig(output, dpi=180)
@@ -358,48 +357,47 @@ def write_documents(summary, averages, outcomes, reproduction, context, selectio
     adaptive = lookup[("heterogeneous", "adaptive_cost")]
     uniform = lookup[("heterogeneous", "uniform")]
     mechanism_text, mechanism_detail = mechanism_sections(mechanism_path, config["seeds"], selection["development_seeds"])
-    readme = f"""# Fresh Demand — learning when lost demand matters
+    readme = f"""# Fresh Demand: inventory learning from censored sales
 
-**When should an inventory policy pay to learn demand it cannot see?** This
-classic ML and operations-research project studies censored feedback, decision
-identification, and budgeted exploration. It uses known synthetic demand laws
-and a separately labelled retail-derived simulator. It estimates no real
-retailer's counterfactual profit or lost demand.
+Inventory policies learn demand from sales limited by stock. Experiments test
+whether allocating extra stock to informative contexts reduces ordering cost.
+They use known synthetic distributions and distributions fitted to selected
+retail records; they do not estimate real lost demand or policy effects.
 
-## Main result, including the failed cases
+## Confirmation results
 
 The predeclared primary comparison is fixed-budget **decision versus uniform**
 allocation on heterogeneous demand. Cumulative expected-regret difference:
 **{interval(primary)}**, candidate minus baseline, with a paired 95% interval.
-{conclusion(primary)} The mechanism contrast against CDF-uncertainty allocation
-is **{interval(mechanism)}**. Neither comparison is replaced by a more favourable
-scenario or policy after confirmation.
+{conclusion(primary)} The comparison with allocation based on CDF uncertainty
+is **{interval(mechanism)}**. Both comparisons were fixed before confirmation.
 
 {comparison_table}
 
-All differences use complete paired simulation seeds. Negative favors decision
-allocation. Secondary intervals are descriptive, without multiplicity correction.
-They condition on the fixed demand laws and protocol, not the real economy.
+Negative differences favor decision allocation. Intervals resample complete
+paired trajectories. Secondary intervals are descriptive and are not adjusted
+for multiple comparisons. All results depend on the stated demand distributions
+and protocol.
 
 ![Confirmation learning curves]({link(figures / 'learning_curves.png')})
 
-## What was built
+## Methods
 
-- An independently written risk-set estimator observes a threshold event only
-  when the known order exposes it. Anytime Hoeffding bands require stationary
-  independent demand within fixed contexts and predictable orders.
-- An exact, linear-time minimax-regret calculation over a pointwise CDF-band
-  polytope, independently checked against probability-simplex LPs.
-- A decision-directed information score and exact integer budget allocator,
-  compared with uncertainty-directed and uniform allocation using the same
-  base rule and spending constraint. Mean-field lookahead is a planning
-  approximation, not a Bayesian value function or new regret theorem.
-- A secondary cost-aware gate can decline exploration when its working-model
-  benefit does not justify its immediate cost. Canonical Kaplan–Meier,
-  censored geometric Bayes/Thompson, LightGBM, and explicit tail assumptions
-  provide independent classical baselines.
+- A risk-set estimator counts `D <= d` only when order `Q > d` reveals that
+  event. Its anytime Hoeffding bands require stationary independent demand
+  within fixed contexts and orders chosen before observing current demand.
+- An exact minimax-regret calculation over all CDFs between the supplied bounds,
+  computed in linear time and checked against independent linear programs.
+- A decision score prioritizes information that reduces regret. An exact integer
+  allocator distributes the budget. Uniform and CDF-width allocation use the
+  same base orders and constraint. Mean-field planning uses expected counts,
+  without a Bayesian value function or regret bound.
+- The cost-aware policy can leave budget unused when estimated immediate cost
+  exceeds the information benefit. Baselines: Kaplan–Meier, geometric Bayes and
+  Thompson sampling with censored feedback, LightGBM, and alternative unknown-tail
+  completions.
 
-## Economic decision versus demand identification
+## Identifiability example
 
 Two constructed demand laws yield identical sales and sold-out observations at
 historical order {analytic['historical_order']}. At critical quantile
@@ -408,12 +406,12 @@ zero regret across the entire population CDF band. At quantile
 {num(high['critical_quantile'], 2)}, the full-band minimax order is
 {high['full_cdf_band_minimax_order']} with regret {num(high['full_cdf_band_minimax_regret'], 0)};
 restricting uncertainty to the two witness worlds gives regret
-{num(high['two_witness_worlds_minimax_regret'], 0)}. These are different ambiguity
-sets. This is a conceptual reproduction, not replication of a published table.
+{num(high['two_witness_worlds_minimax_regret'], 0)}. These minimize regret over different
+ambiguity sets. The distributions and costs illustrate a published identification argument.
 
 ![Identification mechanism]({link(figures / 'identification.png')})
 
-## Policies, actual cost, and exploration spending
+## Cost and stock allocation
 
 Confirmation uses {len(config['seeds'])} independent seeds, {config['horizon']}
 online rounds, {config['n_contexts']} contexts per round, known support
@@ -424,13 +422,12 @@ online shortage and excess cost, including exploration stock, is charged.
 
 {main_table}
 
-Values are seed means on the primary heterogeneous scenario. The oracle knows
-the true PMF, uses the same order set, and never observes next demand. Past
-full information is a privileged learning reference. Fixed allocation policies
-spend B={config['extra_budget']} extra units when capacity permits. The cost-aware
-policy has the **same cap**, spending {num(adaptive['extra_units'], 0)} mean extra
-units versus {num(uniform['extra_units'], 0)} for uniform; actual spending differs.
-It is secondary and cannot rescue a failed fixed-budget primary claim.
+Values are seed means in the heterogeneous scenario. The PMF oracle uses the
+same action set without seeing next demand; the full-information learner sees
+past demand. Fixed policies spend B={config['extra_budget']} extra units when feasible.
+The cost-aware policy uses the same cap but spends {num(adaptive['extra_units'], 0)}
+mean extra units versus {num(uniform['extra_units'], 0)} for uniform. This secondary
+comparison allows different spending.
 
 {mechanism_text}
 
@@ -441,21 +438,23 @@ It is secondary and cannot rescue a failed fixed-budget primary claim.
 Retail contexts use {meta['sampled_series']:,} training-only store–product pairs.
 Clustering features use {meta['feature_days']} days; empirical demand PMFs use
 {meta['fully_stocked_fit_rows']:,} fully stocked rows from {meta['fit_days']} days
-({meta['fit_window'][0]}–{meta['fit_window'][1]}). A global tail-guard multiplier,
-integer rounding, and clipping define dimensionless support. The clipped-row
-fraction is {num(100 * meta['scale']['clipped_row_fraction'], 4)}%; no probability floor is
-added. Within-context iid resampling is constructed, rather than chronological replay. Fully
-stocked selection is endogenous, so this does not identify natural-stockout demand.
+({meta['fit_window'][0]}–{meta['fit_window'][1]}). A single scale factor based on
+context-specific 99th percentiles, followed by rounding and clipping, sets the
+integer support. The clipped-row fraction is
+{num(100 * meta['scale']['clipped_row_fraction'], 4)}%. Zero empirical probabilities
+remain zero. Demand is resampled independently within each context. Stock
+availability depends on demand, so fully stocked records are a selected subset;
+they do not identify demand during natural stockouts.
 
 Real data lack historical inventory thresholds and assignment propensities.
 Known order thresholds, bounded support, costs, context frequencies, and shifts
 are simulator assumptions. CDF guarantees apply only under their stationary
 conditions; constructed shift is an empirical stress test. Empty confidence
-sets trigger a logged uniform-allocation fallback. Costs are scenario units,
-not currency or a shelf-life simulator. No scientific novelty is claimed.
-The CLI serving interface instead fails closed on an empty confidence set.
+sets cause the experiment runner to log a fallback to uniform allocation.
+The CLI refuses a recommendation when the confidence set is empty. Costs use
+scenario units; the model does not represent currency or product shelf life.
 
-## Reproduce and inspect
+## Reproduce
 
 Run these commands from the repository root.
 
@@ -483,23 +482,23 @@ FreshRetail stock flags cannot substitute for historical inventory thresholds.
 Development seeds {selection['development_seeds']} and confirmation
 seeds {min(config['seeds'])}..{max(config['seeds'])} are disjoint. Planning batch
 {selection['planning_samples']} was frozen on development outcomes. The
-[protocol](docs/experimental_protocol.md) records the development-only cost-gate
-amendment. The [research report](docs/research_report.md) contains every policy,
+[protocol](docs/experimental_protocol.md) records the cost-aware policy added during development.
+The [research report](docs/research_report.md) contains every policy,
 coverage diagnostics, spending, and evidence paths; [identification](docs/identification.md)
-gives the exact scope and proof. [Earlier forecasting experiments](docs/baseline_forecasting.md)
-and their Chronos comparison remain separate.
-A [Russian technical walkthrough](docs/interview_notes_ru.md) explains the
-decision problem, implementation, and findings for an interview discussion.
+gives the exact scope and proof. The [forecasting and Chronos baseline](docs/baseline_forecasting.md)
+is documented separately. [Russian notes](docs/interview_notes_ru.md) cover the
+decision problem, implementation, and interview discussion.
 
-The research builds on [Kumar–Mouchtaki (2026)](https://arxiv.org/abs/2602.16842)
-and the online completion perspective of [Mukherjee et al. (2026)](https://arxiv.org/abs/2605.14840).
+Related work: [Kumar–Mouchtaki (2026)](https://arxiv.org/abs/2602.16842)
+and [Mukherjee et al. (2026)](https://arxiv.org/abs/2605.14840).
+The project implements and evaluates methods without new theoretical claims.
 [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K)
 is CC BY 4.0. Independently written software is [MIT](LICENSE).
 """
     detail = f"""# Confirmation research report
 
-This file is generated from `{link(report_dir / 'summary.json')}` and
-`{link(report_dir / 'outcomes.csv')}`. No model is trained by the report script.
+Source files: `{link(report_dir / 'summary.json')}` and
+`{link(report_dir / 'outcomes.csv')}`. The report script reads completed results.
 Configuration hash: `{protocol['config_sha256']}`; context hash:
 `{protocol['context_sha256']}`; frozen-selection hash:
 `{protocol.get('selection_sha256')}`. Runtime: {num(summary['elapsed_seconds'], 1)} seconds.
@@ -508,21 +507,19 @@ Configuration hash: `{protocol['config_sha256']}`; context hash:
 
 {comparison_table}
 
-Primary conclusion: {conclusion(primary)} Difference means candidate minus
-baseline in cumulative conditional expected regret. The comparator is the
-PMF-optimal order from the same finite action set, not a clairvoyant observing
-coming realized demand. Paired intervals resample entire independent demand
-seeds and preserve every round/context. Secondary comparisons are descriptive.
+{conclusion(primary)} Differences are candidate minus baseline in cumulative
+conditional expected regret. The reference order minimizes expected cost under
+the true PMF using the same finite action set, without access to the next
+realized demand. Paired intervals resample whole independent trajectories,
+preserving all rounds and contexts. Secondary comparisons are descriptive.
 
 ## Full policy results
 
-Every configured policy is shown, including unfavourable outcomes. Costs below
-are realized scenario cost totals; normalized-cost and coverage diagnostics
-follow in a separate table. Means across seeds do not constitute claims about
-an unspecified population of environments. Every policy also accumulates a
-risk-set CDF band from its own observations for the same auxiliary coverage
-diagnostic; this is not a separate coverage claim for a Kaplan–Meier or Bayesian
-point predictor.
+Tables include every configured policy. Cost is the total realized scenario
+cost; the second table gives cost divided by demand and coverage diagnostics.
+Means describe repeated runs of the stated environment. Every policy also
+maintains a risk-set CDF band from its own observations. Coverage refers to
+that auxiliary band, rather than the Kaplan–Meier or Bayesian point estimate.
 
 """
     for scenario in config["scenarios"]:
@@ -535,8 +532,8 @@ point predictor.
                                num(row["fallback_rounds"], 2)])
         detail += "\n" + md_table(["Policy", "Mean cost/demand", "Seeds with path coverage", "Final identified fraction", "Fallback rounds"], diagnostic) + "\n"
         stationary_flag = summary["environment_metadata"][scenario].get("stationary", True)
-        detail += ("\nStationary confidence assumptions apply in this constructed environment. " if stationary_flag else "\nThis environment shifts; no stationary coverage guarantee applies. ")
-        detail += "Coverage is measured before each online action and is a simulator diagnostic; final identification is measured at the last action's information set.\n"
+        detail += ("\nThis environment satisfies the stationary confidence assumptions. " if stationary_flag else "\nThis environment shifts, so the stationary coverage guarantee does not apply. ")
+        detail += "Coverage is checked before each action. The final identified fraction uses observations available before the last action.\n"
     secondary_rows = []
     for scenario in config["scenarios"]:
         for baseline in ["uniform", "km_uniform", "geometric_ts"]:
@@ -546,11 +543,11 @@ point predictor.
                                    pct(regret["relative_reduction"]) if regret["relative_reduction"] is not None else "undefined",
                                    interval(cost), pct(cost["relative_reduction"]) if cost["relative_reduction"] is not None else "undefined"])
     detail += "\n## Secondary cost-aware policy comparisons\n\n"
-    detail += "These predefined descriptive contrasts use the same complete seed pairs, with 95% bootstrap intervals computed from outcomes.csv. Positive relative reduction favors the cost-aware policy. They are not multiplicity-adjusted and do not replace the fixed-budget primary result. The cost-aware policy has an at-most budget and may spend less.\n\n"
+    detail += "These secondary comparisons use complete seed pairs and 95% bootstrap intervals computed from outcomes.csv. Positive relative reduction favors the cost-aware policy. Intervals are not adjusted for multiple comparisons. The cost-aware policy may leave budget unused; this differs from the fixed-budget primary test.\n\n"
     detail += md_table(["Scenario", "Baseline", "Regret Δ, 95% CI", "Relative regret reduction", "Realized-cost Δ, 95% CI", "Relative cost reduction"], secondary_rows) + "\n"
     detail += mechanism_detail
     detail += f"""
-## Identification and methodological boundaries
+## Assumptions and limits
 
 The full population ambiguity band gives order {high['full_cdf_band_minimax_order']}
 and regret {num(high['full_cdf_band_minimax_regret'], 0)}; only the two witness worlds
@@ -561,23 +558,22 @@ Kumar–Mouchtaki. See [identification](identification.md) and [reproduction](re
 
 Mean-field planning evaluates nonlinear regret at expected fractional counts;
 it is not expected regret over future datasets. Unknown-tail completions are
-working assumptions. The geometric baseline is correctly specified only for
+assumptions. The geometric baseline is correctly specified only for
 the geometric control. Kaplan–Meier uses censored-before-event tie handling
 under the declared D>=Q observation convention.
 
 All policies observe one outcome from each context every round. Context
 frequency and the extra-stock cap are experimental design choices. Fixed
-allocation and at-most-budget cost gating are different interventions; actual
-extra units and full costs must accompany claims about performance.
+allocation and allocation with an upper budget limit use different spending
+rules. Both extra units and total cost are reported.
 
 Stationary scenarios: {', '.join(stationary)}. Under constructed shift, old
 observations need not represent current demand and confidence coverage is not
 asserted. Empty-polytope action fallbacks are counted. Even stationary
 guarantees condition on the known finite support, fixed contexts, predictable
 orders, independence, and the declared finite horizon.
-The experiment runner may fall back to uniform allocation and logs this event;
-the serving CLI fails closed on an empty confidence set instead of issuing a
-recommendation under an invalid certificate.
+The experiment runner logs a fallback to uniform allocation when a confidence
+set is empty. The serving CLI returns an error without a recommendation.
 
 Retail-derived PMFs describe selected fully stocked historical sales, scaled
 and coarsened. They are not observed natural-stockout counterfactuals. Context
@@ -585,7 +581,7 @@ model provenance, clipping, and cluster sizes are in
 [`context_model.json`](../{link(context_path)}). Official retail
 evaluation outcomes are excluded from context construction.
 
-## Reproducible evidence
+## Result files
 
 - [Confirmation summary](../{link(report_dir / 'summary.json')}) and
   [complete per-seed results](../{link(report_dir / 'outcomes.csv')}).
@@ -596,19 +592,19 @@ evaluation outcomes are excluded from context construction.
 - [Former forecasting baseline](baseline_forecasting.md).
 
 Software versions: {json.dumps(protocol['versions'], sort_keys=True)}.
-These are fixed-simulator experiments with no claim of real operational ROI,
-financial savings, identified latent demand, or new scientific theory.
+Results apply to the stated simulators. They do not estimate operational ROI,
+financial savings, or latent demand in the original retail data. The project
+does not introduce a new statistical theory.
 """
     verification = report_dir / "source_verification.json"
     if verification.exists():
         checked = load(verification)
         detail += (
             "\n## Source verification\n\n"
-            f"The recorded simulation-core match is `{checked.get('all_core_match')}` "
+            f"The recorded simulation-core hash match is `{checked.get('all_core_match')}` "
             f"against commit `{checked.get('confirmation_core_commit')}`. "
-            "This check concerns the simulation core, not every repository source. "
-            "The separately recorded auxiliary-source comparison includes serving changes after the run began; "
-            "post-confirmation mechanism extensions are a separate stage. "
+            "The check covers the simulation core. Serving changes made after the run began "
+            "are recorded separately, as are the post-confirmation mechanism extensions. "
             f"See [source_verification.json](../{link(verification)}).\n"
         )
     tests_path = PROJECT / "reports/active/test_summary.json"
@@ -616,7 +612,7 @@ financial savings, identified latent demand, or new scientific theory.
         tests = load(tests_path)
         passed = int(tests["tests"]) - int(tests["failures"]) - int(tests["errors"]) - int(tests["skipped"])
         test_text = (
-            f"Measured test evidence: **{passed} passed**, {tests['failures']} failures, "
+            f"Tests: **{passed} passed**, {tests['failures']} failures, "
             f"{tests['errors']} errors, and {tests['skipped']} skips; "
             "[test_summary.json](reports/active/test_summary.json)."
         )
@@ -631,7 +627,7 @@ financial savings, identified latent demand, or new scientific theory.
             "\n## Serving replay\n\n"
             f"The saved known-order history reproduces the recorded order at round {verified['round']}: "
             f"exact match `{verified['exact_match']}`, oracle inputs used `{verified['oracle_inputs_used']}`. "
-            "This verifies replay of the declared censored-information interface; it does not identify a real retail policy. "
+            "The check verifies log replay through the censored-feedback interface, rather than a real retail policy effect. "
             "See [verification.json](../reports/active/service_demo/verification.json), "
             "[history.csv](../reports/active/service_demo/history.csv), "
             "[next_orders.json](../reports/active/service_demo/next_orders.json), and "

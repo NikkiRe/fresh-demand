@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate README and an overview figure from completed, measured run outputs."""
+"""Render the forecasting report and figure from saved experiment results."""
 
 from __future__ import annotations
 
@@ -82,18 +82,18 @@ def optional_chronos(report_dir: Path) -> str:
         dates = f"{date_list[0]}–{date_list[-1]}" if date_list else "the frozen test dates"
         measured = table(["Same-cohort model", "Point WAPE", "Bias", "q75 cost"], rows)
         return f"""
-## Optional foundation-model comparison
+## Chronos-2 comparison
 
-Chronos-2 uses {count:,} frozen sampled series and {scored:,} fully available
-rows on {dates}. Every row below uses this same smaller cohort; compare within
-this table. Inference is CPU-only, fit-free, H=1 with daily updated raw history,
-without covariates or cross-series learning. Deployment selection excludes it.
+Chronos-2 and the baselines are evaluated on the same {count:,} sampled series
+and {scored:,} fully available rows on {dates}. Inference runs on CPU without
+fine-tuning. Each H=1 forecast uses the updated history of raw sales, without
+covariates or cross-series learning. Chronos-2 is excluded from deployment selection.
 
 {measured}
 
-Inference time: {number(result.get('inference_seconds'), 1)} seconds. Exact
-pretraining overlap was not independently audited; no strictly unseen-dataset
-claim follows. Source: [`chronos.json`]({relative(path)}).
+Inference time: {number(result.get('inference_seconds'), 1)} seconds. Overlap with
+pretraining data was not independently checked, so this is not verified as an
+unseen-dataset evaluation. Source: [`chronos.json`]({relative(path)}).
 """
     except (OSError, ValueError, TypeError, KeyError, IndexError) as exc:
         warnings.warn(f"Skipping optional Chronos report: {exc}", stacklevel=2)
@@ -172,7 +172,7 @@ def readme(summary: dict, recovery: dict, report_dir: Path, figure_path: Path) -
     policy_interval = ""
     if isinstance(policy, dict) and all(key in policy for key in ("estimate", "ci_low", "ci_high")):
         policy_interval = (
-            f"The secondary q75-minus-q50 policy diagnostic has cost difference "
+            f"The secondary comparison of q75 with q50 orders gives cost difference "
             f"{number(policy['estimate'], signed=True)}, with 95% store-cluster interval "
             f"[{number(policy['ci_low'])}, {number(policy['ci_high'])}], conditional on the same dates."
         )
@@ -207,32 +207,30 @@ def readme(summary: dict, recovery: dict, report_dir: Path, figure_path: Path) -
          for ratio, values in sorted(test["cost_sensitivity"].items(), key=lambda item: float(item[0]))],
     )
     versions = ", ".join(f"{name} {version}" for name, version in metadata["versions"].items())
-    return f"""# Fresh Demand
+    return f"""# Demand forecasting baseline
 
-Stockout-aware day-ahead demand forecasting and a reproducible replenishment
-experiment for fresh retail. The concrete question: does using the **timing of
-historical stockouts** help a classical ML model choose tomorrow's order?
+Day-ahead forecasting of fresh-retail demand with corrections for historical
+stockouts. The experiment compares raw sales, correction by available hours,
+and correction by the hourly demand profile. LightGBM quantiles determine
+single-period order quantities.
 
-The pipeline compares raw sales, uniform-hour recovery, and exact-hour profile
-recovery, then converts LightGBM quantiles into a single-period order decision.
-Observed sales are a lower bound on demand during stockouts. Reconstructed
-quantities remain estimates.
+During stockouts, observed sales are a lower bound on demand. Corrected demand
+is an estimate and is evaluated separately from observed sales.
 
-**Measured outcome on fully available test days:** raw LightGBM q50 achieves
+On fully available test days, raw LightGBM q50 has
 **{percent(raw_point['wape'])} WAPE**, versus {percent(models['pred_mean7']['wape'])}
 for the trailing mean and {percent(models['pred_seasonal_lag7']['wape'])} for seasonal lag 7.
 Using q75 instead of q50 for the raw model {policy_direction} scenario cost by
 **{percent(abs(cost_reduction))}** at a 3:1 shortage:excess cost ratio; fill rate
 changes from **{percent(raw_point['fill_rate'])} to {percent(raw_order['fill_rate'])}**.
 Validation selected **{selection['selected_method']}**. Profile recovery has
-{percent(abs(profile_cost_change))} {profile_direction} test order cost than raw;
-the primary recovery hypothesis is reported below without changing the comparison.
+{percent(abs(profile_cost_change))} {profile_direction} test order cost than raw.
 
 ![Forecast and controlled recovery results]({relative(figure_path)})
 
-## Measured held-out results
+## Held-out results
 
-The frozen run samples **{metadata['n_series']:,} store–product pairs** from
+The run samples **{metadata['n_series']:,} store–product pairs** from
 official training identifiers (seed {config['seed']}); it contains
 {metadata['n_train_rows']:,} training rows across {metadata['sampled_stores']:,}
 stores. Test dates: **{test['start']}–{test['end']}**, {test['n_days']} days.
@@ -250,8 +248,8 @@ fulfilled demand divided by total demand. These are normalized scenario units.
 **Predeclared comparison, profile versus raw:** q75 cost difference
 **{number(primary['estimate'], signed=True)}**, with 95% paired store-cluster
 interval **[{number(primary['ci_low'])}, {number(primary['ci_high'])}]**;
-negative favors profile. This comparison remains primary regardless of which
-method wins selection. The interval is conditional on the observed dates,
+negative favors profile. This primary comparison was fixed before model
+selection. The interval is conditional on the observed dates,
 using {primary['n_boot']:,} bootstrap draws; it does not quantify future-date
 uncertainty.
 
@@ -262,15 +260,15 @@ uncertainty.
 {validation_table}
 
 The lowest arithmetic mean validation cost selected **{selection['selected_method']}**
-before the official evaluation file was read by training. Three expanding
+before training read the official evaluation file. Three expanding
 validation windows precede the final test; the configuration fixes
 {config['n_estimators']} trees, with no test-tuned early stopping. Quantile
 crossings are corrected by sorting each row's quantile predictions.
 
 Recovery profiles and priors use only the first {config['warmup_days']} days and
 remain frozen. Forecast models refit at each weekly origin; actual preceding
-days update lag features within each scoring window. This is daily-updated
-**H=1 forecasting**, not a fixed-origin weekly forecast. Same-day realized
+days update lag features within each scoring window. Each day receives a new
+**H=1 forecast**; the model does not forecast the entire week from one origin. Same-day realized
 weather, discounts, stock flags, and sales are excluded from forecast features.
 
 ## Recovery check and cost assumptions
@@ -282,15 +280,15 @@ hours. Evaluation sales never determine mask placement.
 
 {recovery_table}
 
-This measures retrospective recovery under artificial mechanisms; it does not
-reveal naturally censored demand. Cost-ratio sensitivity uses the matching
-quantile for each ratio, without changing the validation-selected deployment:
+These tests measure recovery under artificial masks. True demand during natural
+stockouts remains unknown. Cost-ratio sensitivity uses the corresponding
+quantile for each ratio; the deployed variant remains the validation selection:
 
 {sensitivity_table}
 
 ## Reproduce
 
-Python {metadata['python']}; measured package versions: {versions}.
+Python {metadata['python']}; package versions: {versions}.
 Elapsed main-run time: {number(metadata.get('elapsed_seconds'), 1)} seconds.
 On macOS, LightGBM also requires OpenMP (`brew install libomp`).
 
@@ -318,9 +316,9 @@ fresh-demand retrain --history data/history_cohort.parquet --selection reports/r
 `--final-test` creates the deployment bundle; validation-only training does not.
 Prediction history follows the source schema and contains consecutive completed
 days. For the original cohort, filter history using `sampled_series.parquet`.
-Retraining uses the frozen selection. Model bundles are omitted from Git;
-regenerate them locally or use the supplied local deliverable. Optional Chronos
-inference uses its separately locked environment and the same frozen cohort:
+Retraining uses the saved selection. Model bundles are excluded from Git and
+can be regenerated locally or loaded from the supplied artifact. Optional Chronos
+inference uses a separate locked environment and the same sampled cohort:
 
 ```bash
 uv venv --python 3.12 .venv-chronos
@@ -331,21 +329,21 @@ python scripts/write_report.py --report-dir reports/reproduction
 
 ## Evidence and limitations
 
-Every result above is generated from [`run_summary.json`]({relative(report_dir / 'run_summary.json')})
+Results are generated from [`run_summary.json`]({relative(report_dir / 'run_summary.json')})
 and [`recovery_test.json`]({relative(report_dir / 'recovery_test.json')}). These
 record data/config hashes, selection, package versions, counts, and scores.
 Dataset revision: `{metadata['dataset_revision']}`. The downloader pins public
 files and verifies their hashes. Raw data and binary model artifacts are ignored.
 
-Fully stocked evaluation days are selected by realized inventory status: this
-endogenous subset need not represent high-demand stockout days. Seven test days
-cannot establish temporal statistical robustness. Positive sales can coexist
+Evaluation uses fully stocked days, which may have a different demand distribution
+from stockout days. The seven-day test does not establish performance stability
+over longer periods. Positive sales can coexist
 with stock flags, so treating flagged hours as entirely unavailable is an
 approximation. Fixed warmup profiles can drift; shrinkage, exposure floors,
-and recovery caps are heuristic assumptions. This experiment measures neither
-currency profit nor actual spoilage, shelf life, multi-period inventory, or
-causal inventory effects. Read the [methodology]({relative(PROJECT / 'docs/methodology.md')}) before
-interpreting the scores.
+and recovery caps are heuristic assumptions. Costs use scenario units. The model
+does not represent monetary profit, actual spoilage, shelf life, multi-period
+inventory, or causal inventory effects. Details are in the
+[methodology]({relative(PROJECT / 'docs/methodology.md')}).
 {optional_chronos(report_dir)}
 ## Data, related work, and license
 
@@ -354,9 +352,9 @@ is released by Dingdong-Inc under **CC BY 4.0**; see the
 [dataset paper](https://arxiv.org/abs/2505.16319) and
 [official baseline](https://github.com/Dingdong-Inc/frn-50k-baseline).
 [Azar's pipeline](https://www.mdpi.com/2411-5134/11/5/89) is closely related prior
-work on recovery, forecasting, and replenishment. This independently written
-project contributes a focused engineering comparison and reproducible evaluation;
-no scientific novelty is claimed. Code is [MIT]({relative(PROJECT / 'LICENSE')}); dataset licensing is
+work on recovery, forecasting, and replenishment. This project compares
+implementations and evaluation procedures; it does not propose a new method.
+Code is [MIT]({relative(PROJECT / 'LICENSE')}); dataset licensing is
 separate. Software citation metadata is in [CITATION.cff]({relative(PROJECT / 'CITATION.cff')}).
 """
 

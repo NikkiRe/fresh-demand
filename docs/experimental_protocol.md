@@ -1,9 +1,9 @@
 # Experimental protocol
 
-The primary question is whether information that can change the inventory
-decision is a better target for exploration than general distributional
-uncertainty. The new experiment does not estimate a real retailer's policy
-effect. Demand is bounded on the known integer support 0..40.
+The primary comparison tests allocation of extra stock by expected reduction
+in decision regret against uniform allocation. Allocation by CDF uncertainty
+is a secondary comparison. Demand has known integer support 0..40. These
+simulations do not estimate a real retailer's policy effect.
 
 Each round has four contexts. Policies order before demand is drawn and observe
 only sales=min(D,Q) and the sell-out indicator D>=Q. Each receives the same
@@ -45,8 +45,8 @@ predeclared; secondary intervals are descriptive and not familywise adjusted.
 Confidence bands require stationary independent demand conditional on context
 and predictable inventory. They have no claimed coverage after the constructed
 shift. If a confidence polytope becomes empty, the allocation falls back to
-uniform and logs the event. This prevents silently treating an invalid
-certificate as a valid robust decision.
+uniform and logs the event. The serving CLI returns an error without a
+recommendation when its confidence set is empty.
 
 The exact CDF-band optimization and its LP verification are described in
 [identification.md](identification.md). They do not reproduce the complete
@@ -54,10 +54,9 @@ finite-sample worst-case-regret theorem of Kumar and Mouchtaki.
 
 ## Development revision before confirmation
 
-The first development run revealed that forcing all extra inventory to be
-spent can dominate the comparison when little additional information is
-needed. Before reading any confirmation seeds, a separate cost-aware policy
-was added. Its score is the planned regret reduction times remaining rounds
+The first development run showed that forced spending can dominate ordering
+cost when little additional information is needed. A cost-aware policy was
+added before reading confirmation seeds. Its score is the planned regret reduction times remaining rounds
 divided by the planning batch size, minus the working-model expected immediate
 incremental inventory cost. It optimizes an at-most-B budget and may leave
 inventory unallocated. This is an approximate planning score, not an optimal
