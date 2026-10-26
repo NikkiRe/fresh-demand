@@ -184,4 +184,4 @@ is released by Dingdong-Inc under **CC BY 4.0**; see the
 work on recovery, forecasting, and replenishment. This project compares
 implementations and evaluation procedures; it does not propose a new method.
 Code is [MIT](../LICENSE); dataset licensing is
-separate. Software citation metadata is in [CITATION.cff](../CITATION.cff).
+separate.

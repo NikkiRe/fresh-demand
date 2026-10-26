@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "fresh-demand"
 version = "0.2.0"
-description = "Decision-aware exploration and identification in inventory learning with censored feedback"
+description = "Fresh-retail demand forecasting and order quantities under censored sales"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "numpy>=2.0,<3",

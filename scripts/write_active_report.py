@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import re
 import tempfile
 import warnings
 
@@ -65,6 +66,16 @@ def conclusion(comparison):
     if comparison["ci_low"] > 0:
         return "Decision allocation has higher expected regret than uniform allocation."
     return "The interval includes zero; there is no clear advantage over uniform allocation."
+
+
+def as_docs_page(text):
+    """Rebase root-relative Markdown links for a page stored in docs/."""
+    def rebase(match):
+        target = match.group(1)
+        if target.startswith(("http://", "https://", "#", "../")):
+            return match.group(0)
+        return "](" + (target[len("docs/"):] if target.startswith("docs/") else "../" + target) + ")"
+    return re.sub(r"\]\(([^)]+)\)", rebase, text)
 
 
 def aggregate(outcomes):
@@ -357,7 +368,7 @@ def write_documents(summary, averages, outcomes, reproduction, context, selectio
     adaptive = lookup[("heterogeneous", "adaptive_cost")]
     uniform = lookup[("heterogeneous", "uniform")]
     mechanism_text, mechanism_detail = mechanism_sections(mechanism_path, config["seeds"], selection["development_seeds"])
-    readme = f"""# Fresh Demand: inventory learning from censored sales
+    readme = f"""# Simulation study: inventory learning from censored sales
 
 Inventory policies learn demand from sales limited by stock. Experiments test
 whether allocating extra stock to informative contexts reduces ordering cost.
@@ -486,8 +497,7 @@ seeds {min(config['seeds'])}..{max(config['seeds'])} are disjoint. Planning batc
 The [research report](docs/research_report.md) contains every policy,
 coverage diagnostics, spending, and evidence paths; [identification](docs/identification.md)
 gives the exact scope and proof. The [forecasting and Chronos baseline](docs/baseline_forecasting.md)
-is documented separately. [Russian notes](docs/interview_notes_ru.md) cover the
-decision problem, implementation, and interview discussion.
+is documented separately.
 
 Related work: [Kumar–Mouchtaki (2026)](https://arxiv.org/abs/2602.16842)
 and [Mukherjee et al. (2026)](https://arxiv.org/abs/2605.14840).
@@ -680,7 +690,7 @@ def main():
     has_phase = phase_plot(phase_path, figures / "phase_grid.png", plt)
     readme, detail = write_documents(summary, averages, outcomes, reproduction, context, selection, report_dir, figures, has_phase,
                                    mechanism_path, phase_path, args.reproduction.resolve(), args.context.resolve(), args.selection.resolve())
-    (PROJECT / "README.md").write_text(readme)
+    (PROJECT / "docs/simulation_study.md").write_text(as_docs_page(readme))
     (PROJECT / "docs/research_report.md").write_text(detail)
     print(json.dumps({"readme_words": len(readme.split()), "outcomes": outcomes.height,
                       "scenarios": config["scenarios"], "figures": str(figures), "phase_grid_included": has_phase}))
