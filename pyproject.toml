@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fresh-demand"
-version = "0.1.0"
-description = "Stockout-aware demand forecasting and reproducible replenishment experiments"
+version = "0.2.0"
+description = "Decision-aware exploration and identification in inventory learning with censored feedback"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "numpy>=2.0,<3",
@@ -13,6 +13,7 @@ dependencies = [
   "lightgbm==4.7.0",
   "scikit-learn==1.9.1",
   "pyarrow>=20,<27",
+  "scipy>=1.14,<2",
 ]
 
 [project.optional-dependencies]

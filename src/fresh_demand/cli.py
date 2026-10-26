@@ -31,6 +31,27 @@ def main():
     refit.add_argument("--selection", type=Path, required=True)
     refit.add_argument("--config", type=Path, required=True)
     refit.add_argument("--model", type=Path, required=True)
+    experiment = commands.add_parser("active-run", help="Run paired censored-inventory learning experiments")
+    experiment.add_argument("--config", type=Path, required=True)
+    experiment.add_argument("--output", type=Path, required=True)
+    experiment.add_argument("--selection", type=Path)
+    select = commands.add_parser("active-select", help="Freeze planning horizon using development seeds only")
+    select.add_argument("--development", type=Path, required=True)
+    select.add_argument("--config", type=Path, required=True)
+    select.add_argument("--output", type=Path, required=True)
+    propose = commands.add_parser("active-plan", help="Propose next orders from observed known-inventory logs")
+    propose.add_argument("--history", type=Path, required=True)
+    propose.add_argument("--config", type=Path, required=True)
+    propose.add_argument("--selection", type=Path, required=True)
+    propose.add_argument("--output", type=Path, required=True)
+    propose.add_argument("--policy", choices=["adaptive_cost", "decision", "uniform"], default="adaptive_cost")
+    propose.add_argument("--seed", type=int, default=42)
+    reproduce = commands.add_parser("active-reproduce", help="Verify the exact indistinguishable-tail construction")
+    reproduce.add_argument("--output", type=Path, required=True)
+    grid = commands.add_parser("active-grid", help="Run the secondary exploration sensitivity grid")
+    grid.add_argument("--config", type=Path, required=True)
+    grid.add_argument("--selection", type=Path, required=True)
+    grid.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.command == "download":
         from .data import download
@@ -57,6 +78,21 @@ def main():
         from .pipeline import forecast
         result = forecast(args.model, args.history, args.output)
         print(f"Wrote {result.height} next-day forecasts to {args.output}")
-    else:
+    elif args.command == "retrain":
         from .retrain import retrain
         print(json.dumps(retrain(args.history, args.selection, args.config, args.model), indent=2))
+    elif args.command == "active-run":
+        from .active.experiment import run
+        run(args.config, args.output, args.selection)
+    elif args.command == "active-select":
+        from .active.experiment import freeze_selection
+        print(json.dumps(freeze_selection(args.development, args.config, args.output), indent=2))
+    elif args.command == "active-plan":
+        from .active.service import plan_next
+        print(json.dumps(plan_next(args.history, args.config, args.selection, args.output, args.policy, args.seed), indent=2))
+    elif args.command == "active-reproduce":
+        from .active.reproduction import run_reproduction
+        run_reproduction(args.output)
+    else:
+        from .active.grid import run_grid
+        run_grid(args.config, args.selection, args.output)
