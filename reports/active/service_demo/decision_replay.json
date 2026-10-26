@@ -1,0 +1,65 @@
+{
+  "next_round": 100,
+  "policy": "decision",
+  "planning_samples": 64,
+  "budget_limit": 8,
+  "extra_units": 8,
+  "underage": 3,
+  "overage": 1,
+  "contexts": [
+    {
+      "context": 0,
+      "base_order": 7,
+      "order": 11,
+      "extra_units": 4,
+      "quantile_lower": 5,
+      "quantile_upper": 40,
+      "minimax_order": 22,
+      "minimax_regret_bound": 16.895715714585638,
+      "observations": 140,
+      "chosen_order_regret_bound": 27.220875317943495
+    },
+    {
+      "context": 1,
+      "base_order": 18,
+      "order": 19,
+      "extra_units": 1,
+      "quantile_lower": 10,
+      "quantile_upper": 40,
+      "minimax_order": 27,
+      "minimax_regret_bound": 13.85311995419729,
+      "observations": 140,
+      "chosen_order_regret_bound": 22.463362454988406
+    },
+    {
+      "context": 2,
+      "base_order": 17,
+      "order": 19,
+      "extra_units": 2,
+      "quantile_lower": 14,
+      "quantile_upper": 40,
+      "minimax_order": 26,
+      "minimax_regret_bound": 11.147551871673752,
+      "observations": 140,
+      "chosen_order_regret_bound": 16.68796813058846
+    },
+    {
+      "context": 3,
+      "base_order": 29,
+      "order": 30,
+      "extra_units": 1,
+      "quantile_lower": 24,
+      "quantile_upper": 40,
+      "minimax_order": 33,
+      "minimax_regret_bound": 6.452678863330931,
+      "observations": 140,
+      "chosen_order_regret_bound": 9.21811266190133
+    }
+  ],
+  "history_sha256": "40a44ed83b604ef5e6e36ba86f86457943336c8d4ca4ccf66363f0f4af83d103",
+  "config_sha256": "1bd8b39b9469ba37bdc6f57844169e633e3a8caf50b7caa5fd0dc0d13a0acc13",
+  "selection_sha256": "ef9673e1eeef2463fc03ed4125b8354dbab36ef8ce0fe2d17144adce4507d008",
+  "oracle_data_used": false,
+  "assumptions": "Known bounded support; known inventory Q; predictable orders; stationary independent demand conditional on context",
+  "planning": "Mean-field virtual batches are heuristic scores, not guaranteed future confidence sets"
+}

@@ -1,0 +1,83 @@
+{
+  "config": {
+    "stage": "post_confirmation_mechanism_check",
+    "seeds": [
+      4000,
+      4001,
+      4002,
+      4003,
+      4004,
+      4005,
+      4006,
+      4007,
+      4008,
+      4009,
+      4010,
+      4011,
+      4012,
+      4013,
+      4014,
+      4015,
+      4016,
+      4017,
+      4018,
+      4019
+    ],
+    "scenarios": [
+      "heterogeneous",
+      "geometric",
+      "heavy_tail",
+      "fresh_empirical",
+      "identified",
+      "shift"
+    ],
+    "horizon": 400,
+    "warmup": 40,
+    "initial_order": 8,
+    "max_demand": 40,
+    "n_contexts": 4,
+    "underage": 3,
+    "overage": 1,
+    "extra_budget": 8,
+    "delta": 0.1,
+    "planning_samples": "frozen_development_selection",
+    "policies": [
+      "uniform",
+      "decision",
+      "adaptive_cost",
+      "myopic_cost"
+    ],
+    "workers": 4,
+    "context_path": "reports/active/context_model.json",
+    "bootstrap_replicates": 5000,
+    "scope": "Post-confirmation explanatory ablation on new seeds. Candidate algorithm and primary comparison remain unchanged; this check is not a new predeclared primary test."
+  },
+  "config_sha256": "cb13facd8940128f61880656cb06a1fa501002feb58c86f0d904654425dbbae0",
+  "context_sha256": "c504f44652f6c39f157a62a9c8a272d74e6f88262fc5b6c20223ba25fb9d8b2e",
+  "selection_sha256": "ef9673e1eeef2463fc03ed4125b8354dbab36ef8ce0fe2d17144adce4507d008",
+  "started_utc": "2026-10-26T01:07:50.682167+00:00",
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "lightgbm": "4.7.0",
+    "polars": "2.1.0"
+  },
+  "python": "3.12.15",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "hypothesis": "At identical extra-unit budgets, decision-directed information allocation reduces expected regret relative to uniform allocation",
+  "censoring": "sales=min(D,Q), sold_out=(D>=Q); latent D never supplied to ordinary learners",
+  "warmup": "Common censored history at fixed initial order; warmup costs excluded equally from all policies",
+  "source_sha256": {
+    "src/fresh_demand/active/__init__.py": "fbdcb32dd9a8ebbc5678e39fce197bf62f97aa839102c5b6b3641c4f926df939",
+    "src/fresh_demand/active/ablation.py": "034822f81a011fa06a28f9a9e19eff06e19a0f2e694898f687f82299dfdaa731",
+    "src/fresh_demand/active/baselines.py": "8af30f1fd63f356d8b532f76897c2977b5b73b2797968230cab37be5cb2934ee",
+    "src/fresh_demand/active/environments.py": "347a53c8d6447ea032df7d29e6ca7e92a6a2e002882439e450a6337bc269f0e8",
+    "src/fresh_demand/active/experiment.py": "45b0217342c7e53a047c20c614f2c0c8f132710b7a7e174cda57c45160679d99",
+    "src/fresh_demand/active/grid.py": "84171677d198b724fd7073e2a6198c7f060e727b22b1a6c5021c6bf97bd3c84c",
+    "src/fresh_demand/active/policies.py": "3d184b6f590307925a4cf3ab2d3ff3920982750480a8143ef271b12a9b09a161",
+    "src/fresh_demand/active/reproduction.py": "9028cbf6f6ebd447527618a6444377813c35c4e59e5cf6f06a52e7200eddc1fe",
+    "src/fresh_demand/active/service.py": "84b8e9dced7f18e11ab731b2d4df9bd4f75cfaad6e00ca13f492d3d04ebd7af7",
+    "src/fresh_demand/active/statistics.py": "e801036137450bbdc192df0f5f4c3d4e303f4c55f43a6ec4af3b1f7c458d9f32"
+  }
+}

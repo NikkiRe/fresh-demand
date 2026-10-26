@@ -24,10 +24,10 @@ import polars as pl
 from .environments import make_environment, sample_demands
 from .policies import allocate_cost_aware, allocate_decision, allocate_predictive, allocate_uniform
 from .baselines import kaplan_meier_pmf
+from .ablation import allocate_myopic
 from .statistics import RiskSetEstimator, cost_curve, minimax_regret, quantile_bounds
 
-PROJECT = Path(__file__).resolve().parents[3]
-ALLOCATION_POLICIES = {"uniform", "uncertainty", "decision", "adaptive_decision", "adaptive_cost"}
+ALLOCATION_POLICIES = {"uniform", "uncertainty", "decision", "adaptive_decision", "adaptive_cost", "myopic_cost"}
 KNOWN_POLICIES = ALLOCATION_POLICIES | {"sales", "lightgbm_sales", "risk_lower", "risk_uniform", "risk_upper", "km_uniform", "km_upper", "minimax", "geometric_mean", "geometric_ts", "full_information"}
 
 
@@ -37,6 +37,25 @@ def log(message):
 
 def sha256(path: Path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _resolve_context_path(path: str | Path) -> Path:
+    """Resolve user data relative to the caller's working directory.
+
+    Data paths do not depend on whether this package is installed from a wheel
+    or imported from its source checkout. Absolute paths retain their meaning.
+    """
+    value = Path(path)
+    return value if value.is_absolute() else Path.cwd() / value
+
+
+def _source_hashes() -> dict[str, str]:
+    """Hash the active package actually executing, using portable source labels."""
+    active_directory = Path(__file__).resolve().parent
+    return {
+        f"src/fresh_demand/active/{path.name}": sha256(path)
+        for path in sorted(active_directory.glob("*.py"))
+    }
 
 
 def save_json(path: Path, value):
@@ -142,6 +161,8 @@ def simulate_policy(pmfs, demands, warmup_demands, policy, config, seed, plannin
                 elif policy == "adaptive_cost":
                     orders = allocate_cost_aware(base, budget, estimators, cu, co, allocation_rng,
                         planning_samples=planning_samples, remaining_rounds=horizon-t)
+                elif policy == "myopic_cost":
+                    orders = allocate_myopic(base, budget, estimators, cu, co, allocation_rng)
                 else:
                     orders = allocate_decision(base, budget, estimators, cu, co, allocation_rng, planning_samples=planning_samples)
             except ValueError as error:
@@ -196,7 +217,7 @@ def simulate_policy(pmfs, demands, warmup_demands, policy, config, seed, plannin
 def _job(arguments):
     config, scenario, seed, planning = arguments
     os.environ.setdefault("OMP_NUM_THREADS", "1")
-    environment = make_environment(scenario, seed, config["horizon"], config["max_demand"], config["n_contexts"], PROJECT / config["context_path"])
+    environment = make_environment(scenario, seed, config["horizon"], config["max_demand"], config["n_contexts"], _resolve_context_path(config["context_path"]))
     pmfs = environment["pmfs"]
     warmup_pmf = np.repeat(pmfs[:1], config["warmup"], axis=0)
     all_demands = sample_demands(np.concatenate([warmup_pmf, pmfs]), seed)
@@ -266,14 +287,14 @@ def run(config_path: Path, output: Path, selection_path: Path | None = None):
         plans = config["planning_samples"] if isinstance(config["planning_samples"], list) else [config["planning_samples"]]
         selection_hash = None
     protocol = {"config": config, "config_sha256": sha256(config_path),
-        "context_sha256": sha256(PROJECT / config["context_path"]),
+        "context_sha256": sha256(_resolve_context_path(config["context_path"])),
         "selection_sha256": selection_hash, "started_utc": datetime.now(timezone.utc).isoformat(),
         "versions": {name: importlib.metadata.version(name) for name in ["numpy", "scipy", "scikit-learn", "lightgbm", "polars"]},
         "python": platform.python_version(), "platform": platform.platform(),
         "hypothesis": "At identical extra-unit budgets, decision-directed information allocation reduces expected regret relative to uniform allocation",
         "censoring": "sales=min(D,Q), sold_out=(D>=Q); latent D never supplied to ordinary learners",
         "warmup": "Common censored history at fixed initial order; warmup costs excluded equally from all policies"}
-    protocol["source_sha256"] = {str(path.relative_to(PROJECT)): sha256(path) for path in sorted((PROJECT / "src/fresh_demand/active").glob("*.py"))}
+    protocol["source_sha256"] = _source_hashes()
     save_json(output / "protocol.json", protocol)
     jobs = [(config, scenario, seed, plan) for plan in plans for scenario in config["scenarios"] for seed in config["seeds"]]
     all_summaries, all_rounds, environments = [], [], {}

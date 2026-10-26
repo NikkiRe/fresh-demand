@@ -16,7 +16,7 @@ def fixture():
 
 def test_future_and_oracle_pmf_do_not_affect_learner_actions():
     pmfs, demand, warmup, config = fixture()
-    for policy in ["sales", "risk_uniform", "geometric_ts", "uniform", "uncertainty", "decision"]:
+    for policy in ["sales", "risk_uniform", "geometric_ts", "uniform", "uncertainty", "decision", "adaptive_cost", "myopic_cost"]:
         _, _, original = simulate_policy(pmfs, demand, warmup, policy, config, 11, 16, True)
         future = demand.copy()
         future[6:] = 6 - future[6:]
@@ -45,3 +45,45 @@ def test_paired_bootstrap_preserves_pairing():
     })
     result = paired_comparison(frame, "x", "a", "b", n_boot=100)
     assert result["difference"] == result["ci_low"] == result["ci_high"] == -2
+
+
+def test_context_paths_and_jobs_use_callers_directory_after_installation(tmp_path, monkeypatch):
+    import json
+    from pathlib import Path
+
+    from fresh_demand.active.experiment import _job, _resolve_context_path
+
+    monkeypatch.chdir(tmp_path)
+    context = tmp_path / "inputs" / "contexts.json"
+    context.parent.mkdir()
+    context.write_text(json.dumps({"pmfs": [[.2] * 5], "metadata": {"fixture": True}}))
+    relative = Path("inputs/contexts.json")
+    assert _resolve_context_path(relative) == context
+    assert _resolve_context_path(context) == context
+    config = {
+        "horizon": 4, "max_demand": 4, "n_contexts": 1,
+        "warmup": 2, "initial_order": 1, "underage": 3, "overage": 1,
+        "extra_budget": 1, "delta": .1, "policies": ["uniform", "decision"],
+        "seeds": [7], "scenarios": ["fresh_empirical"], "context_path": str(relative),
+    }
+    relative_results = _job((config, "fresh_empirical", 7, 1))
+    absolute_results = _job(({**config, "context_path": str(context)}, "fresh_empirical", 7, 1))
+    assert relative_results[0] == absolute_results[0]
+    assert relative_results[1].equals(absolute_results[1])
+
+
+def test_source_provenance_hashes_executing_installed_package(tmp_path, monkeypatch):
+    import hashlib
+
+    from fresh_demand.active import experiment
+
+    installed = tmp_path / "site-packages" / "fresh_demand" / "active"
+    installed.mkdir(parents=True)
+    files = {"experiment.py": b"# installed experiment\n", "statistics.py": b"# installed statistics\n"}
+    for name, contents in files.items():
+        (installed / name).write_bytes(contents)
+    monkeypatch.setattr(experiment, "__file__", str(installed / "experiment.py"))
+    assert experiment._source_hashes() == {
+        f"src/fresh_demand/active/{name}": hashlib.sha256(contents).hexdigest()
+        for name, contents in files.items()
+    }

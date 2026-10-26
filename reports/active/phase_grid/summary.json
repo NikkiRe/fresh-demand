@@ -1,0 +1,2828 @@
+{
+  "config": {
+    "stage": "secondary_phase_grid",
+    "seeds": [
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005
+    ],
+    "scenarios": [
+      "heterogeneous"
+    ],
+    "horizon": 200,
+    "warmup": 40,
+    "initial_orders": [
+      4,
+      8,
+      16
+    ],
+    "budgets": [
+      0,
+      4,
+      8,
+      16
+    ],
+    "underage_costs": [
+      1,
+      3,
+      9
+    ],
+    "initial_order": 8,
+    "extra_budget": 8,
+    "underage": 3,
+    "overage": 1,
+    "max_demand": 40,
+    "n_contexts": 4,
+    "delta": 0.1,
+    "policies": [
+      "km_uniform",
+      "uniform",
+      "uncertainty",
+      "decision",
+      "adaptive_cost"
+    ],
+    "workers": 4,
+    "context_path": "reports/active/context_model.json",
+    "bootstrap_replicates": 2000,
+    "scope": "Predeclared secondary sensitivity; six paired seeds per cell, descriptive unadjusted intervals"
+  },
+  "planning_samples": 64,
+  "cells": [
+    {
+      "underage": 1,
+      "initial_order": 4,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 3722.9376709780095,
+          "normalized_cost": 0.7811901311921822,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 3722.9376709780095,
+          "normalized_cost": 0.7811901311921822,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 511.50306485829407,
+          "normalized_cost": 0.5004377231225371,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 3722.9376709780095,
+          "normalized_cost": 0.7811901311921822,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 3722.9376709780095,
+          "normalized_cost": 0.7811901311921822,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 4,
+      "budget": 4,
+      "difference": 507.6995970638364,
+      "relative_reduction": -1.5911989118222734,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 507.6995970638364,
+          "ci_low": 272.26077440173077,
+          "ci_high": 856.9700192122934,
+          "relative_reduction": -1.5911989118222734,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 47.045323965681916,
+          "ci_low": -388.81233900152023,
+          "ci_high": 491.64672048618496,
+          "relative_reduction": -0.060336052568266595,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 353.7373180508899,
+        "ci_low": 133.09220750346006,
+        "ci_high": 593.5807016514296,
+        "relative_reduction": -1.1086603944708913,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 672.8046535623304,
+          "normalized_cost": 0.5118503276919201,
+          "extra_units": 765.1666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 826.7669325752769,
+          "normalized_cost": 0.5234178783856568,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 511.50306485829407,
+          "normalized_cost": 0.5004377231225371,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 779.721608609595,
+          "normalized_cost": 0.5239879838188429,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 319.0673355114405,
+          "normalized_cost": 0.4851291466690714,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 4,
+      "budget": 8,
+      "difference": 165.6833474948109,
+      "relative_reduction": -0.365994293224019,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 165.6833474948109,
+          "ci_low": 113.04919459828658,
+          "ci_high": 223.96520020910467,
+          "relative_reduction": -0.365994293224019,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -6.027210514624092,
+          "ci_low": -113.43165354170083,
+          "ci_high": 118.27354481324568,
+          "relative_reduction": 0.009652736138413512,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -43.925680384494456,
+        "ci_low": -69.97847570865656,
+        "ci_high": -14.034106558860282,
+        "relative_reduction": 0.09703176927428214,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 408.7681199349518,
+          "normalized_cost": 0.4922682136967432,
+          "extra_units": 1362.5
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 618.3771478142572,
+          "normalized_cost": 0.5088109285459765,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 511.50306485829407,
+          "normalized_cost": 0.5004377231225371,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 624.4043583288814,
+          "normalized_cost": 0.5059886650798407,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 452.6938003194463,
+          "normalized_cost": 0.4926369731240911,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 4,
+      "budget": 16,
+      "difference": -110.88133777321126,
+      "relative_reduction": 0.10089547679578792,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -110.88133777321126,
+          "ci_low": -172.72092180087506,
+          "ci_high": -47.23111957188461,
+          "relative_reduction": 0.10089547679578792,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -290.2657306289288,
+          "ci_low": -393.44219536150695,
+          "ci_high": -210.66134627754968,
+          "relative_reduction": 0.22706160510280843,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -520.6610303411214,
+        "ci_low": -623.365333121743,
+        "ci_high": -439.27734227157765,
+        "relative_reduction": 0.4737708252826056,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 578.3113051346769,
+          "normalized_cost": 0.5036422386369565,
+          "extra_units": 1914.1666666666667
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 988.0909977025872,
+          "normalized_cost": 0.5369822333927908,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 511.50306485829407,
+          "normalized_cost": 0.5004377231225371,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1278.356728331516,
+          "normalized_cost": 0.5617269494507514,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1098.9723354757982,
+          "normalized_cost": 0.5486880711746767,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 8,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 1998.3072407680227,
+          "normalized_cost": 0.6290042880906496,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 1998.3072407680227,
+          "normalized_cost": 0.6290042880906496,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 245.49323486767187,
+          "normalized_cost": 0.4773177238591524,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1998.3072407680227,
+          "normalized_cost": 0.6290042880906496,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1998.3072407680227,
+          "normalized_cost": 0.6290042880906496,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 8,
+      "budget": 4,
+      "difference": 218.24910553679243,
+      "relative_reduction": -0.874637591804753,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 218.24910553679243,
+          "ci_low": 80.81139484622388,
+          "ci_high": 376.56975411445336,
+          "relative_reduction": -0.874637591804753,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -379.7053735096143,
+          "ci_low": -608.298974491655,
+          "ci_high": -169.43054447603618,
+          "relative_reduction": 0.44803766868039735,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 173.09545420424243,
+        "ci_low": 31.938225683337254,
+        "ci_high": 316.74575932641375,
+        "relative_reduction": -0.6936834441780849,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 422.62635429561715,
+          "normalized_cost": 0.49268111720054186,
+          "extra_units": 736.6666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 467.78000562816715,
+          "normalized_cost": 0.5009489907255408,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 245.49323486767187,
+          "normalized_cost": 0.4773177238591524,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 847.4853791377815,
+          "normalized_cost": 0.5294350481442133,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 249.53090009137475,
+          "normalized_cost": 0.4767018016184255,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 8,
+      "budget": 8,
+      "difference": 32.15481392863291,
+      "relative_reduction": -0.07563133118074385,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 32.15481392863291,
+          "ci_low": -35.29542888021996,
+          "ci_high": 98.4869820943404,
+          "relative_reduction": -0.07563133118074385,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -14.56056497342926,
+          "ci_low": -42.7767685950487,
+          "ci_high": 28.088248768582968,
+          "relative_reduction": 0.030857322885531016,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -75.23514111837126,
+        "ci_low": -124.50405760252598,
+        "ci_high": -24.091704937296107,
+        "relative_reduction": 0.17696055983973957,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 349.9168881615221,
+          "normalized_cost": 0.48492036522874016,
+          "extra_units": 1320.3333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 457.30684320852623,
+          "normalized_cost": 0.4927732338366562,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 245.49323486767187,
+          "normalized_cost": 0.4773177238591524,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 471.86740818195557,
+          "normalized_cost": 0.49602458655558473,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 425.1520292798934,
+          "normalized_cost": 0.4896531670894082,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 8,
+      "budget": 16,
+      "difference": -131.29660412175727,
+      "relative_reduction": 0.12428333803182334,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -131.29660412175727,
+          "ci_low": -168.7697267523027,
+          "ci_high": -86.01634707134586,
+          "relative_reduction": 0.12428333803182334,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -225.8538698471934,
+          "ci_low": -305.13483452488316,
+          "ci_high": -157.5220030923402,
+          "relative_reduction": 0.1962262693524316,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -518.0321299660167,
+        "ci_low": -606.8847034323535,
+        "ci_high": -450.5913496411064,
+        "relative_reduction": 0.4903612149801441,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 538.3975266637254,
+          "normalized_cost": 0.4995706682629156,
+          "extra_units": 1868.6666666666667
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 925.1330525079848,
+          "normalized_cost": 0.5311033380673882,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 245.49323486767187,
+          "normalized_cost": 0.4773177238591524,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1150.9869223551782,
+          "normalized_cost": 0.5576645049721346,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1056.429656629742,
+          "normalized_cost": 0.5455493187710265,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 16,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 486.2769101760376,
+          "normalized_cost": 0.49689387497246,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 486.2769101760376,
+          "normalized_cost": 0.49689387497246,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 154.3396243067186,
+          "normalized_cost": 0.467463995317728,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 486.2769101760376,
+          "normalized_cost": 0.49689387497246,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 486.2769101760376,
+          "normalized_cost": 0.49689387497246,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 16,
+      "budget": 4,
+      "difference": 218.89327366304425,
+      "relative_reduction": -1.3310585937822725,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 218.89327366304425,
+          "ci_low": 118.40387204982369,
+          "ci_high": 331.34602770733426,
+          "relative_reduction": -1.3310585937822725,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -24.38062678737378,
+          "ci_low": -191.48218413977057,
+          "ci_high": 187.40489873472563,
+          "relative_reduction": 0.059796827844382845,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 116.80707128787357,
+        "ci_low": 46.4481313859151,
+        "ci_high": 191.92102513655212,
+        "relative_reduction": -0.7102870428608873,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 281.25758810625615,
+          "normalized_cost": 0.478617614516969,
+          "extra_units": 742.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 383.3437904814268,
+          "normalized_cost": 0.49112571620502377,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 154.3396243067186,
+          "normalized_cost": 0.467463995317728,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 407.7244172688006,
+          "normalized_cost": 0.4881362149866115,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 164.4505168183826,
+          "normalized_cost": 0.46904401388887895,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 16,
+      "budget": 8,
+      "difference": 9.210030709466372,
+      "relative_reduction": -0.024922674034012035,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 9.210030709466372,
+          "ci_low": -44.43015442655898,
+          "ci_high": 80.43526754015433,
+          "relative_reduction": -0.024922674034012035,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -92.23275795005513,
+          "ci_low": -126.2867483910844,
+          "ci_high": -59.942368112798256,
+          "relative_reduction": 0.19582865716031436,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -68.01192475867994,
+        "ci_low": -134.79528378610283,
+        "ci_high": 5.05361047693619,
+        "relative_reduction": 0.18404271219683516,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 301.5323182425894,
+          "normalized_cost": 0.48071804599965234,
+          "extra_units": 1281.1666666666667
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 378.75427371073573,
+          "normalized_cost": 0.48735401706697473,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 154.3396243067186,
+          "normalized_cost": 0.467463995317728,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 470.9870316607908,
+          "normalized_cost": 0.49581712512376835,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 369.5442430012693,
+          "normalized_cost": 0.48604272728967385,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 1,
+      "initial_order": 16,
+      "budget": 16,
+      "difference": -106.12369230282603,
+      "relative_reduction": 0.10382958293012641,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -106.12369230282603,
+          "ci_low": -170.0249805678012,
+          "ci_high": -20.713521299023984,
+          "relative_reduction": 0.10382958293012641,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -67.52383727029816,
+          "ci_low": -109.92320261463651,
+          "ci_high": -17.564060202116384,
+          "relative_reduction": 0.06865701482655256,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -583.5198599304093,
+        "ci_low": -702.6150171467449,
+        "ci_high": -501.57681437192855,
+        "relative_reduction": 0.5709057268299247,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 438.57508938902953,
+          "normalized_cost": 0.4907273542605193,
+          "extra_units": 1667.3333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 915.9712570166129,
+          "normalized_cost": 0.5309791099077651,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 154.3396243067186,
+          "normalized_cost": 0.467463995317728,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 983.4950942869109,
+          "normalized_cost": 0.543342367473037,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1022.0949493194388,
+          "normalized_cost": 0.5438904501185077,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 4,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 16660.071839578603,
+          "normalized_cost": 2.282216417638237,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 16660.071839578603,
+          "normalized_cost": 2.282216417638237,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 3533.9388096822754,
+          "normalized_cost": 1.1280330646789227,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 16660.071839578603,
+          "normalized_cost": 2.282216417638237,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 16660.071839578603,
+          "normalized_cost": 2.282216417638237,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 4,
+      "budget": 4,
+      "difference": 206.54046944571596,
+      "relative_reduction": -0.2252560864061396,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 206.54046944571596,
+          "ci_low": -42.07311494032554,
+          "ci_high": 595.7801508035403,
+          "relative_reduction": -0.2252560864061396,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -525.0705651497509,
+          "ci_low": -905.6736074499103,
+          "ci_high": -163.48437424222553,
+          "relative_reduction": 0.3185092974986798,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 215.6954602259237,
+        "ci_low": 91.77140743955695,
+        "ci_high": 350.8048430811696,
+        "relative_reduction": -0.2352406545625313,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 1132.6095056618408,
+          "normalized_cost": 0.9213562708332702,
+          "extra_units": 733.1666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 1123.4545148816333,
+          "normalized_cost": 0.9170269995599094,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 3533.9388096822754,
+          "normalized_cost": 1.1280330646789227,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1648.525080031384,
+          "normalized_cost": 0.9574125235525743,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 916.9140454359173,
+          "normalized_cost": 0.9029405133368256,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 4,
+      "budget": 8,
+      "difference": 126.62978682377279,
+      "relative_reduction": -0.17959503622482356,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 126.62978682377279,
+          "ci_low": 60.41736578067628,
+          "ci_high": 193.83816855928112,
+          "relative_reduction": -0.17959503622482356,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -110.94614339856668,
+          "ci_low": -409.96428864184423,
+          "ci_high": 100.24747646039722,
+          "relative_reduction": 0.11769463045666136,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 49.7085301933835,
+        "ci_low": -88.32092843809198,
+        "ci_high": 232.66769294591157,
+        "relative_reduction": -0.07050004193079368,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 754.7936454927454,
+          "normalized_cost": 0.8826896207648778,
+          "extra_units": 1350.3333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 831.7149021231347,
+          "normalized_cost": 0.8889565495100561,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 3533.9388096822754,
+          "normalized_cost": 1.1280330646789227,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 942.6610455217015,
+          "normalized_cost": 0.8964027040879001,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 705.0851152993619,
+          "normalized_cost": 0.8812305449254785,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 4,
+      "budget": 16,
+      "difference": -15.100109980429957,
+      "relative_reduction": 0.0128772554644255,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -15.100109980429957,
+          "ci_low": -116.71750766522639,
+          "ci_high": 68.24750941750567,
+          "relative_reduction": 0.0128772554644255,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -89.60966740153306,
+          "ci_low": -163.26100564871112,
+          "ci_high": -33.75927241563812,
+          "relative_reduction": 0.0718528107392555,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -339.18105922170497,
+        "ci_low": -530.1896111449965,
+        "ci_high": -113.81163307937142,
+        "relative_reduction": 0.28925094942705604,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 833.4375955953309,
+          "normalized_cost": 0.8890808609348135,
+          "extra_units": 2221.8333333333335
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 1157.5185448366058,
+          "normalized_cost": 0.9280993369655587,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 3533.9388096822754,
+          "normalized_cost": 1.1280330646789227,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1247.128212238139,
+          "normalized_cost": 0.9231914098856179,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1172.618654817036,
+          "normalized_cost": 0.9220859646121785,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 8,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 10550.068076704001,
+          "normalized_cost": 1.7454308792338062,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 10550.068076704001,
+          "normalized_cost": 1.7454308792338062,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 2540.8428550820668,
+          "normalized_cost": 1.0417221234536334,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 10550.068076704001,
+          "normalized_cost": 1.7454308792338062,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 10550.068076704001,
+          "normalized_cost": 1.7454308792338062,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 8,
+      "budget": 4,
+      "difference": 478.0499962991305,
+      "relative_reduction": -0.7526547357857768,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 478.0499962991305,
+          "ci_low": -79.11063806111144,
+          "ci_high": 1179.7279042792777,
+          "relative_reduction": -0.7526547357857768,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -332.9711195796404,
+          "ci_low": -1550.9151024278976,
+          "ci_high": 693.7689211779511,
+          "relative_reduction": 0.23024295378511367,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 232.6440924270909,
+        "ci_low": 5.130595228258531,
+        "ci_high": 511.37367747582823,
+        "relative_reduction": -0.3662810987833751,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 867.7958739408855,
+          "normalized_cost": 0.8955292329655502,
+          "extra_units": 724.1666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 1113.201777812925,
+          "normalized_cost": 0.9185487591017015,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 2540.8428550820668,
+          "normalized_cost": 1.0417221234536334,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1446.1728973925656,
+          "normalized_cost": 0.950411024822411,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 635.1517815137946,
+          "normalized_cost": 0.8757990266927161,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 8,
+      "budget": 8,
+      "difference": 100.63078585182159,
+      "relative_reduction": -0.17573523125024362,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 100.63078585182159,
+          "ci_low": -10.168180327630958,
+          "ci_high": 249.33036548039436,
+          "relative_reduction": -0.17573523125024362,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 98.94382521670006,
+          "ci_low": -37.67008623833804,
+          "ci_high": 272.73680790139844,
+          "relative_reduction": -0.17228168797388116,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 2.8996083314703847,
+        "ci_low": -75.16494140723985,
+        "ci_high": 79.60023359876014,
+        "relative_reduction": -0.00506369235172635,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 575.5268791177435,
+          "normalized_cost": 0.8657565116642715,
+          "extra_units": 1298.8333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 673.2580566380947,
+          "normalized_cost": 0.8733836528655674,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 2540.8428550820668,
+          "normalized_cost": 1.0417221234536334,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 574.3142314213947,
+          "normalized_cost": 0.8671731290659611,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 572.6272707862731,
+          "normalized_cost": 0.8688254422465259,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 8,
+      "budget": 16,
+      "difference": 7.862203717908604,
+      "relative_reduction": -0.007104983761337818,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 7.862203717908604,
+          "ci_low": -71.13709095627325,
+          "ci_high": 65.92663801238169,
+          "relative_reduction": -0.007104983761337818,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -74.78656589498257,
+          "ci_low": -194.5190578043762,
+          "ci_high": 45.18050621399713,
+          "relative_reduction": 0.06288682747187439,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -272.24169291987283,
+        "ci_low": -438.5499457747128,
+        "ci_high": -116.98879662264035,
+        "relative_reduction": 0.24602171054775748,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 834.3341954996393,
+          "normalized_cost": 0.8889609158609572,
+          "extra_units": 2028.3333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 1114.4380921374209,
+          "normalized_cost": 0.9194970397590673,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 2540.8428550820668,
+          "normalized_cost": 1.0417221234536334,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1189.2246580324033,
+          "normalized_cost": 0.921849773590249,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1106.5758884195122,
+          "normalized_cost": 0.916610501603594,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 16,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 3182.998326073702,
+          "normalized_cost": 1.0873375935332927,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 3182.998326073702,
+          "normalized_cost": 1.0873375935332927,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 1445.6260863327343,
+          "normalized_cost": 0.9424076595106561,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 3182.998326073702,
+          "normalized_cost": 1.0873375935332927,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 3182.998326073702,
+          "normalized_cost": 1.0873375935332927,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 16,
+      "budget": 4,
+      "difference": 263.6095260121679,
+      "relative_reduction": -0.853098191448518,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 263.6095260121679,
+          "ci_low": 18.77022269120232,
+          "ci_high": 531.6345538701191,
+          "relative_reduction": -0.853098191448518,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 256.6850860755936,
+          "ci_low": 38.08300650246429,
+          "ci_high": 492.1274702594387,
+          "relative_reduction": -0.8124822672575428,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -17.783954666168512,
+        "ci_low": -122.56062070195212,
+        "ci_high": 84.09726377405624,
+        "relative_reduction": 0.05755277433263353,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 291.2186064160115,
+          "normalized_cost": 0.8410479777257152,
+          "extra_units": 719.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 572.6120870943479,
+          "normalized_cost": 0.8684304396369357,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 1445.6260863327343,
+          "normalized_cost": 0.9424076595106561,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 315.9270010187543,
+          "normalized_cost": 0.844500564318412,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 309.00256108217997,
+          "normalized_cost": 0.8462412978151868,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 16,
+      "budget": 8,
+      "difference": 19.16175314154657,
+      "relative_reduction": -0.040929758342478695,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 19.16175314154657,
+          "ci_low": -84.72385904540427,
+          "ci_high": 142.24800569558053,
+          "relative_reduction": -0.040929758342478695,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -8.193674084537463,
+          "ci_low": -77.43662645919899,
+          "ci_high": 57.736646127282675,
+          "relative_reduction": 0.01653559573347658,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -37.92712799979384,
+        "ci_low": -90.66881365640388,
+        "ci_high": 18.662452249667705,
+        "relative_reduction": 0.0810128474252188,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 430.234764900015,
+          "normalized_cost": 0.8557467517724029,
+          "extra_units": 1354.8333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 487.3236460413554,
+          "normalized_cost": 0.8621809933213186,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 1445.6260863327343,
+          "normalized_cost": 0.9424076595106561,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 495.5173201258928,
+          "normalized_cost": 0.863420914793075,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 468.16189289980883,
+          "normalized_cost": 0.85948950309102,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 3,
+      "initial_order": 16,
+      "budget": 16,
+      "difference": 86.32937228122285,
+      "relative_reduction": -0.07679327757596474,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 86.32937228122285,
+          "ci_low": 5.439711685437563,
+          "ci_high": 165.33416072172886,
+          "relative_reduction": -0.07679327757596474,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 36.42010327634813,
+          "ci_low": -37.5157282123688,
+          "ci_high": 107.01649105340879,
+          "relative_reduction": -0.03101990829134502,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -366.1792919866616,
+        "ci_low": -460.3340204600715,
+        "ci_high": -268.5254296941105,
+        "relative_reduction": 0.3257304816314324,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 757.9994773831559,
+          "normalized_cost": 0.8876015224239487,
+          "extra_units": 2283.8333333333335
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 1210.5081416510402,
+          "normalized_cost": 0.9243330193842679,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 1445.6260863327343,
+          "normalized_cost": 0.9424076595106561,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 1174.0880383746921,
+          "normalized_cost": 0.9219926398908881,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 1124.1787693698175,
+          "normalized_cost": 0.9175097673998661,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 4,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 64423.26238698574,
+          "normalized_cost": 6.7852952769764014,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 64423.26238698574,
+          "normalized_cost": 6.7852952769764014,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 19563.635252958873,
+          "normalized_cost": 2.848475857323825,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 64423.26238698574,
+          "normalized_cost": 6.7852952769764014,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 64423.26238698574,
+          "normalized_cost": 6.7852952769764014,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 4,
+      "budget": 4,
+      "difference": 248.69495670421898,
+      "relative_reduction": -0.04122034443422078,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 248.69495670421898,
+          "ci_low": -288.33876791118655,
+          "ci_high": 717.0933615842979,
+          "relative_reduction": -0.04122034443422078,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -448.2336909936125,
+          "ci_low": -1220.5047632918624,
+          "ci_high": 170.1309001499394,
+          "relative_reduction": 0.06660000815456073,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 120.51341059560438,
+        "ci_low": -408.56855766676205,
+        "ci_high": 624.2238860801264,
+        "relative_reduction": -0.019974688508064997,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 6153.819539346788,
+          "normalized_cost": 1.6753328401779364,
+          "extra_units": 564.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 6282.001085455402,
+          "normalized_cost": 1.6953666691209983,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 19563.635252958873,
+          "normalized_cost": 2.848475857323825,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 6730.234776449015,
+          "normalized_cost": 1.718220376432047,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 6033.306128751184,
+          "normalized_cost": 1.672017901338754,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 4,
+      "budget": 8,
+      "difference": -91.80685259518638,
+      "relative_reduction": 0.024676014830717383,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -91.80685259518638,
+          "ci_low": -328.1188870766405,
+          "ci_high": 129.5328503205375,
+          "relative_reduction": 0.024676014830717383,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -349.4294117552584,
+          "ci_low": -868.3558804016438,
+          "ci_high": 102.89969337590598,
+          "relative_reduction": 0.0878380025103605,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 678.4338942459527,
+        "ci_low": -67.34542049831452,
+        "ci_high": 1498.5489913738284,
+        "relative_reduction": -0.1823507108983741,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 4398.923334092725,
+          "normalized_cost": 1.5010800193062444,
+          "extra_units": 822.1666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 3628.682587251586,
+          "normalized_cost": 1.440640006027527,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 19563.635252958873,
+          "normalized_cost": 2.848475857323825,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 3978.111999006844,
+          "normalized_cost": 1.4654414858635179,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 3720.4894398467727,
+          "normalized_cost": 1.4484852028736608,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 4,
+      "budget": 16,
+      "difference": -16.945433450296303,
+      "relative_reduction": 0.005794401882796883,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -16.945433450296303,
+          "ci_low": -227.96128199382568,
+          "ci_high": 259.6099938731748,
+          "relative_reduction": 0.005794401882796883,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -77.81114070862805,
+          "ci_low": -274.85712292213566,
+          "ci_high": 130.23221085499753,
+          "relative_reduction": 0.0260646348464069,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 729.4072733298634,
+        "ci_low": -48.43773786018721,
+        "ci_high": 1518.4641942400292,
+        "relative_reduction": -0.24941698247526375,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 3653.856386983154,
+          "normalized_cost": 1.4306436719766558,
+          "extra_units": 950.5
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 2907.503680202995,
+          "normalized_cost": 1.3947854326661213,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 19563.635252958873,
+          "normalized_cost": 2.848475857323825,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 2985.3148209116225,
+          "normalized_cost": 1.395129810444111,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 2924.449113653291,
+          "normalized_cost": 1.3961003506551075,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 8,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 44367.18171889762,
+          "normalized_cost": 5.030255147917263,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 44367.18171889762,
+          "normalized_cost": 5.030255147917263,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 14376.584513434967,
+          "normalized_cost": 2.3951360885282535,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 44367.18171889762,
+          "normalized_cost": 5.030255147917263,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 44367.18171889762,
+          "normalized_cost": 5.030255147917263,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 8,
+      "budget": 4,
+      "difference": -61.3462799037402,
+      "relative_reduction": 0.01284603207879803,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -61.3462799037402,
+          "ci_low": -314.1710807254046,
+          "ci_high": 224.68147316152832,
+          "relative_reduction": 0.01284603207879803,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -519.5395718154996,
+          "ci_low": -821.6365752838216,
+          "ci_high": -168.8401150988543,
+          "relative_reduction": 0.09926817025394626,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -12.21860646957498,
+        "ci_low": -610.9161381782052,
+        "ci_high": 547.7603860321186,
+        "relative_reduction": 0.0025586003081630978,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 4763.285574700135,
+          "normalized_cost": 1.549410049141051,
+          "extra_units": 563.6666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 4714.1579012659695,
+          "normalized_cost": 1.5480833010544197,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 14376.584513434967,
+          "normalized_cost": 2.3951360885282535,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 5233.697473081469,
+          "normalized_cost": 1.5989580952894,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 4775.504181169709,
+          "normalized_cost": 1.5611819503239441,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 8,
+      "budget": 8,
+      "difference": -0.22855447597135026,
+      "relative_reduction": 7.597453185441638e-05,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -0.22855447597135026,
+          "ci_low": -247.7300786349348,
+          "ci_high": 234.2608794346444,
+          "relative_reduction": 7.597453185441638e-05,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -236.62169120986815,
+          "ci_low": -588.9974225633479,
+          "ci_high": 105.4764732708204,
+          "relative_reduction": 0.07292566697510557,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 519.3662657224551,
+        "ci_low": 33.492031564063076,
+        "ci_high": 1036.895527711308,
+        "relative_reduction": -0.17264421854589346,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 3527.670106400408,
+          "normalized_cost": 1.4285711399390968,
+          "extra_units": 791.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 3008.0752862019813,
+          "normalized_cost": 1.3926726963465847,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 14376.584513434967,
+          "normalized_cost": 2.3951360885282535,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 3244.6969774118493,
+          "normalized_cost": 1.4150981382004586,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 3008.3038406779524,
+          "normalized_cost": 1.3859913526258623,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 8,
+      "budget": 16,
+      "difference": 55.839355736387155,
+      "relative_reduction": -0.02151060508741691,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 55.839355736387155,
+          "ci_low": -25.59841128332975,
+          "ci_high": 133.8615233765012,
+          "relative_reduction": -0.02151060508741691,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 57.218089226576616,
+          "ci_low": -78.04024143294117,
+          "ci_high": 207.06870755682817,
+          "relative_reduction": -0.022053437981448216,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 740.504439964241,
+        "ci_low": 72.41709635334746,
+        "ci_high": 1420.3656040325168,
+        "relative_reduction": -0.2852593545088099,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 3336.403323768843,
+          "normalized_cost": 1.3913544577140733,
+          "extra_units": 900.6666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 2651.7382395409895,
+          "normalized_cost": 1.3708635387631969,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 14376.584513434967,
+          "normalized_cost": 2.3951360885282535,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 2594.520150314413,
+          "normalized_cost": 1.368116506183121,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 2595.8988838046025,
+          "normalized_cost": 1.3714205773094283,
+          "extra_units": 3200.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 16,
+      "budget": 0,
+      "difference": 0.0,
+      "relative_reduction": -0.0,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0,
+          "relative_reduction": -0.0,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "relative_reduction": -0.0,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 17789.085008187758,
+          "normalized_cost": 2.663201693396138,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 17789.085008187758,
+          "normalized_cost": 2.663201693396138,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 7008.8900790818525,
+          "normalized_cost": 1.7381626538970618,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 17789.085008187758,
+          "normalized_cost": 2.663201693396138,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 17789.085008187758,
+          "normalized_cost": 2.663201693396138,
+          "extra_units": 0.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 16,
+      "budget": 4,
+      "difference": -56.462979689528765,
+      "relative_reduction": 0.020595904984063728,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -56.462979689528765,
+          "ci_low": -497.2596926105869,
+          "ci_high": 267.33953403710956,
+          "relative_reduction": 0.020595904984063728,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -238.8565872971184,
+          "ci_low": -548.1414307666719,
+          "ci_high": 73.25785013195906,
+          "relative_reduction": 0.08169221297279843,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 140.72833514250684,
+        "ci_low": -90.5197762564188,
+        "ci_high": 410.61554043914947,
+        "relative_reduction": -0.05133323524720162,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 2882.1946476554804,
+          "normalized_cost": 1.3672632609692237,
+          "extra_units": 509.8333333333333
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 2685.0033328234445,
+          "normalized_cost": 1.355385155358839,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 7008.8900790818525,
+          "normalized_cost": 1.7381626538970618,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 2923.8599201205634,
+          "normalized_cost": 1.3909499887540269,
+          "extra_units": 800.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 2741.4663125129737,
+          "normalized_cost": 1.369701269143026,
+          "extra_units": 800.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 16,
+      "budget": 8,
+      "difference": 122.7563466801222,
+      "relative_reduction": -0.05800978526976695,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": 122.7563466801222,
+          "ci_low": -163.23469303098113,
+          "ci_high": 395.08633165093846,
+          "relative_reduction": -0.05800978526976695,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -16.45646226323896,
+          "ci_low": -207.75753023671217,
+          "ci_high": 171.04055485777772,
+          "relative_reduction": 0.007296651155511545,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 355.1965568625249,
+        "ci_low": -36.51006048377766,
+        "ci_high": 737.8907845557825,
+        "relative_reduction": -0.167851818251383,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 2471.3282768690683,
+          "normalized_cost": 1.3256048270398313,
+          "extra_units": 786.3333333333334
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 2238.8880666866658,
+          "normalized_cost": 1.313436779028618,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 7008.8900790818525,
+          "normalized_cost": 1.7381626538970618,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 2255.3445289499045,
+          "normalized_cost": 1.3191988632459672,
+          "extra_units": 1600.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 2116.1317200065437,
+          "normalized_cost": 1.3107098739259726,
+          "extra_units": 1600.0
+        }
+      ]
+    },
+    {
+      "underage": 9,
+      "initial_order": 16,
+      "budget": 16,
+      "difference": -24.622834025914283,
+      "relative_reduction": 0.011016975353862517,
+      "comparisons": {
+        "uniform": {
+          "candidate": "decision",
+          "baseline": "uniform",
+          "metric": "cumulative_expected_regret",
+          "difference": -24.622834025914283,
+          "ci_low": -110.9983237557553,
+          "ci_high": 62.65795693854253,
+          "relative_reduction": 0.011016975353862517,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        },
+        "uncertainty": {
+          "candidate": "decision",
+          "baseline": "uncertainty",
+          "metric": "cumulative_expected_regret",
+          "difference": -153.8064915080737,
+          "ci_low": -519.420216628369,
+          "ci_high": 78.54090388262267,
+          "relative_reduction": 0.06505717790587062,
+          "paired_seeds": 6,
+          "bootstrap_replicates": 2000,
+          "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+        }
+      },
+      "adaptive_cost_vs_uniform": {
+        "candidate": "adaptive_cost",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 135.07250350323903,
+        "ci_low": -561.3263948507171,
+        "ci_high": 803.8120425884608,
+        "relative_reduction": -0.06043538450990464,
+        "paired_seeds": 6,
+        "bootstrap_replicates": 2000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "means": [
+        {
+          "policy": "adaptive_cost",
+          "cumulative_expected_regret": 2370.0628919751157,
+          "normalized_cost": 1.3131932877058634,
+          "extra_units": 852.1666666666666
+        },
+        {
+          "policy": "decision",
+          "cumulative_expected_regret": 2210.3675544459625,
+          "normalized_cost": 1.3362138919382345,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "km_uniform",
+          "cumulative_expected_regret": 7008.8900790818525,
+          "normalized_cost": 1.7381626538970618,
+          "extra_units": 0.0
+        },
+        {
+          "policy": "uncertainty",
+          "cumulative_expected_regret": 2364.1740459540365,
+          "normalized_cost": 1.3540310289323207,
+          "extra_units": 3200.0
+        },
+        {
+          "policy": "uniform",
+          "cumulative_expected_regret": 2234.990388471877,
+          "normalized_cost": 1.3342517201569353,
+          "extra_units": 3200.0
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 87.06461266699989
+}

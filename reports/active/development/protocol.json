@@ -1,0 +1,63 @@
+{
+  "config": {
+    "stage": "development",
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "scenarios": [
+      "heterogeneous",
+      "identified",
+      "geometric",
+      "fresh_empirical"
+    ],
+    "horizon": 180,
+    "warmup": 40,
+    "initial_order": 8,
+    "max_demand": 40,
+    "n_contexts": 4,
+    "underage": 3,
+    "overage": 1,
+    "extra_budget": 8,
+    "delta": 0.1,
+    "planning_samples": [
+      1,
+      16,
+      64
+    ],
+    "policies": [
+      "sales",
+      "risk_lower",
+      "risk_uniform",
+      "risk_upper",
+      "minimax",
+      "geometric_mean",
+      "geometric_ts",
+      "uniform",
+      "uncertainty",
+      "decision",
+      "adaptive_decision",
+      "full_information"
+    ],
+    "workers": 4,
+    "context_path": "reports/active/context_model.json"
+  },
+  "config_sha256": "8888d0998211271570bc1f4904871cb4239667a51d53b525ca200cbca15700bd",
+  "context_sha256": "c504f44652f6c39f157a62a9c8a272d74e6f88262fc5b6c20223ba25fb9d8b2e",
+  "selection_sha256": null,
+  "started_utc": "2026-10-26T00:53:04.787116+00:00",
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "lightgbm": "4.7.0",
+    "polars": "2.1.0"
+  },
+  "python": "3.12.15",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "hypothesis": "At identical extra-unit budgets, decision-directed information allocation reduces expected regret relative to uniform allocation",
+  "censoring": "sales=min(D,Q), sold_out=(D>=Q); latent D never supplied to ordinary learners",
+  "warmup": "Common censored history at fixed initial order; warmup costs excluded equally from all policies"
+}

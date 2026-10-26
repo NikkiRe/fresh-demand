@@ -1,16 +1,17 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata in this file."
 type: software
-title: "Fresh Demand: Stockout-Aware Forecasting and Replenishment Experiments"
-version: 0.1.0
+title: "The Price of Learning Lost Demand"
+version: 0.2.0
 date-released: 2026-10-26
 authors:
   - family-names: Evstigneev
     given-names: Nikita
 license: MIT
 abstract: >-
-  Reproducible day-ahead demand forecasting, controlled stockout-recovery
-  experiments, and single-period replenishment evaluation on FreshRetailNet-50K.
+  Identification, exact CDF-band minimax decisions, and decision-aware
+  inventory exploration under censored feedback. Paired synthetic and
+  FreshRetailNet-calibrated experiments with classical statistical baselines.
   Software and dataset licensing are separate; the external dataset is CC BY 4.0.
 keywords:
   - demand forecasting
@@ -18,3 +19,6 @@ keywords:
   - stockouts
   - LightGBM
   - replenishment
+  - active learning
+  - minimax regret
+  - survival analysis

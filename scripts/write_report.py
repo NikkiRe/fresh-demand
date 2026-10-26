@@ -13,6 +13,7 @@ import warnings
 
 
 PROJECT = Path(__file__).resolve().parents[1]
+DOCUMENT_ROOT = PROJECT
 METHODS = ("raw", "uniform", "profile")
 COLORS = {"raw": "#62738a", "uniform": "#d58c39", "profile": "#23877a"}
 
@@ -44,8 +45,8 @@ def table(headers: list[str], rows: list[list[str]]) -> str:
     ])
 
 
-def relative(path: Path, anchor: Path = PROJECT) -> str:
-    return Path(os.path.relpath(path, anchor)).as_posix()
+def relative(path: Path, anchor: Path | None = None) -> str:
+    return Path(os.path.relpath(path, DOCUMENT_ROOT if anchor is None else anchor)).as_posix()
 
 
 def optional_chronos(report_dir: Path) -> str:
@@ -343,7 +344,7 @@ with stock flags, so treating flagged hours as entirely unavailable is an
 approximation. Fixed warmup profiles can drift; shrinkage, exposure floors,
 and recovery caps are heuristic assumptions. This experiment measures neither
 currency profit nor actual spoilage, shelf life, multi-period inventory, or
-causal inventory effects. Read the [methodology](docs/methodology.md) before
+causal inventory effects. Read the [methodology]({relative(PROJECT / 'docs/methodology.md')}) before
 interpreting the scores.
 {optional_chronos(report_dir)}
 ## Data, related work, and license
@@ -355,16 +356,18 @@ is released by Dingdong-Inc under **CC BY 4.0**; see the
 [Azar's pipeline](https://www.mdpi.com/2411-5134/11/5/89) is closely related prior
 work on recovery, forecasting, and replenishment. This independently written
 project contributes a focused engineering comparison and reproducible evaluation;
-no scientific novelty is claimed. Code is [MIT](LICENSE); dataset licensing is
-separate. Software citation metadata is in [CITATION.cff](CITATION.cff).
+no scientific novelty is claimed. Code is [MIT]({relative(PROJECT / 'LICENSE')}); dataset licensing is
+separate. Software citation metadata is in [CITATION.cff]({relative(PROJECT / 'CITATION.cff')}).
 """
 
 
 def main() -> None:
+    global DOCUMENT_ROOT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report-dir", type=Path, default=PROJECT / "reports" / "main")
-    parser.add_argument("--readme", type=Path, default=PROJECT / "README.md")
+    parser.add_argument("--readme", type=Path, default=PROJECT / "docs/baseline_forecasting.md")
     args = parser.parse_args()
+    DOCUMENT_ROOT = args.readme.resolve().parent
     report_dir = args.report_dir.resolve()
     summary = load_json(report_dir / "run_summary.json")
     if "test" not in summary:

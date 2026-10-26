@@ -1,189 +1,166 @@
-# Fresh Demand
+# Fresh Demand — learning when lost demand matters
 
-Stockout-aware day-ahead demand forecasting and a reproducible replenishment
-experiment for fresh retail. The concrete question: does using the **timing of
-historical stockouts** help a classical ML model choose tomorrow's order?
+**When should an inventory policy pay to learn demand it cannot see?** This
+classic ML and operations-research project studies censored feedback, decision
+identification, and budgeted exploration. It uses known synthetic demand laws
+and a separately labelled retail-derived simulator. It estimates no real
+retailer's counterfactual profit or lost demand.
 
-The pipeline compares raw sales, uniform-hour recovery, and exact-hour profile
-recovery, then converts LightGBM quantiles into a single-period order decision.
-Observed sales are a lower bound on demand during stockouts. Reconstructed
-quantities remain estimates.
+## Main result, including the failed cases
 
-**Measured outcome on fully available test days:** raw LightGBM q50 achieves
-**29.98% WAPE**, versus 32.14%
-for the trailing mean and 39.84% for seasonal lag 7.
-Using q75 instead of q50 for the raw model reduces scenario cost by
-**21.08%** at a 3:1 shortage:excess cost ratio; fill rate
-changes from **83.27% to 93.18%**.
-Validation selected **raw**. Profile recovery has
-8.65% higher test order cost than raw;
-the primary recovery hypothesis is reported below without changing the comparison.
+The predeclared primary comparison is fixed-budget **decision versus uniform**
+allocation on heterogeneous demand. Cumulative expected-regret difference:
+**+0.91 [-58.26, 59.81]**, candidate minus baseline, with a paired 95% interval.
+The interval includes zero; the primary comparison does not establish a clear advantage. The mechanism contrast against CDF-uncertainty allocation
+is **-6.79 [-83.54, 80.13]**. Neither comparison is replaced by a more favourable
+scenario or policy after confirmation.
 
-![Forecast and controlled recovery results](reports/main/overview.png)
+| Scenario | Decision − uniform, 95% CI | Decision − uncertainty, 95% CI |
+| --- | --- | --- |
+| heterogeneous | +0.91 [-58.26, 59.81] | -6.79 [-83.54, 80.13] |
+| geometric | +146.76 [92.45, 199.51] | -320.31 [-409.36, -238.35] |
+| heavy_tail | -70.07 [-127.39, -11.59] | +43.48 [-11.00, 96.00] |
+| fresh_empirical | -48.28 [-91.55, -6.99] | -473.13 [-547.54, -395.83] |
+| identified | -11.46 [-16.82, -4.19] | +5.29 [4.13, 6.44] |
+| shift | +763.95 [380.66, 1,171.62] | +186.36 [-335.15, 717.62] |
 
-## Measured held-out results
+All differences use complete paired simulation seeds. Negative favors decision
+allocation. Secondary intervals are descriptive, without multiplicity correction.
+They condition on the fixed demand laws and protocol, not the real economy.
 
-The frozen run samples **10,000 store–product pairs** from
-official training identifiers (seed 42); it contains
-900,000 training rows across 890
-stores. Test dates: **2024-06-26–2024-07-02**, 7 days.
-Scoring uses 41,220 fully available rows out of
-70,000 test rows, across 890 scored stores.
+![Confirmation learning curves](reports/active/figures/learning_curves.png)
 
-| Model | Point WAPE | Point bias | Order cost | Fill rate |
+## What was built
+
+- An independently written risk-set estimator observes a threshold event only
+  when the known order exposes it. Anytime Hoeffding bands require stationary
+  independent demand within fixed contexts and predictable orders.
+- An exact, linear-time minimax-regret calculation over a pointwise CDF-band
+  polytope, independently checked against probability-simplex LPs.
+- A decision-directed information score and exact integer budget allocator,
+  compared with uncertainty-directed and uniform allocation using the same
+  base rule and spending constraint. Mean-field lookahead is a planning
+  approximation, not a Bayesian value function or new regret theorem.
+- A secondary cost-aware gate can decline exploration when its working-model
+  benefit does not justify its immediate cost. Canonical Kaplan–Meier,
+  censored geometric Bayes/Thompson, LightGBM, and explicit tail assumptions
+  provide independent classical baselines.
+
+## Economic decision versus demand identification
+
+Two constructed demand laws yield identical sales and sold-out observations at
+historical order 8. At critical quantile
+0.25, order 5 has
+zero regret across the entire population CDF band. At quantile
+0.75, the full-band minimax order is
+24 with regret 16;
+restricting uncertainty to the two witness worlds gives regret
+12. These are different ambiguity
+sets. This is a conceptual reproduction, not replication of a published table.
+
+![Identification mechanism](reports/active/figures/identification.png)
+
+## Policies, actual cost, and exploration spending
+
+Confirmation uses 30 independent seeds, 400
+online rounds, 4 contexts per round, known support
+0..40, and shortage:excess costs
+3:1. Shared warmup: 40 rounds
+at order 8; its costs are excluded equally. Every
+online shortage and excess cost, including exploration stock, is charged.
+
+| Policy | Expected regret | Realized cost | Fill rate | Extra units |
 | --- | --- | --- | --- | --- |
-| Seasonal lag 7 | 39.84% | +0.09% | 0.7959 | 80.13% |
-| Trailing mean 7 | 32.14% | -1.00% | 0.6529 | 83.43% |
-| LightGBM raw | 29.98% | -3.47% | 0.5006 | 93.18% |
-| LightGBM uniform | 32.36% | +10.63% | 0.5679 | 96.06% |
-| LightGBM profile | 31.12% | +6.95% | 0.5439 | 95.48% |
+| Sales quantile | 21,093.09 | 40,340 | 44.4% | 0 |
+| LightGBM sales | 21,082.93 | 40,318 | 45.2% | 0 |
+| KM: uniform | 3,113.50 | 22,387 | 77.1% | 0 |
+| KM: upper | 3,156.83 | 22,434 | 77.1% | 0 |
+| CDF-band minimax | 2,639.38 | 21,827 | 92.0% | 0 |
+| Geometric Thompson | 3,508.66 | 22,740 | 89.2% | 0 |
+| Uniform allocation | 1,004.81 | 20,230 | 87.3% | 3,200 |
+| CDF uncertainty | 1,012.51 | 20,252 | 87.1% | 3,200 |
+| Decision allocation | 1,005.72 | 20,232 | 87.2% | 3,200 |
+| Cost-aware gate | 858.96 | 20,088 | 86.3% | 2,466 |
+| Past full information | 160.55 | 19,345 | 85.6% | 0 |
 
-LightGBM point metrics use q50; its order metrics use q75. The two simple
-baselines use the same point forecast as their order quantity. WAPE and bias
-are percentages; positive bias means overprediction. Cost is total
-`3 × shortage + 1 × excess` divided by total scored demand. Fill rate is total
-fulfilled demand divided by total demand. These are normalized scenario units.
+Values are seed means on the primary heterogeneous scenario. The oracle knows
+the true PMF, uses the same order set, and never observes next demand. Past
+full information is a privileged learning reference. Fixed allocation policies
+spend B=8 extra units when capacity permits. The cost-aware
+policy has the **same cap**, spending 2,466 mean extra
+units versus 3,200 for uniform; actual spending differs.
+It is secondary and cannot rescue a failed fixed-budget primary claim.
 
-**Predeclared comparison, profile versus raw:** q75 cost difference
-**+0.0433**, with 95% paired store-cluster
-interval **[0.0392, 0.0478]**;
-negative favors profile. This comparison remains primary regardless of which
-method wins selection. The interval is conditional on the observed dates,
-using 2,000 bootstrap draws; it does not quantify future-date
-uncertainty.
 
-The secondary q75-minus-q50 policy diagnostic has cost difference -0.1337, with 95% store-cluster interval [-0.1410, -0.1262], conditional on the same dates. Source: [`policy_comparison.json`](reports/main/policy_comparison.json).
+## Post-confirmation mechanism control
 
-## Validation and deployment selection
+New seeds 4000–4019 compare the unchanged cost-aware
+candidate with a myopic policy using the same working PMF and at-most budget,
+without information value. On heterogeneous demand, candidate-minus-myopic
+regret is **-9,643.05 [-11,722.22, -7,540.05]** and realized cost is **-9,776.30 [-11,915.21, -7,646.54]**.
+Expected regret is lower than the myopic control on these new simulator trajectories; this is explanatory evidence, not a new primary test. The cost-aware policy has higher expected regret than myopic control in Geometric, Retail iid, Identified. This follow-up does not alter the original primary comparison.
 
-| Validation dates | Raw cost | Uniform cost | Profile cost |
-| --- | --- | --- | --- |
-| 2024-06-05–2024-06-11 | 0.5700 | 0.6531 | 0.6196 |
-| 2024-06-12–2024-06-18 | 0.5562 | 0.6428 | 0.6163 |
-| 2024-06-19–2024-06-25 | 0.5265 | 0.5828 | 0.5635 |
-| Arithmetic fold mean | 0.5509 | 0.6262 | 0.5998 |
 
-The lowest arithmetic mean validation cost selected **raw**
-before the official evaluation file was read by training. Three expanding
-validation windows precede the final test; the configuration fixes
-250 trees, with no test-tuned early stopping. Quantile
-crossings are corrected by sorting each row's quantile predictions.
+![All baselines and scenarios](reports/active/figures/scenario_results.png)
 
-Recovery profiles and priors use only the first 28 days and
-remain frozen. Forecast models refit at each weekly origin; actual preceding
-days update lag features within each scoring window. This is daily-updated
-**H=1 forecasting**, not a fixed-origin weekly forecast. Same-day realized
-weather, discounts, stock flags, and sales are excluded from forecast features.
+## Data and limitations
 
-## Recovery check and cost assumptions
+Retail contexts use 10,000 training-only store–product pairs.
+Clustering features use 28 days; empirical demand PMFs use
+379,138 fully stocked rows from 69 days
+(2024-03-28–2024-06-04). A global tail-guard multiplier,
+integer rounding, and clipping define dimensionless support. The clipped-row
+fraction is 0.0633%; no probability floor is
+added. Within-context iid resampling is constructed, rather than chronological replay. Fully
+stocked selection is endogenous, so this does not identify natural-stockout demand.
 
-Known sales on 41,220 fully available store–product days are
-artificially hidden. Empirical masks come from training, suffix masks hide the
-last four operational hours, and the fixed peak scenario hides predeclared
-hours. Evaluation sales never determine mask placement.
+Real data lack historical inventory thresholds and assignment propensities.
+Known order thresholds, bounded support, costs, context frequencies, and shifts
+are simulator assumptions. CDF guarantees apply only under their stationary
+conditions; constructed shift is an empirical stress test. Empty confidence
+sets trigger a logged uniform-allocation fallback. Costs are scenario units,
+not currency or a shelf-life simulator. No scientific novelty is claimed.
+The CLI serving interface instead fails closed on an empty confidence set.
 
-| Mask regime | Raw WAPE | Uniform WAPE | Profile WAPE |
-| --- | --- | --- | --- |
-| empirical | 39.81% | 29.40% | 25.64% |
-| suffix | 15.44% | 18.93% | 12.36% |
-| peak | 36.58% | 22.52% | 20.27% |
+## Reproduce and inspect
 
-This measures retrospective recovery under artificial mechanisms; it does not
-reveal naturally censored demand. Cost-ratio sensitivity uses the matching
-quantile for each ratio, without changing the validation-selected deployment:
-
-| Shortage:excess cost | Raw cost | Uniform cost | Profile cost |
-| --- | --- | --- | --- |
-| 1:1 | 0.2998 | 0.3236 | 0.3112 |
-| 3:1 | 0.5006 | 0.5679 | 0.5439 |
-| 9:1 | 0.7461 | 0.8949 | 0.8401 |
-
-## Reproduce
-
-Python 3.12.15; measured package versions: numpy 2.5.4, polars 2.1.0, lightgbm 4.7.0, scikit-learn 1.9.1, pyarrow 26.0.0.
-Elapsed main-run time: 187.5 seconds.
-On macOS, LightGBM also requires OpenMP (`brew install libomp`).
+Run these commands from the repository root.
 
 ```bash
 uv venv --python 3.12
 source .venv/bin/activate
 uv pip install -r requirements-lock.txt
-uv pip install -e ".[dev]"
+uv pip install ".[dev]"
 fresh-demand download --data-dir data/raw
-fresh-demand audit data/raw/train.parquet --output reports/train_audit.json
+python scripts/build_active_contexts.py --train-file data/raw/train.parquet --series-file reports/main/sampled_series.parquet --output reports/active/context_model.json --scale-mode tail_guard
+fresh-demand active-reproduce --output reports/reproduction_active/reproduction
+fresh-demand active-run --config configs/active/development.json --output reports/reproduction_active/development
+fresh-demand active-select --development reports/reproduction_active/development --config configs/active/development.json --output reports/reproduction_active/frozen_selection.json
+fresh-demand active-run --config configs/active/confirmation.json --selection reports/reproduction_active/frozen_selection.json --output reports/reproduction_active/confirmation
+fresh-demand active-grid --config configs/active/phase_grid.json --selection reports/reproduction_active/frozen_selection.json --output reports/reproduction_active/phase_grid
+fresh-demand active-run --config configs/active/mechanism_check.json --selection reports/reproduction_active/frozen_selection.json --output reports/reproduction_active/mechanism_check
+python scripts/write_active_report.py --report-dir reports/reproduction_active/confirmation --selection reports/reproduction_active/frozen_selection.json --reproduction reports/reproduction_active/reproduction/identification.json --phase-grid reports/reproduction_active/phase_grid/summary.json --mechanism-check reports/reproduction_active/mechanism_check/summary.json
+fresh-demand active-plan --history reports/active/service_demo/history.csv --config configs/active/confirmation.json --selection reports/reproduction_active/frozen_selection.json --output reports/reproduction_active/next_orders.json --policy adaptive_cost --seed 42
 pytest -q
-
-# Validation only: no held-out evaluation data is read.
-fresh-demand train --data-dir data/raw --config configs/default.json --output reports/validation
-
-# A fresh output directory preserves the existing frozen results.
-fresh-demand train --data-dir data/raw --config configs/default.json --output reports/reproduction --final-test
-python scripts/write_report.py --report-dir reports/reproduction
-
-fresh-demand subset --input data/raw/train.parquet --series reports/reproduction/sampled_series.parquet --output data/history_cohort.parquet
-fresh-demand predict --model reports/reproduction/artifacts/model.pkl --history data/history_cohort.parquet --output forecasts/next_day.parquet
-fresh-demand retrain --history data/history_cohort.parquet --selection reports/reproduction/frozen_selection.json --config configs/default.json --model reports/reproduction/artifacts/retrained.pkl
 ```
 
-`--final-test` creates the deployment bundle; validation-only training does not.
-Prediction history follows the source schema and contains consecutive completed
-days. For the original cohort, filter history using `sampled_series.parquet`.
-Retraining uses the frozen selection. Model bundles are omitted from Git;
-regenerate them locally or use the supplied local deliverable. Optional Chronos
-inference uses its separately locked environment and the same frozen cohort:
+Existing completed runs are preserved; use fresh output directories when
+rerunning. The serving demo replays a complete known-order censored log; raw
+FreshRetail stock flags cannot substitute for historical inventory thresholds.
+Development seeds [0, 1, 2, 3] and confirmation
+seeds 1000..1029 are disjoint. Planning batch
+64 was frozen on development outcomes. The
+[protocol](docs/experimental_protocol.md) records the development-only cost-gate
+amendment. The [research report](docs/research_report.md) contains every policy,
+coverage diagnostics, spending, and evidence paths; [identification](docs/identification.md)
+gives the exact scope and proof. [Earlier forecasting experiments](docs/baseline_forecasting.md)
+and their Chronos comparison remain separate.
+A [Russian technical walkthrough](docs/interview_notes_ru.md) explains the
+decision problem, implementation, and findings for an interview discussion.
 
-```bash
-uv venv --python 3.12 .venv-chronos
-uv pip install --python .venv-chronos/bin/python -r requirements-chronos-lock.txt
-.venv-chronos/bin/python scripts/benchmark_chronos.py --data-dir data/raw --predictions reports/reproduction/test_predictions.parquet --series-file reports/reproduction/sampled_series.parquet --output reports/reproduction/chronos.json --max-series 256 --threads 4 --cache-dir .cache/hf
-python scripts/write_report.py --report-dir reports/reproduction
-```
-
-## Evidence and limitations
-
-Every result above is generated from [`run_summary.json`](reports/main/run_summary.json)
-and [`recovery_test.json`](reports/main/recovery_test.json). These
-record data/config hashes, selection, package versions, counts, and scores.
-Dataset revision: `c374e85975c82816c495acfa904cc55ab14a47d3`. The downloader pins public
-files and verifies their hashes. Raw data and binary model artifacts are ignored.
-
-Fully stocked evaluation days are selected by realized inventory status: this
-endogenous subset need not represent high-demand stockout days. Seven test days
-cannot establish temporal statistical robustness. Positive sales can coexist
-with stock flags, so treating flagged hours as entirely unavailable is an
-approximation. Fixed warmup profiles can drift; shrinkage, exposure floors,
-and recovery caps are heuristic assumptions. This experiment measures neither
-currency profit nor actual spoilage, shelf life, multi-period inventory, or
-causal inventory effects. Read the [methodology](docs/methodology.md) before
-interpreting the scores.
-
-## Optional foundation-model comparison
-
-Chronos-2 uses 256 frozen sampled series and 1,096 fully available
-rows on 2024-06-26–2024-07-02. Every row below uses this same smaller cohort; compare within
-this table. Inference is CPU-only, fit-free, H=1 with daily updated raw history,
-without covariates or cross-series learning. Deployment selection excludes it.
-
-| Same-cohort model | Point WAPE | Bias | q75 cost |
-| --- | --- | --- | --- |
-| Seasonal lag 7 | 44.36% | +4.12% | — |
-| Trailing mean 7 | 36.08% | +1.96% | — |
-| LightGBM raw | 31.47% | +0.37% | 0.5374 |
-| LightGBM profile | 33.93% | +10.84% | 0.6096 |
-| Chronos-2 | 33.44% | -3.10% | 0.5837 |
-
-Inference time: 1.8 seconds. Exact
-pretraining overlap was not independently audited; no strictly unseen-dataset
-claim follows. Source: [`chronos.json`](reports/main/chronos.json).
-
-## Data, related work, and license
-
+The research builds on [Kumar–Mouchtaki (2026)](https://arxiv.org/abs/2602.16842)
+and the online completion perspective of [Mukherjee et al. (2026)](https://arxiv.org/abs/2605.14840).
 [FreshRetailNet-50K](https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K)
-is released by Dingdong-Inc under **CC BY 4.0**; see the
-[dataset paper](https://arxiv.org/abs/2505.16319) and
-[official baseline](https://github.com/Dingdong-Inc/frn-50k-baseline).
-[Azar's pipeline](https://www.mdpi.com/2411-5134/11/5/89) is closely related prior
-work on recovery, forecasting, and replenishment. This independently written
-project contributes a focused engineering comparison and reproducible evaluation;
-no scientific novelty is claimed. Code is [MIT](LICENSE); dataset licensing is
-separate. Software citation metadata is in [CITATION.cff](CITATION.cff).
+is CC BY 4.0. Independently written software is [MIT](LICENSE).
+
+Measured test evidence: **109 passed**, 0 failures, 0 errors, and 0 skips; [test_summary.json](reports/active/test_summary.json).

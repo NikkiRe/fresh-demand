@@ -1,0 +1,922 @@
+{
+  "protocol": {
+    "config": {
+      "stage": "confirmation",
+      "seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014,
+        1015,
+        1016,
+        1017,
+        1018,
+        1019,
+        1020,
+        1021,
+        1022,
+        1023,
+        1024,
+        1025,
+        1026,
+        1027,
+        1028,
+        1029
+      ],
+      "scenarios": [
+        "heterogeneous",
+        "geometric",
+        "heavy_tail",
+        "fresh_empirical",
+        "identified",
+        "shift"
+      ],
+      "horizon": 400,
+      "warmup": 40,
+      "initial_order": 8,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "underage": 3,
+      "overage": 1,
+      "extra_budget": 8,
+      "delta": 0.1,
+      "planning_samples": "frozen_development_selection",
+      "policies": [
+        "sales",
+        "lightgbm_sales",
+        "risk_lower",
+        "risk_uniform",
+        "risk_upper",
+        "km_uniform",
+        "km_upper",
+        "minimax",
+        "geometric_mean",
+        "geometric_ts",
+        "uniform",
+        "uncertainty",
+        "decision",
+        "adaptive_decision",
+        "adaptive_cost",
+        "full_information"
+      ],
+      "workers": 4,
+      "context_path": "reports/active/context_model.json",
+      "primary_scenario": "heterogeneous",
+      "primary_comparison": "decision_vs_uniform",
+      "secondary_mechanism_comparison": "decision_vs_uncertainty",
+      "primary_metric": "cumulative_expected_regret",
+      "bootstrap_replicates": 5000,
+      "uncertainty_unit": "complete common-random-number demand trajectory; paired independent seeds",
+      "stationary_coverage_claim_excludes": [
+        "shift"
+      ]
+    },
+    "config_sha256": "1bd8b39b9469ba37bdc6f57844169e633e3a8caf50b7caa5fd0dc0d13a0acc13",
+    "context_sha256": "c504f44652f6c39f157a62a9c8a272d74e6f88262fc5b6c20223ba25fb9d8b2e",
+    "selection_sha256": "ef9673e1eeef2463fc03ed4125b8354dbab36ef8ce0fe2d17144adce4507d008",
+    "started_utc": "2026-10-26T00:59:05.464608+00:00",
+    "versions": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "lightgbm": "4.7.0",
+      "polars": "2.1.0"
+    },
+    "python": "3.12.15",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "hypothesis": "At identical extra-unit budgets, decision-directed information allocation reduces expected regret relative to uniform allocation",
+    "censoring": "sales=min(D,Q), sold_out=(D>=Q); latent D never supplied to ordinary learners",
+    "warmup": "Common censored history at fixed initial order; warmup costs excluded equally from all policies",
+    "source_sha256": {
+      "src/fresh_demand/active/__init__.py": "fbdcb32dd9a8ebbc5678e39fce197bf62f97aa839102c5b6b3641c4f926df939",
+      "src/fresh_demand/active/baselines.py": "8af30f1fd63f356d8b532f76897c2977b5b73b2797968230cab37be5cb2934ee",
+      "src/fresh_demand/active/environments.py": "347a53c8d6447ea032df7d29e6ca7e92a6a2e002882439e450a6337bc269f0e8",
+      "src/fresh_demand/active/experiment.py": "201a0ca01d15c38c7dacb50d4d59b7c547a012a479de276739dbe48be0981342",
+      "src/fresh_demand/active/policies.py": "3d184b6f590307925a4cf3ab2d3ff3920982750480a8143ef271b12a9b09a161",
+      "src/fresh_demand/active/reproduction.py": "9028cbf6f6ebd447527618a6444377813c35c4e59e5cf6f06a52e7200eddc1fe",
+      "src/fresh_demand/active/service.py": "2426b1b1da51e16148a6cef5bc21f258fbb5e71d4064d3d233a6325fa46dee9f",
+      "src/fresh_demand/active/statistics.py": "e801036137450bbdc192df0f5f4c3d4e303f4c55f43a6ec4af3b1f7c458d9f32"
+    }
+  },
+  "environment_metadata": {
+    "heterogeneous": {
+      "name": "heterogeneous",
+      "seed": 1029,
+      "horizon": 400,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "support": [
+        0,
+        40
+      ],
+      "parameters_depend_on_seed": false,
+      "oracle_knows_true_pmf": true,
+      "policy_access_to_true_pmf": false,
+      "probability_floor": null,
+      "stationary": true,
+      "interpretation": "Controlled bounded synthetic demand, not a business counterfactual.",
+      "context_parameters": [
+        {
+          "context": 0,
+          "type": "low_mean_rare_spike",
+          "poisson_mean": 4.0,
+          "spike_weight": 0.18,
+          "spike_at": 33
+        },
+        {
+          "context": 1,
+          "type": "bimodal",
+          "low_mean": 8.0,
+          "high_mean": 22.0,
+          "low_weight": 0.6
+        },
+        {
+          "context": 2,
+          "type": "medium_mean_rare_endpoint",
+          "poisson_mean": 14.0,
+          "endpoint_weight": 0.05
+        },
+        {
+          "context": 3,
+          "type": "high_mean_zero_inflated",
+          "poisson_mean": 26.0,
+          "zero_weight": 0.25
+        }
+      ],
+      "pmf_sha256": "890b1ac2389894938adb9e151ab2ad57e54fcb4e3105bbc95d8ac9f1624b5f3d",
+      "context_means_before_shift": [
+        9.22,
+        13.598502566678764,
+        15.299999905113314,
+        19.451316452904006
+      ],
+      "context_q75_before_shift": [
+        7,
+        20,
+        17,
+        28
+      ]
+    },
+    "geometric": {
+      "name": "geometric",
+      "seed": 1029,
+      "horizon": 400,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "support": [
+        0,
+        40
+      ],
+      "parameters_depend_on_seed": false,
+      "oracle_knows_true_pmf": true,
+      "policy_access_to_true_pmf": false,
+      "probability_floor": null,
+      "stationary": true,
+      "interpretation": "Correctly specified conjugate control: min(G, M), where G counts failures before the first geometric success.",
+      "context_parameters": [
+        {
+          "geometric_success_probability": 0.1
+        },
+        {
+          "geometric_success_probability": 0.18
+        },
+        {
+          "geometric_success_probability": 0.3
+        },
+        {
+          "geometric_success_probability": 0.45
+        }
+      ],
+      "tail_mass_at_support_endpoint": "P(G >= max_demand), not P(G == max_demand)",
+      "pmf_sha256": "a29447b5e9dda0fad061118d51730fe6eb2c2cfad026606c0a613a6cb93fed1b",
+      "context_means_before_shift": [
+        8.866972053527093,
+        4.553929649522194,
+        2.3333318477453218,
+        1.222222222171912
+      ],
+      "context_q75_before_shift": [
+        13,
+        6,
+        3,
+        2
+      ]
+    },
+    "heavy_tail": {
+      "name": "heavy_tail",
+      "seed": 1029,
+      "horizon": 400,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "support": [
+        0,
+        40
+      ],
+      "parameters_depend_on_seed": false,
+      "oracle_knows_true_pmf": true,
+      "policy_access_to_true_pmf": false,
+      "probability_floor": null,
+      "stationary": true,
+      "interpretation": "Bounded long-tail mixture; this is not an unbounded heavy-tail guarantee.",
+      "context_parameters": [
+        {
+          "context": 0,
+          "tail_weight": 0.12,
+          "tail_start": 10,
+          "tail_power": 1.2,
+          "core_center": 2
+        },
+        {
+          "context": 1,
+          "tail_weight": 0.27,
+          "tail_start": 10,
+          "tail_power": 1.2,
+          "core_center": 3
+        },
+        {
+          "context": 2,
+          "tail_weight": 0.42,
+          "tail_start": 10,
+          "tail_power": 1.2,
+          "core_center": 4
+        },
+        {
+          "context": 3,
+          "tail_weight": 0.5700000000000001,
+          "tail_start": 10,
+          "tail_power": 1.2,
+          "core_center": 2
+        }
+      ],
+      "pmf_sha256": "bd18d20ae795731de64b7746485cc5d8aca4544e69aa866dc0fe84df43a23fe7",
+      "context_means_before_shift": [
+        4.04564811242953,
+        7.462708252966442,
+        10.654768393503353,
+        12.654328534040264
+      ],
+      "context_q75_before_shift": [
+        3,
+        10,
+        17,
+        21
+      ]
+    },
+    "fresh_empirical": {
+      "name": "fresh_empirical",
+      "seed": 1029,
+      "horizon": 400,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "support": [
+        0,
+        40
+      ],
+      "parameters_depend_on_seed": false,
+      "oracle_knows_true_pmf": true,
+      "policy_access_to_true_pmf": false,
+      "probability_floor": null,
+      "stationary": true,
+      "interpretation": "Semi-synthetic iid bootstrap of train-only, fully-stocked scaled sales. No observed natural-stockout demand or real policy counterfactual is supplied.",
+      "context_model_sha256": "c504f44652f6c39f157a62a9c8a272d74e6f88262fc5b6c20223ba25fb9d8b2e",
+      "context_model_metadata": {
+        "source_dataset": "Dingdong-Inc/FreshRetailNet-50K",
+        "source_revision": "c374e85975c82816c495acfa904cc55ab14a47d3",
+        "source_file": "train.parquet",
+        "source_sha256": "6706832db892bbae4969c19d87e07975d2543d2ba7d7d4756360654785de5a3d",
+        "source_license": "CC-BY-4.0",
+        "source_reference": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K",
+        "source_fields_used": [
+          "store_id",
+          "product_id",
+          "dt",
+          "hours_sale",
+          "hours_stock_status"
+        ],
+        "source_original_date_range": [
+          "2024-03-28",
+          "2024-06-25"
+        ],
+        "fit_window": [
+          "2024-03-28",
+          "2024-06-04"
+        ],
+        "fit_days": 69,
+        "feature_window": [
+          "2024-03-28",
+          "2024-04-24"
+        ],
+        "feature_days": 28,
+        "official_eval_file_read": false,
+        "train_only_series_manifest_sha256": "204e6d79f77fc2b93966fbc584271c307e8f6dfbdfb46dfd82d2bce8cc60bb8f",
+        "sampling_seed": 42,
+        "sampled_series": 10000,
+        "sampling_rule": "IDs from a supplied train-only manifest, or uniformly sampled train IDs; no eval outcomes used.",
+        "fit_rows": 690000,
+        "fully_stocked_fit_rows": 379138,
+        "fully_stocked_fit_row_fraction": 0.5494753623188405,
+        "series_with_fully_stocked_fit_rows": 9962,
+        "feature_series_fallback_to_raw_mean": 108,
+        "feature_columns": [
+          "log1p_fully_stocked_mean",
+          "log1p_fully_stocked_std",
+          "stockout_hour_share"
+        ],
+        "feature_fallback": "If no fully-stocked feature-window day exists, use observed raw mean/std for that series.",
+        "clustering": {
+          "method": "StandardScaler then KMeans",
+          "random_state": 42,
+          "n_init": 10,
+          "context_order": "Ascending center of log1p sales mean",
+          "threads": 4,
+          "scaler_mean": [
+            0.5718130308874978,
+            0.2814341143307418,
+            0.23663169642857265
+          ],
+          "scaler_scale": [
+            0.34212574803058704,
+            0.18147582837460852,
+            0.1308692675212959
+          ]
+        },
+        "scale": {
+          "mode": "tail_guard",
+          "positive_fully_stocked_sales_median": 0.6,
+          "median_target_units": null,
+          "resulting_scaled_positive_sales_median": 1.5584415584415583,
+          "raw_q99_by_context": [
+            1.7000000000000002,
+            3.922999999999957,
+            3.6000000000000005,
+            15.4
+          ],
+          "tail_guard_rule": "One global multiplier = max_demand / max(context raw-sales q99).",
+          "tail_guard_quantile": 0.99,
+          "multiplier": 2.5974025974025974,
+          "quantization": "numpy.rint (nearest integer, ties to even)",
+          "clipping_support": [
+            0,
+            40
+          ],
+          "clipped_row_fraction": 0.0006330148916753267,
+          "maximum_context_clipped_row_fraction": 0.00973353250132511,
+          "mean_absolute_quantization_error_before_clipping": 0.25025074994110014,
+          "positive_sales_rounded_to_zero_fraction": 0.048786985213827155,
+          "positive_sales_rounded_to_zero_denominator": "All fully-stocked fit rows, including originally zero-sale rows.",
+          "interpretation": "Dimensionless scaled, coarsened normalized operating-hour sales, not physical SKU units or currency."
+        },
+        "probability_estimator": "Unsmoothed empirical counts; zero-probability support points remain zero.",
+        "clusters": [
+          {
+            "context": 0,
+            "series": 5803,
+            "fully_stocked_rows": 230539,
+            "clipped_row_fraction": 0.0,
+            "mean_integer_demand": 1.4055452656600402,
+            "q75_integer_demand": 2,
+            "feature_center_standardized": [
+              -0.5747693056755997,
+              -0.48228343128460033,
+              -0.29235466903468366
+            ],
+            "feature_center_unstandardized": [
+              0.3751696522382121,
+              0.19391132912702036,
+              0.1983714550355727
+            ],
+            "empirical_counts": [
+              23138,
+              121468,
+              64671,
+              15738,
+              3553,
+              1102,
+              425,
+              169,
+              135,
+              61,
+              30,
+              24,
+              5,
+              7,
+              4,
+              2,
+              2,
+              2,
+              1,
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "context": 1,
+            "series": 1221,
+            "fully_stocked_rows": 32378,
+            "clipped_row_fraction": 0.0011736364197912164,
+            "mean_integer_demand": 2.6754277595898452,
+            "q75_integer_demand": 3,
+            "feature_center_standardized": [
+              0.1555999768428847,
+              -0.1286372251523936,
+              1.9548082078150917
+            ],
+            "feature_center_unstandardized": [
+              0.6250477893584118,
+              0.25808956733640015,
+              0.49245601472995093
+            ],
+            "empirical_counts": [
+              1376,
+              8630,
+              9263,
+              5617,
+              3134,
+              1782,
+              1050,
+              455,
+              389,
+              246,
+              140,
+              82,
+              65,
+              24,
+              21,
+              19,
+              16,
+              10,
+              7,
+              6,
+              1,
+              2,
+              0,
+              1,
+              0,
+              1,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              38
+            ]
+          },
+          {
+            "context": 2,
+            "series": 2347,
+            "fully_stocked_rows": 95468,
+            "clipped_row_fraction": 0.0,
+            "mean_integer_demand": 3.137438722922865,
+            "q75_integer_demand": 4,
+            "feature_center_standardized": [
+              0.630321004883728,
+              0.507212464217687,
+              -0.3805390241140326
+            ],
+            "feature_center_unstandardized": [
+              0.7874620761827346,
+              0.373480916436573,
+              0.18683083307950044
+            ],
+            "empirical_counts": [
+              2208,
+              13984,
+              24386,
+              22436,
+              14734,
+              8111,
+              4467,
+              1945,
+              1485,
+              798,
+              412,
+              219,
+              114,
+              41,
+              50,
+              25,
+              19,
+              9,
+              7,
+              5,
+              1,
+              0,
+              5,
+              3,
+              0,
+              0,
+              1,
+              2,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "context": 3,
+            "series": 629,
+            "fully_stocked_rows": 20753,
+            "clipped_row_fraction": 0.00973353250132511,
+            "mean_integer_demand": 9.040283332530237,
+            "q75_integer_demand": 11,
+            "feature_center_standardized": [
+              2.646254528065258,
+              2.8039241464925055,
+              0.3176548031833952
+            ],
+            "feature_center_unstandardized": [
+              1.4771648407811524,
+              0.7902785715150364,
+              0.278202947845805
+            ],
+            "empirical_counts": [
+              112,
+              347,
+              782,
+              1212,
+              1479,
+              1905,
+              2074,
+              1570,
+              1956,
+              1790,
+              1533,
+              1280,
+              998,
+              527,
+              643,
+              508,
+              367,
+              288,
+              189,
+              182,
+              102,
+              118,
+              87,
+              81,
+              63,
+              46,
+              38,
+              32,
+              29,
+              29,
+              26,
+              18,
+              17,
+              10,
+              11,
+              16,
+              15,
+              21,
+              20,
+              19,
+              213
+            ]
+          }
+        ],
+        "selection_bias": "PMFs condition on observed fully-stocked days; they do not identify demand during naturally censored days.",
+        "environment_use": "Semi-synthetic iid resampling within contexts, not chronological replay.",
+        "real_policy_counterfactual_identified": false,
+        "oracle_pmf_known_only_in_simulator": true
+      },
+      "pmf_sha256": "83df20c65744040cd82ea981e80d6c394800faf8bf461e59631c49fd44ec7a57",
+      "context_means_before_shift": [
+        1.4055452656600402,
+        2.6754277595898452,
+        3.137438722922864,
+        9.040283332530235
+      ],
+      "context_q75_before_shift": [
+        2,
+        3,
+        4,
+        11
+      ]
+    },
+    "identified": {
+      "name": "identified",
+      "seed": 1029,
+      "horizon": 400,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "support": [
+        0,
+        40
+      ],
+      "parameters_depend_on_seed": false,
+      "oracle_knows_true_pmf": true,
+      "policy_access_to_true_pmf": false,
+      "probability_floor": null,
+      "stationary": true,
+      "interpretation": "Negative control: every demand is below an initial stock of at least two.",
+      "context_parameters": [
+        {
+          "probability_demand_one": 0.1
+        },
+        {
+          "probability_demand_one": 0.31666666666666665
+        },
+        {
+          "probability_demand_one": 0.5333333333333333
+        },
+        {
+          "probability_demand_one": 0.75
+        }
+      ],
+      "actual_demand_support": [
+        0,
+        1
+      ],
+      "minimum_fully_observing_stock": 2,
+      "pmf_sha256": "008de3193d2728113b8b7209c3b5431cd68933442311a197079a169fb7064efd",
+      "context_means_before_shift": [
+        0.1,
+        0.31666666666666665,
+        0.5333333333333333,
+        0.75
+      ],
+      "context_q75_before_shift": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    "shift": {
+      "name": "shift",
+      "seed": 1029,
+      "horizon": 400,
+      "max_demand": 40,
+      "n_contexts": 4,
+      "support": [
+        0,
+        40
+      ],
+      "parameters_depend_on_seed": false,
+      "oracle_knows_true_pmf": true,
+      "policy_access_to_true_pmf": false,
+      "probability_floor": null,
+      "stationary": false,
+      "interpretation": "Controlled bounded synthetic demand, not a business counterfactual.",
+      "context_parameters": [
+        {
+          "context": 0,
+          "type": "low_mean_rare_spike",
+          "poisson_mean": 4.0,
+          "spike_weight": 0.18,
+          "spike_at": 33
+        },
+        {
+          "context": 1,
+          "type": "bimodal",
+          "low_mean": 8.0,
+          "high_mean": 22.0,
+          "low_weight": 0.6
+        },
+        {
+          "context": 2,
+          "type": "medium_mean_rare_endpoint",
+          "poisson_mean": 14.0,
+          "endpoint_weight": 0.05
+        },
+        {
+          "context": 3,
+          "type": "high_mean_zero_inflated",
+          "poisson_mean": 26.0,
+          "zero_weight": 0.25
+        }
+      ],
+      "change_round": 200,
+      "context_distribution_permutation": [
+        3,
+        2,
+        1,
+        0
+      ],
+      "stationary_confidence_bounds_apply": false,
+      "shift_interpretation": "A constructed regime change, not an empirical chronology.",
+      "pmf_sha256": "9488a589467d9a1dd35655512417ff9187e6a5a7e52657d6cb9fd5c806cb6db8",
+      "context_means_before_shift": [
+        9.22,
+        13.598502566678764,
+        15.299999905113314,
+        19.451316452904006
+      ],
+      "context_q75_before_shift": [
+        7,
+        20,
+        17,
+        28
+      ]
+    }
+  },
+  "comparisons": {
+    "heterogeneous": {
+      "uniform": {
+        "candidate": "decision",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 0.9088020099615771,
+        "ci_low": -58.25896830896577,
+        "ci_high": 59.80668055386649,
+        "relative_reduction": -0.0009044498275240463,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "uncertainty": {
+        "candidate": "decision",
+        "baseline": "uncertainty",
+        "metric": "cumulative_expected_regret",
+        "difference": -6.78950955481705,
+        "ci_low": -83.53665505414328,
+        "ci_high": 80.1299398373503,
+        "relative_reduction": 0.006705620378055887,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      }
+    },
+    "geometric": {
+      "uniform": {
+        "candidate": "decision",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 146.763852265416,
+        "ci_low": 92.45451686232676,
+        "ci_high": 199.5137896109643,
+        "relative_reduction": -0.14156798629970663,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "uncertainty": {
+        "candidate": "decision",
+        "baseline": "uncertainty",
+        "metric": "cumulative_expected_regret",
+        "difference": -320.30988951212584,
+        "ci_low": -409.3576111460898,
+        "ci_high": -238.346388583555,
+        "relative_reduction": 0.21300372378728835,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      }
+    },
+    "heavy_tail": {
+      "uniform": {
+        "candidate": "decision",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -70.066776736725,
+        "ci_low": -127.39131152088527,
+        "ci_high": -11.587904019282142,
+        "relative_reduction": 0.0867433517161913,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "uncertainty": {
+        "candidate": "decision",
+        "baseline": "uncertainty",
+        "metric": "cumulative_expected_regret",
+        "difference": 43.47505307241647,
+        "ci_low": -10.997938536392482,
+        "ci_high": 96.00090933116753,
+        "relative_reduction": -0.06262555600050915,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      }
+    },
+    "fresh_empirical": {
+      "uniform": {
+        "candidate": "decision",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -48.27583683370949,
+        "ci_low": -91.5535681899735,
+        "ci_high": -6.994355352079305,
+        "relative_reduction": 0.030170394336353226,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "uncertainty": {
+        "candidate": "decision",
+        "baseline": "uncertainty",
+        "metric": "cumulative_expected_regret",
+        "difference": -473.1341928435657,
+        "ci_low": -547.542625223,
+        "ci_high": -395.82715635168915,
+        "relative_reduction": 0.2336505977361862,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      }
+    },
+    "identified": {
+      "uniform": {
+        "candidate": "decision",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": -11.455555555555641,
+        "ci_low": -16.823111111111228,
+        "ci_high": -4.186611111111229,
+        "relative_reduction": 0.00376553053074626,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "uncertainty": {
+        "candidate": "decision",
+        "baseline": "uncertainty",
+        "metric": "cumulative_expected_regret",
+        "difference": 5.293333333333416,
+        "ci_low": 4.133333333333439,
+        "ci_high": 6.4400000000001,
+        "relative_reduction": -0.001749592349389653,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      }
+    },
+    "shift": {
+      "uniform": {
+        "candidate": "decision",
+        "baseline": "uniform",
+        "metric": "cumulative_expected_regret",
+        "difference": 763.9548141131464,
+        "ci_low": 380.6604890415762,
+        "ci_high": 1171.6208004301268,
+        "relative_reduction": -0.22613641603155135,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      },
+      "uncertainty": {
+        "candidate": "decision",
+        "baseline": "uncertainty",
+        "metric": "cumulative_expected_regret",
+        "difference": 186.3627202290056,
+        "ci_low": -335.14531745087845,
+        "ci_high": 717.6221567299697,
+        "relative_reduction": -0.04711025962334455,
+        "paired_seeds": 30,
+        "bootstrap_replicates": 5000,
+        "scope": "Independent demand trajectories paired across policies; conditional on this fixed simulator and protocol"
+      }
+    }
+  },
+  "elapsed_seconds": 320.33021462500074
+}

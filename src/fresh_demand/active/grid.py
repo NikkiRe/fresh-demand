@@ -7,7 +7,9 @@ import time
 
 import polars as pl
 
-from .experiment import _job, log, paired_comparison, save_json, sha256
+from .experiment import (
+    _job, _resolve_context_path, _source_hashes, log, paired_comparison, save_json, sha256,
+)
 
 
 def run_grid(config_path: Path, selection_path: Path, output: Path):
@@ -24,7 +26,9 @@ def run_grid(config_path: Path, selection_path: Path, output: Path):
                 for seed in config["seeds"]:
                     jobs.append((cell, "heterogeneous", seed, selected))
     save_json(output / "protocol.json", {"config": config, "config_sha256": sha256(config_path),
-        "selection_sha256": sha256(selection_path), "planning_samples": selected})
+        "selection_sha256": sha256(selection_path), "planning_samples": selected,
+        "context_sha256": sha256(_resolve_context_path(config["context_path"])),
+        "source_sha256": _source_hashes()})
     started = time.perf_counter()
     records = []
     with ProcessPoolExecutor(max_workers=config["workers"]) as executor:

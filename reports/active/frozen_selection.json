@@ -1,0 +1,27 @@
+{
+  "planning_samples": 64,
+  "criterion": "Mean decision-policy cumulative expected regret on heterogeneous development seeds only",
+  "development_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "confirmation_seeds_seen": false,
+  "candidates": [
+    {
+      "planning_samples": 64,
+      "cumulative_expected_regret": 520.6487227077366
+    },
+    {
+      "planning_samples": 16,
+      "cumulative_expected_regret": 619.982190574791
+    },
+    {
+      "planning_samples": 1,
+      "cumulative_expected_regret": 661.7488383433098
+    }
+  ],
+  "development_config_sha256": "8888d0998211271570bc1f4904871cb4239667a51d53b525ca200cbca15700bd",
+  "frozen_utc": "2026-10-26T00:55:24.565079+00:00"
+}

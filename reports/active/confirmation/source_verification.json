@@ -1,0 +1,23 @@
+{
+  "confirmation_core_commit": "7121c6c4e6e21a174dab5976be1e9c332f610459",
+  "verification_basis": "Preserved Git revision, not the entire current checkout",
+  "core_source_hashes_match": {
+    "src/fresh_demand/active/baselines.py": true,
+    "src/fresh_demand/active/environments.py": true,
+    "src/fresh_demand/active/experiment.py": true,
+    "src/fresh_demand/active/policies.py": true,
+    "src/fresh_demand/active/statistics.py": true
+  },
+  "all_core_match": true,
+  "release_changes_after_confirmation": {
+    "src/fresh_demand/active/experiment.py": {
+      "at_confirmation_start": "201a0ca01d15c38c7dacb50d4d59b7c547a012a479de276739dbe48be0981342",
+      "release_sha256": "2d5ef9aea1b4c409c4ec63931b2991d20122209594c4aec1d2caa5df938c3490"
+    },
+    "src/fresh_demand/active/service.py": {
+      "at_confirmation_start": "2426b1b1da51e16148a6cef5bc21f258fbb5e71d4064d3d233a6325fa46dee9f",
+      "release_sha256": "84b8e9dced7f18e11ab731b2d4df9bd4f75cfaad6e00ca13f492d3d04ebd7af7"
+    }
+  },
+  "explanation": "Later package changes add serving diagnostics, a separately labelled myopic-ablation route, and installed-package path/provenance support. Relative context files resolve from the caller working directory; new runs hash the executing package with canonical source labels. These path changes do not alter simulation algorithms. The predeclared confirmation algorithms are preserved in the pinned revision; the original protocol is not rewritten."
+}
